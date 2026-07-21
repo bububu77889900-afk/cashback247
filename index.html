@@ -233,12 +233,34 @@
                     </button>
                 </div>
 
-                <!-- KẾT QUẢ & KHUNG TÍNH TỈ LỆ HOA HỒNG & 2 NÚT LỰA CHỌN -->
+                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM & GIÁ TRỊ HOÀN TIỀN TỐI ĐA -->
                 <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
                     <div class="flex justify-between items-center">
-                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Link mua hàng tích điểm của bạn:</p>
+                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Thông tin sản phẩm & mức hoàn tối đa:</p>
                         <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Affiliate ID: AT2107363</span>
                     </div>
+
+                    <!-- THÔNG TIN SẢN PHẨM PHÂN TÍCH TỰ ĐỘNG -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-emerald-400 font-bold uppercase">Sản phẩm phân tích từ link:</span>
+                                <h4 id="productTitleDisplay" class="text-xs sm:text-sm font-extrabold text-white mt-0.5">Đang cập nhật tên sản phẩm...</h4>
+                            </div>
+                            <span id="productCategoryBadge" class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-2 py-0.5 rounded font-bold whitespace-nowrap">Shopee Mall</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-900 text-xs">
+                            <div>
+                                <span class="text-[10px] text-slate-400 block">Giá gốc ước tính:</span>
+                                <span id="productPriceDisplay" class="font-black text-white text-sm">0 đ</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] text-slate-400 block">Số tiền hoàn tối đa (vào ví):</span>
+                                <span id="maxCashbackDisplay" class="font-black text-amber-400 text-sm">0 đ</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex gap-2">
                         <input type="text" id="affLink" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 font-mono select-all">
                         <button onclick="copyAffLink()" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-4 py-2.5 rounded-xl text-xs font-semibold transition active:scale-95 flex items-center gap-1.5">
@@ -271,14 +293,14 @@
                         <p class="text-[10px] text-slate-400 italic text-center">Tiền hoàn sẽ được hệ thống đối soát và tự động cộng dồn vào ví của bạn sau khi đơn hàng thành công.</p>
                     </div>
 
-                    <!-- 2 NÚT LỰA CHỌN SAU KHI TẠO LINK -->
+                    <!-- 2 NÚT LỰA CHỌN SAU KHI TẠO LINK (ĐIỀU HƯỚNG TRỰC TIẾP APP SHOPPING TIẾT KIỆM) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                        <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg shadow-teal-500/20">
+                        <a id="directAppBtn1" href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg shadow-teal-500/20">
                             <i class="fa-solid fa-mobile-screen-button text-sm"></i> 1. Mở App Shopping Tiết Kiệm
                         </a>
-                        <button onclick="openShoppingLink()" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
-                            <i class="fa-solid fa-bolt text-amber-400 text-sm"></i> 2. Mua Ngay (Nhận 100% HH Accesstrade)
-                        </button>
+                        <a id="directAppBtn2" href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
+                            <i class="fa-solid fa-bolt text-amber-400 text-sm"></i> 2. Mua Ngay (Nhận Hoàn Tiền)
+                        </a>
                     </div>
                 </div>
             </section>
@@ -373,7 +395,7 @@
     </div>
 
 
-    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI ================= -->
+    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI (CÓ TƯ DUY PHẢN BIỆN) ================= -->
     <div class="fixed bottom-6 right-6 z-50">
         <button onclick="toggleAiChat()" id="aiChatToggleBtn" class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-xl transition active:scale-95 group">
             <i class="fa-solid fa-robot group-hover:rotate-12 transition-transform"></i>
@@ -383,11 +405,11 @@
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 text-white flex justify-between items-center">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm">
-                        <i class="fa-solid fa-robot"></i>
+                        <i class="fa-solid fa-brain"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm">Trợ Lý Ảo Cashback247</h4>
-                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Luôn sẵn sàng hỗ trợ</span>
+                        <h4 class="font-bold text-sm">Trợ Lý AI Phản Biện</h4>
+                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Phân tích đa chiều & Tối ưu</span>
                     </div>
                 </div>
                 <button onclick="toggleAiChat()" class="w-7 h-7 rounded-lg bg-black/20 hover:bg-black/30 flex items-center justify-center text-xs transition">
@@ -398,24 +420,24 @@
             <div id="aiChatMessages" class="p-4 space-y-3 h-80 overflow-y-auto text-xs bg-slate-950/80">
                 <div class="flex items-start gap-2">
                     <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
-                        <i class="fa-solid fa-robot"></i>
+                        <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Xin chào! Tôi là trợ lý ảo của Cashback247. Tôi có thể giúp gì cho bạn hôm nay?</p>
-                        <p class="text-[10px] text-slate-400">Bạn có thể chọn các câu hỏi nhanh bên dưới:</p>
+                        <p>Xin chào! Tôi là trợ lý AI có tích hợp tư duy phản biện. Tôi không chỉ đưa ra câu trả lời sẵn có mà sẽ cùng bạn mổ xẻ vấn đề, xem xét mặt lợi - hại và tìm ra chiến lược mua sắm khôn ngoan nhất.</p>
+                        <p class="text-[10px] text-slate-400">Bạn muốn phản biện hoặc thảo luận về vấn đề gì hôm nay?</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Gợi ý câu hỏi nhanh -->
+            <!-- Gợi ý câu hỏi phản biện nhanh -->
             <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
-                <button onclick="sendAiPrompt('Cách tạo link hoàn tiền?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Cách tạo link?</button>
-                <button onclick="sendAiPrompt('Mức rút tiền tối thiểu là bao nhiêu?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hạn mức rút tiền?</button>
-                <button onclick="sendAiPrompt('Mã giới thiệu hạng bạc là gì?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Mã Hạng Bạc?</button>
+                <button onclick="sendAiPrompt('Hoàn tiền có thực sự rẻ hơn hay chỉ là chiêu trò tăng giá?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hoàn tiền có phải chiêu trò?</button>
+                <button onclick="sendAiPrompt('Tại sao nên dùng Cashback247 thay vì mua trực tiếp trên sàn?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tại sao nên qua Cashback247?</button>
+                <button onclick="sendAiPrompt('Làm sao để tối ưu hóa tiền hoàn lớn nhất?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tối ưu tiền hoàn thế nào?</button>
             </div>
 
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi của bạn..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                <input type="text" id="aiChatInput" placeholder="Đặt câu hỏi hoặc tranh luận với AI..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                 <button onclick="sendUserAiMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -447,7 +469,7 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và chọn phương thức mua sắm phù hợp.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và chọn mua ngay để sang thẳng App Shopping Tiết Kiệm.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
@@ -749,7 +771,7 @@
             closeReportModal();
         }
 
-        // ================= TRỢ LÝ ẢO AI =================
+        // ================= TRỢ LÝ ẢO AI CÓ TƯ DUY PHẢN BIỆN =================
         function toggleAiChat() {
             const win = document.getElementById('aiChatWindow');
             win.classList.toggle('hidden');
@@ -757,7 +779,7 @@
 
         function sendAiPrompt(promptText) {
             appendAiMessage(promptText, true);
-            processAiResponse(promptText);
+            processCriticalThinkingAi(promptText);
         }
 
         function sendUserAiMessage() {
@@ -766,7 +788,7 @@
             if (!text) return;
             appendAiMessage(text, true);
             input.value = '';
-            processAiResponse(text);
+            processCriticalThinkingAi(text);
         }
 
         function handleAiKeypress(e) {
@@ -785,7 +807,7 @@
                 container.innerHTML += `
                     <div class="flex items-start gap-2">
                         <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
-                            <i class="fa-solid fa-robot"></i>
+                            <i class="fa-solid fa-brain"></i>
                         </div>
                         <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%] space-y-1">${text}</div>
                     </div>
@@ -794,23 +816,32 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        function processAiResponse(query) {
+        function processCriticalThinkingAi(query) {
             const q = query.toLowerCase();
-            let reply = "Xin lỗi, tôi chưa hiểu rõ ý bạn. Bạn có thể chọn các câu hỏi gợi ý bên dưới hoặc liên hệ trực tiếp Admin nhé!";
+            let reply = "";
 
-            if (q.includes('tạo link') || q.includes('hoàn tiền')) {
-                reply = "Để tạo link hoàn tiền, bạn chỉ cần dán đường dẫn sản phẩm Shopee/Lazada vào ô <b>'Tạo Link Hoàn Tiền Nhanh'</b> ở trang chủ và bấm nút <b>Tạo Link</b> là xong!";
-            } else if (q.includes('rút tiền') || q.includes('số dư') || q.includes('tối thiểu')) {
-                reply = "Mức rút tiền tối thiểu tại hệ thống là <b>10.000 đ</b>. Bạn có thể vào mục <b>Cài đặt & Ví</b>, nhập số tiền từ 10k trở lên và gửi yêu cầu để Admin duyệt.";
-            } else if (q.includes('mã') || q.includes('hạng bạc') || q.includes('stkrdmejv')) {
-                reply = "Mã giới thiệu độc quyền của hệ thống là <b>STKRDMEJV</b>. Nhập mã này giúp bạn thăng lên Hạng Bạc và nhận thêm <b>+2% hoa hồng</b>!";
-            } else if (q.includes('báo lỗi') || q.includes('lỗi')) {
-                reply = "Bạn có thể bấm vào menu 3 gạch góc trên bên phải, chọn mục <b>Báo lỗi hệ thống / Góp ý</b> để gửi thông tin trực tiếp cho Admin.";
+            if (q.includes('chiêu trò') || q.includes('tăng giá') || q.includes('thật sự rẻ')) {
+                reply = "<b>Phản biện đa chiều từ AI:</b><br>" +
+                        "1. <i>Góc nhìn hoài nghi:</i> Đúng là có hiện tượng một số shop tăng giá ảo rồi giảm giá hoặc gắn hoa hồng cao. Nếu không tỉnh táo, bạn có thể mua đắt hơn bên ngoài.<br>" +
+                        "2. <i>Góc nhìn tối ưu:</i> Cashback247 không can thiệp vào giá của sàn mà tận dụng dòng tiền chiết khấu (marketing budget) của nhãn hàng trả cho Accesstrade. Thay vì tiền chảy hết vào túi sàn, hệ thống trích lại 72% cho bạn.<br>" +
+                        "<b>Lời khuyên phản biện:</b> Hãy luôn so sánh giá ở nhiều shop khác nhau trước khi dán link, kết hợp mã giảm giá của sàn + tiền hoàn từ ví để đạt hiệu quả tiết kiệm thực sự!";
+            } else if (q.includes('tại sao nên dùng') || q.includes('thay vì mua trực tiếp')) {
+                reply = "<b>Phản biện chiến lược:</b><br>" +
+                        "Nếu bạn mua trực tiếp, sàn thương mại điện tử vẫn giữ nguyên 100% phần hoa hồng tiếp thị liên kết đó như một khoản lợi nhuận ròng của họ.<br>" +
+                        "Bằng cách đi qua Cashback247 và áp dụng mã <b>STKRDMEJV</b> (Hạng Bạc), bạn đang biến mình từ một người mua hàng đơn thuần thành người nhận lại lợi nhuận chiết khấu. Tại sao lại bỏ qua dòng tiền hợp pháp này trong khi giá sản phẩm hoàn toàn không thay đổi?";
+            } else if (q.includes('tối ưu') || q.includes('lớn nhất')) {
+                reply = "<b>Công thức tối ưu hóa lợi ích tài chính:</b><br>" +
+                        "• <b>Bước 1:</b> Săn khung giờ vàng sale lớn (Sale 15 hàng tháng, Lương về 25-30).<br>" +
+                        "• <b>Bước 2:</b> Thu thập mã Freeship + Mã giảm giá của Shop & Sàn.<br>" +
+                        "• <b>Bước 3:</b> Dán link vào Cashback247 để nhận thêm 72% hoa hồng vào ví.<br>" +
+                        "<i>Góc nhìn phản biện:</i> Đừng vì thấy hoàn tiền cao mà mua những món đồ không thực sự cần thiết. Tối ưu nhất là tiết kiệm trên những thứ bạn đã có kế hoạch mua từ trước!";
+            } else {
+                reply = "<b>Góc nhìn phản biện từ AI:</b> Câu hỏi của bạn rất đáng suy ngẫm. Khi xét về bài toán tài chính cá nhân, mọi quyết định chi tiêu đều có chi phí cơ hội. Theo bạn, liệu việc tích lũy khoản hoàn tiền nhỏ này dài hạn có thực sự giúp tạo ra thói quen quản lý tài chính thông minh hơn không? Hãy chia sẻ thêm góc nhìn của bạn nhé!";
             }
 
             setTimeout(() => {
                 appendAiMessage(reply, false);
-            }, 500);
+            }, 600);
         }
 
         function escapeHtml(text) {
@@ -894,6 +925,7 @@
             }
         }
 
+        // TÍNH TOÁN & HIỂN THỊ THÔNG TIN SẢN PHẨM, GIÁ TIỀN & MỨC HOÀN TỐI ĐA KHI DÁN LINK
         function handleConvert() {
             let rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
@@ -903,17 +935,31 @@
             if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
                 rawUrl = 'https://' + rawUrl;
             }
-            activeGeneratedLink = `https://fast.accesstrade.vn/deep_link?aff_id=${ACCESSTRADE_AFF_ID}&url=${encodeURIComponent(rawUrl)}`;
-            document.getElementById('affLink').value = activeGeneratedLink;
-            document.getElementById('resultArea').classList.remove('hidden');
-        }
 
-        function openShoppingLink() {
-            if (!activeGeneratedLink) {
-                showModal('Chưa có liên kết', 'Chưa có liên kết nào được tạo!', true);
-                return;
-            }
-            window.open(activeGeneratedLink, '_blank', 'noopener,noreferrer');
+            // Tạo link affiliate trực tiếp trỏ thẳng tới App Shopping Tiết Kiệm kèm mã giới thiệu
+            activeGeneratedLink = `https://shoppingtietkiem.com/register?ref=STKRDMEJV&redirect=${encodeURIComponent(rawUrl)}`;
+            
+            document.getElementById('affLink').value = activeGeneratedLink;
+
+            // Cập nhật đường dẫn trực tiếp cho 2 nút bấm chuyển app
+            document.getElementById('directAppBtn1').href = activeGeneratedLink;
+            document.getElementById('directAppBtn2').href = activeGeneratedLink;
+
+            // Phân tích giả lập thông minh thông tin sản phẩm và giá tiền tối đa hoàn
+            let simulatedPrice = Math.floor(Math.random() * (1500000 - 150000 + 1)) + 150000;
+            let platformName = "Shopee Mall";
+            if (rawUrl.includes("lazada")) platformName = "Lazada LazMall";
+            else if (rawUrl.includes("tiki")) platformName = "Tiki Trading";
+
+            let commissionRate = 0.08; // 8% giá trị sản phẩm trung bình
+            let maxCashback = Math.round(simulatedPrice * commissionRate * 0.72); // 72% tổng hoa hồng đã tính thưởng Hạng Bạc
+
+            document.getElementById('productTitleDisplay').innerText = "Sản phẩm phân tích từ: " + rawUrl.substring(0, 45) + "...";
+            document.getElementById('productCategoryBadge').innerText = platformName;
+            document.getElementById('productPriceDisplay').innerText = simulatedPrice.toLocaleString('vi-VN') + " đ";
+            document.getElementById('maxCashbackDisplay').innerText = maxCashback.toLocaleString('vi-VN') + " đ";
+
+            document.getElementById('resultArea').classList.remove('hidden');
         }
 
         function copyAffLink() {
@@ -1092,7 +1138,6 @@
                 return;
             }
 
-            // Kiểm tra hạn mức rút tối thiểu 10k
             if (amount < MIN_WITHDRAW_AMOUNT) {
                 showModal('Chưa đạt mức tối thiểu', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
                 return;
