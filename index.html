@@ -445,9 +445,9 @@
         const ACCESSTRADE_AFF_ID = "AT2107363";           
         let currentUser = null;
         let activeGeneratedLink = ""; 
-        const ADMIN_EMAIL = "tvty832@gmail.com"; // Cập nhật đúng email Admin của ông
+        const ADMIN_EMAIL = "tvty832@gmail.com"; 
 
-        // Biến đếm số lần đăng nhập sai
+        // Biến đếm số lần đăng nhập sai chống Brute-force
         let loginFailCount = 0;
         let lockUntilTime = 0;
 
@@ -604,12 +604,10 @@
             }
         }
 
-        // ================= HÀM ĐĂNG NHẬP CÓ BẢO VỆ CHỐNG SPAM / TẤN CÔNG (QUÁ 3 LẦN BỊ KHÓA) =================
         async function submitLogin() {
             const now = Date.now();
             const warningEl = document.getElementById('loginLockWarning');
 
-            // Kiểm tra nếu đang trong thời gian bị khóa
             if (now < lockUntilTime) {
                 const remainingSec = Math.ceil((lockUntilTime - now) / 1000);
                 warningEl.innerText = `Cảnh báo: Bạn đã nhập sai quá 3 lần. Tài khoản bị tạm khóa. Vui lòng thử lại sau ${remainingSec} giây!`;
@@ -638,9 +636,8 @@
                     const remainingAttempts = 3 - loginFailCount;
 
                     if (loginFailCount >= 3) {
-                        // Khóa 5 phút (300,000 ms) nếu nhập sai từ lần thứ 3 trở lên đối với email bất kỳ hoặc email admin
                         lockUntilTime = Date.now() + 5 * 60 * 1000;
-                        loginFailCount = 0; // reset bộ đếm sau khi khóa
+                        loginFailCount = 0; 
                         warningEl.innerText = `Phát hiện hành vi truy cập sai liên tục! Tài khoản bị khóa tạm thời trong 5 phút.`;
                         warningEl.classList.remove('hidden');
                         showModal('Cảnh báo bảo mật', 'Nhập sai mật khẩu quá 3 lần. Hệ thống đã khóa quyền đăng nhập tạm thời!', true);
@@ -648,7 +645,6 @@
                         showModal('Đăng nhập thất bại', `Sai thông tin đăng nhập! Bạn còn ${remainingAttempts} lần thử trước khi bị khóa tạm thời.`, true);
                     }
                 } else {
-                    // Đăng nhập thành công -> Reset bộ đếm lỗi
                     loginFailCount = 0;
                     lockUntilTime = 0;
                     warningEl.classList.add('hidden');
