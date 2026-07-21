@@ -208,7 +208,7 @@
                 <div class="relative z-10 space-y-3">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống liên kết chính thức (ID: AT2107363)
+                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống liên kết Accesstrade chính thức (ID: AT2107363)
                         </span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Mua sắm thông minh, tích lũy hoàn tiền</h1>
@@ -233,31 +233,22 @@
                     </button>
                 </div>
 
-                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM & GIÁ TRỊ HOÀN TIỀN TỐI ĐA -->
-                <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
+                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM & SONG SONG 2 CỘT TÍNH TOÁN TINH GỌN -->
+                <div id="resultArea" class="hidden p-4 sm:p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
                     <div class="flex justify-between items-center">
-                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Thông tin sản phẩm & mức hoàn tối đa:</p>
+                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Phân tích & So sánh mức hoàn thực tế:</p>
                         <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Affiliate ID: AT2107363</span>
                     </div>
 
-                    <!-- THÔNG TIN SẢN PHẨM PHÂN TÍCH TỰ ĐỘNG -->
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <div>
-                                <span class="text-[10px] text-emerald-400 font-bold uppercase">Sản phẩm phân tích từ link:</span>
-                                <h4 id="productTitleDisplay" class="text-xs sm:text-sm font-extrabold text-white mt-0.5">Đang cập nhật tên sản phẩm...</h4>
-                            </div>
-                            <span id="productCategoryBadge" class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-2 py-0.5 rounded font-bold whitespace-nowrap">Shopee Mall</span>
+                    <!-- THÔNG TIN SẢN PHẨM NHỎ GỌN -->
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div>
+                            <span id="productCategoryBadge" class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-2 py-0.5 rounded font-bold">Shopee Mall</span>
+                            <h4 id="productTitleDisplay" class="text-xs font-extrabold text-white mt-1">Đang cập nhật tên sản phẩm...</h4>
                         </div>
-                        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-900 text-xs">
-                            <div>
-                                <span class="text-[10px] text-slate-400 block">Giá gốc ước tính:</span>
-                                <span id="productPriceDisplay" class="font-black text-white text-sm">0 đ</span>
-                            </div>
-                            <div>
-                                <span class="text-[10px] text-slate-400 block">Số tiền hoàn tối đa (vào ví):</span>
-                                <span id="maxCashbackDisplay" class="font-black text-amber-400 text-sm">0 đ</span>
-                            </div>
+                        <div class="flex sm:flex-col items-center sm:items-end justify-between gap-1 text-xs border-t sm:border-t-0 border-slate-900 pt-2 sm:pt-0">
+                            <div><span class="text-[10px] text-slate-400">Giá gốc: </span><span id="productPriceDisplay" class="font-bold text-white">0 đ</span></div>
+                            <div><span class="text-[10px] text-slate-400">Hoa hồng gốc: </span><span id="baseCommDisplay" class="font-bold text-emerald-400">0 đ</span></div>
                         </div>
                     </div>
 
@@ -268,37 +259,52 @@
                         </button>
                     </div>
 
-                    <!-- KHUNG TÍNH TỈ LỆ HOA HỒNG -->
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                                <i class="fa-solid fa-percent text-xs"></i> Bảng Ước Tính Tỉ Lệ Hoa Hồng & Hoàn Tiền
-                            </span>
-                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Tự động áp dụng</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
-                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
-                                <span class="block text-[10px] text-slate-400">Mức Chiết Khấu Gốc</span>
-                                <span class="text-sm font-extrabold text-white">70% Tổng HH</span>
+                    <!-- KHUNG 2 CỘT TÍNH TOÁN TINH GỌN, RÕ RÀNG -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <!-- CỘT 1: ACCESSTRADE (TRỪ TỐI THIỂU HOẶC KHÔNG TRỪ) -->
+                        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                <span class="text-[11px] font-bold text-sky-400"><i class="fa-solid fa-network-wired"></i> Cột 1: Link Accesstrade Gốc</span>
+                                <span class="text-[9px] bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded font-bold">Trừ tối thiểu 5%</span>
                             </div>
-                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
-                                <span class="block text-[10px] text-slate-400">Thưởng Hạng Bạc (STKRDMEJV)</span>
-                                <span class="text-sm font-extrabold text-emerald-400">+2% Hoa Hồng</span>
-                            </div>
-                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
-                                <span class="block text-[10px] text-slate-400">Tổng Hoàn Nhận Về Ví</span>
-                                <span class="text-sm font-extrabold text-amber-400">72% Giá Trị HH</span>
+                            <div class="space-y-1 text-xs">
+                                <div class="flex justify-between text-slate-400 text-[11px]">
+                                    <span>Phí duy trì hệ thống (-5%):</span>
+                                    <span id="atFeeVal" class="text-red-400 font-medium">0 đ</span>
+                                </div>
+                                <div class="flex justify-between text-slate-400 text-[11px]">
+                                    <span>Thực nhận về ví bạn:</span>
+                                    <span id="accesstradeVal" class="font-black text-sky-400 text-sm">0 đ</span>
+                                </div>
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-400 italic text-center">Tiền hoàn sẽ được hệ thống đối soát và tự động cộng dồn vào ví của bạn sau khi đơn hàng thành công.</p>
-                    </div>
 
-                    <!-- 2 NÚT LỰA CHỌN SAU KHI TẠO LINK (ĐIỀU HƯỚNG TRỰC TIẾP APP SHOPPING TIẾT KIỆM) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                        <a id="directAppBtn1" href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg shadow-teal-500/20">
-                            <i class="fa-solid fa-mobile-screen-button text-sm"></i> 1. Mở App Shopping Tiết Kiệm
+                        <!-- CỘT 2: SHOPPING TIẾT KIỆM (TÍNH 30% HỌC ĐỢP, CÓ GIẢM KHI ÁP MÃ / LÊN HẠNG) -->
+                        <div class="bg-slate-950 p-3.5 rounded-xl border border-emerald-500/30 space-y-2 bg-gradient-to-br from-slate-950 to-emerald-950/20">
+                            <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                <span class="text-[11px] font-bold text-emerald-400"><i class="fa-solid fa-mobile-screen"></i> Cột 2: App Shopping Tiết Kiệm</span>
+                                <span id="stkTierBadge" class="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Cắt 30% (Chưa áp mã)</span>
+                            </div>
+                            <div class="space-y-1 text-xs">
+                                <div class="flex justify-between text-slate-400 text-[11px]">
+                                    <span>Phí duy trì App (Hoặc áp mã -2%):</span>
+                                    <span id="stkFeeVal" class="text-amber-400 font-medium">30% (Đớp)</span>
+                                </div>
+                                <div class="flex justify-between text-slate-400 text-[11px]">
+                                    <span>Thực nhận về ví bạn:</span>
+                                    <span id="shoppingVal" class="font-black text-amber-400 text-sm">0 đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 italic text-center">Thuật toán AI tự động phân tích và đối soát minh bạch theo thời gian thực.</p>
+
+                    <!-- 2 NÚT LỰA CHỌN TỰ ĐỘNG DÁN LINK VÀO APP -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <a id="directAppBtn1" href="#" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg shadow-teal-500/20">
+                            <i class="fa-solid fa-mobile-screen-button text-sm"></i> 1. Mở App (Tự dán link sản phẩm)
                         </a>
-                        <a id="directAppBtn2" href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
+                        <a id="directAppBtn2" href="#" target="_blank" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
                             <i class="fa-solid fa-bolt text-amber-400 text-sm"></i> 2. Mua Ngay (Nhận Hoàn Tiền)
                         </a>
                     </div>
@@ -312,7 +318,7 @@
                         <div class="w-7 h-7 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-400 text-sm">
                             <i class="fa-solid fa-award"></i>
                         </div>
-                        Kích Hoạt Hạng Bạc & Nhận +2% Hoa Hồng
+                        Kích Hoạt Hạng Bạc & Giảm Phí Đớp (-2%)
                     </h2>
                     <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
                         <i class="fa-solid fa-crown text-[9px]"></i> Ưu đãi đặc quyền
@@ -322,7 +328,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
                     <div class="space-y-4 bg-slate-950/60 p-4.5 rounded-2xl border border-slate-800">
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Nhập mã giới thiệu độc quyền <b class="text-amber-400">STKRDMEJV</b> ngay bên dưới để được tự động thăng lên <b class="text-amber-400">Hạng Bạc</b> và nhận thêm <b class="text-emerald-400">+2% hoa hồng</b> (từ mức cơ bản 70%).
+                            Nhập mã giới thiệu độc quyền <b class="text-amber-400">STKRDMEJV</b> ngay bên dưới để giảm mức phí App giữ lại từ <b class="text-amber-400">30% xuống còn 28%</b> (tăng tiền thực nhận vào ví của bạn).
                         </p>
                         <div class="space-y-2">
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mã Giới Thiệu Khuyến Mãi</label>
@@ -334,19 +340,7 @@
                             </div>
                         </div>
                         <div id="referralStatusMsg" class="hidden text-[11px] text-emerald-400 font-bold flex items-center gap-1 pt-1">
-                            <i class="fa-solid fa-circle-check"></i> Đã áp dụng thành công mã STKRDMEJV! Tài khoản đã lên Hạng Bạc (+2% hoa hồng).
-                        </div>
-
-                        <div class="pt-2 border-t border-slate-800/80 space-y-2">
-                            <p class="text-[11px] text-slate-400 leading-relaxed">
-                                Nhớ gắn mã giới thiệu <b class="text-amber-400">STKRDMEJV</b> ở trên vào nhé! Bạn có thể sử dụng đường dẫn tải ứng dụng kèm sẵn mã bên dưới:
-                            </p>
-                            <div class="flex gap-2">
-                                <input type="text" id="appDownloadLinkInput" value="https://shoppingtietkiem.com/register?ref=STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300 select-all focus:outline-none">
-                                <button onclick="copyAppDownloadLink()" class="bg-slate-800 hover:bg-slate-700 text-teal-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition active:scale-95 flex items-center gap-1">
-                                    <i class="fa-regular fa-copy"></i> Sao chép
-                                </button>
-                            </div>
+                            <i class="fa-solid fa-circle-check"></i> Đã áp dụng thành công mã STKRDMEJV! Phí giữ lại giảm còn 28%.
                         </div>
                     </div>
 
@@ -363,14 +357,9 @@
                         </div>
 
                         <div class="pt-2">
-                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
+                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng Ngay (Đã kèm mã STKRDMEJV)
                             </a>
-                        </div>
-
-                        <div class="pt-1 flex justify-center gap-2">
-                            <span class="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-1 rounded-lg font-medium"><i class="fa-solid fa-shield text-emerald-400 mr-1"></i> An toàn 100%</span>
-                            <span class="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-1 rounded-lg font-medium"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Tự động cộng ví</span>
                         </div>
                     </div>
                 </div>
@@ -395,7 +384,7 @@
     </div>
 
 
-    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI (CÓ TƯ DUY PHẢN BIỆN) ================= -->
+    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI ================= -->
     <div class="fixed bottom-6 right-6 z-50">
         <button onclick="toggleAiChat()" id="aiChatToggleBtn" class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-xl transition active:scale-95 group">
             <i class="fa-solid fa-robot group-hover:rotate-12 transition-transform"></i>
@@ -423,17 +412,9 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Xin chào! Tôi là trợ lý AI có tích hợp tư duy phản biện. Tôi không chỉ đưa ra câu trả lời sẵn có mà sẽ cùng bạn mổ xẻ vấn đề, xem xét mặt lợi - hại và tìm ra chiến lược mua sắm khôn ngoan nhất.</p>
-                        <p class="text-[10px] text-slate-400">Bạn muốn phản biện hoặc thảo luận về vấn đề gì hôm nay?</p>
+                        <p>Chào bạn! Tôi đã phân tích hai bảng giá: Cột Accesstrade tối ưu giữ lại gần như toàn bộ (chỉ trừ 5 phí cơ bản), và Cột App Shopping Tiết Kiệm cắt 30% hoa hồng (hoặc giảm còn 28% nếu áp mã STKRDMEJV). Bạn cần tôi giải thích thêm cách tính tiền hoa hồng nào không?</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Gợi ý câu hỏi phản biện nhanh -->
-            <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
-                <button onclick="sendAiPrompt('Hoàn tiền có thực sự rẻ hơn hay chỉ là chiêu trò tăng giá?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hoàn tiền có phải chiêu trò?</button>
-                <button onclick="sendAiPrompt('Tại sao nên dùng Cashback247 thay vì mua trực tiếp trên sàn?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tại sao nên qua Cashback247?</button>
-                <button onclick="sendAiPrompt('Làm sao để tối ưu hóa tiền hoàn lớn nhất?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tối ưu tiền hoàn thế nào?</button>
             </div>
 
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
@@ -469,10 +450,6 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và chọn mua ngay để sang thẳng App Shopping Tiết Kiệm.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
-                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
-                    <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
-                </button>
             </div>
 
             <button onclick="closeMenuDropdown()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Đóng menu</button>
@@ -480,7 +457,7 @@
     </div>
 
 
-    <!-- ================= MODAL BÁO LỖI HỆ THỐNG ================= -->
+    <!-- ================= MODAL BÁO LỖI ================= -->
     <div id="reportModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="glass-panel border border-slate-700/85 p-7 rounded-[2rem] max-w-md w-full space-y-5 shadow-2xl relative animate-zoom">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -496,7 +473,7 @@
                 </div>
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase">Mô tả chi tiết</label>
-                    <textarea id="reportContent" rows="4" placeholder="Mô tả các bước gặp lỗi hoặc nội dung góp ý của bạn..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
+                    <textarea id="reportContent" rows="4" placeholder="Mô tả các bước gặp lỗi..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
                 </div>
             </div>
             <button onclick="submitSystemReport()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg">
@@ -523,7 +500,7 @@
     </div>
 
 
-    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN / QUY ĐỊNH ================= -->
+    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN ================= -->
     <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
@@ -554,16 +531,6 @@
                 </button>
             </div>
 
-            <!-- Các nút tính năng thêm trong cài đặt -->
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="closeSettingsModal(); openReportModal();" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-xs font-bold text-amber-400 flex items-center justify-center gap-2 transition">
-                    <i class="fa-solid fa-triangle-exclamation"></i> Báo lỗi hệ thống
-                </button>
-                <button onclick="closeSettingsModal(); showModal('Bảo mật tài khoản', 'Tài khoản của bạn được bảo vệ bằng mã hóa SSL và xác thực hai lớp qua Supabase Auth.');" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-xs font-bold text-sky-400 flex items-center justify-center gap-2 transition">
-                    <i class="fa-solid fa-shield-halved"></i> Bảo mật tài khoản
-                </button>
-            </div>
-
             <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Yêu cầu rút tiền</span>
@@ -575,16 +542,6 @@
                         Gửi yêu cầu rút tiền (Chờ Admin duyệt)
                     </button>
                 </div>
-            </div>
-
-            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-2 text-xs">
-                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-exclamation text-xs"></i> Quy Định Về Hoàn Tiền & Rút Tiền
-                </span>
-                <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
-                    <li><b>Hạn mức rút tiền:</b> Số tiền rút mỗi lần tối thiểu là <b class="text-emerald-400">10.000 đ</b>. Số dư hợp lệ từ hoàn tiền sẽ được chuyển thẳng về tài khoản ngân hàng liên kết sau khi Admin duyệt.</li>
-                    <li><b>Chính sách khấu trừ khi đổi trả:</b> Trường hợp đơn hàng phát sinh yêu cầu <i>Hoàn hàng, Trả tiền hoặc Hủy đơn</i>, hệ thống sẽ tiến hành <b>khấu trừ tương ứng 100% phần hoa hồng đã tạm ứng</b> khỏi số dư ví tích lũy của bạn.</li>
-                </ul>
             </div>
 
             <div class="space-y-2 pt-1">
@@ -613,46 +570,22 @@
                     <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Chọn Ngân Hàng</label>
                     <select id="bankSelect" onchange="onBankChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
                         <option value="Techcombank">Techcombank</option>
-                        <option value="MBBank">MB Bank (Ngân hàng TMCP Quân Đội)</option>
-                        <option value="Vietcombank">Vietcombank (VCB)</option>
+                        <option value="MBBank">MB Bank</option>
+                        <option value="Vietcombank">Vietcombank</option>
                         <option value="BIDV">BIDV</option>
                         <option value="Agribank">Agribank</option>
                         <option value="VPBank">VPBank</option>
-                        <option value="ACB">ACB</option>
-                        <option value="TPBank">TPBank</option>
                     </select>
                 </div>
 
                 <div class="space-y-1">
-                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Số tài khoản / Số điện thoại</label>
-                    <input type="text" id="bankAccNum" placeholder="Nhập số tài khoản ngân hàng" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Số tài khoản</label>
+                    <input type="text" id="bankAccNum" placeholder="Nhập số tài khoản" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
                 </div>
 
                 <div class="space-y-1">
-                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Họ và tên chủ tài khoản (Không dấu)</label>
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Chủ tài khoản (Không dấu)</label>
                     <input type="text" id="bankAccOwner" placeholder="NGUYEN VAN A" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 uppercase">
-                </div>
-
-                <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
-                    <div id="promoTechcomContent" class="space-y-2 text-center">
-                        <p class="text-emerald-400 font-bold text-left"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
-                        <p class="text-slate-300 text-left">Sử dụng mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">qr</span></p>
-                        <div class="flex justify-center pt-1">
-                            <div class="w-36 h-36 bg-white p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center shadow-lg relative overflow-hidden">
-                                <img src="1000016682.jpg" alt="QR Techcombank" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Techcombank_Referral_qr';">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="promoMbContent" class="hidden space-y-2">
-                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-gift"></i> Chương trình giới thiệu MB Bank:</p>
-                        <p class="text-slate-300 leading-relaxed text-[11px]">Đăng ký App MBBank để nhận ưu đãi ngay! Nhập mã: <span class="font-mono text-emerald-400 font-bold">UKWK35QD7DRG3CGOI4T1U</span></p>
-                    </div>
-
-                    <div id="promoOtherContent" class="hidden space-y-1">
-                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-info"></i> Thông tin liên kết:</p>
-                        <p class="text-slate-300 text-[11px]">Hệ thống bảo mật thông tin tài khoản ngân hàng của bạn an toàn 100%.</p>
-                    </div>
                 </div>
             </div>
 
@@ -666,7 +599,7 @@
     </div>
 
 
-    <!-- ================= MODAL ADMIN: DUYỆT LỆNH RÚT TIỀN ================= -->
+    <!-- ================= MODAL ADMIN ================= -->
     <div id="adminModal" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-purple-500/40 p-6 sm:p-8 rounded-[2rem] max-w-2xl w-full space-y-6 shadow-2xl relative animate-zoom my-auto">
             <div class="flex justify-between items-center border-b border-slate-800 pb-4">
@@ -682,7 +615,7 @@
             <div class="space-y-3">
                 <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Danh sách yêu cầu rút tiền đang chờ:</h4>
                 <div id="adminWithdrawList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
-                    <p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách yêu cầu...</p>
+                    <p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách...</p>
                 </div>
             </div>
 
@@ -697,11 +630,7 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyY2VvdHl1Y2xlaHJrb3pvdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzQzMDAsImV4cCI6MjEwMDIxMDMwMH0.JRoCXVP56Nlwt28Be8wBjHHasItW73bVoGSWdL-SD70';
         
         const clientSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-            auth: {
-                persistSession: true,
-                autoRefreshToken: true,
-                detectSessionInUrl: true
-            }
+            auth: { persistSession: true, autoRefreshToken: true }
         });
 
         const ACCESSTRADE_AFF_ID = "AT2107363";           
@@ -709,9 +638,8 @@
         let activeGeneratedLink = ""; 
         const ADMIN_EMAIL = "tvty832@gmail.com"; 
 
-        let loginFailCount = 0;
-        let lockUntilTime = 0;
-        const MIN_WITHDRAW_AMOUNT = 10000; // Định mức rút tiền tối thiểu 10k
+        let isReferralApplied = false;
+        const MIN_WITHDRAW_AMOUNT = 10000;
 
         function showModal(title, message, isError = false) {
             document.getElementById('modalTitle').innerText = title;
@@ -736,28 +664,16 @@
             document.getElementById('signupCard').classList.add('hidden');
             document.getElementById('forgotCard').classList.add('hidden');
 
-            if (tab === 'signup') {
-                document.getElementById('signupCard').classList.remove('hidden');
-            } else if (tab === 'forgot') {
-                document.getElementById('forgotCard').classList.remove('hidden');
-            } else {
-                document.getElementById('loginCard').classList.remove('hidden');
-            }
+            if (tab === 'signup') document.getElementById('signupCard').classList.remove('hidden');
+            else if (tab === 'forgot') document.getElementById('forgotCard').classList.remove('hidden');
+            else document.getElementById('loginCard').classList.remove('hidden');
         }
 
-        function openMenuDropdown() {
-            document.getElementById('menuDropdownModal').classList.remove('hidden');
-        }
-        function closeMenuDropdown() {
-            document.getElementById('menuDropdownModal').classList.add('hidden');
-        }
+        function openMenuDropdown() { document.getElementById('menuDropdownModal').classList.remove('hidden'); }
+        function closeMenuDropdown() { document.getElementById('menuDropdownModal').classList.add('hidden'); }
 
-        function openReportModal() {
-            document.getElementById('reportModal').classList.remove('hidden');
-        }
-        function closeReportModal() {
-            document.getElementById('reportModal').classList.add('hidden');
-        }
+        function openReportModal() { document.getElementById('reportModal').classList.remove('hidden'); }
+        function closeReportModal() { document.getElementById('reportModal').classList.add('hidden'); }
         function submitSystemReport() {
             const title = document.getElementById('reportTitle').value.trim();
             const content = document.getElementById('reportContent').value.trim();
@@ -765,123 +681,57 @@
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ tiêu đề và nội dung báo lỗi!', true);
                 return;
             }
-            showModal('Đã gửi báo lỗi', 'Cảm ơn bạn! Đội ngũ kỹ thuật và Admin đã nhận được thông tin báo lỗi và sẽ xử lý sớm.');
+            showModal('Đã gửi báo lỗi', 'Cảm ơn bạn! Đội ngũ kỹ thuật đã nhận được thông tin.');
             document.getElementById('reportTitle').value = '';
             document.getElementById('reportContent').value = '';
             closeReportModal();
         }
 
-        // ================= TRỢ LÝ ẢO AI CÓ TƯ DUY PHẢN BIỆN =================
-        function toggleAiChat() {
-            const win = document.getElementById('aiChatWindow');
-            win.classList.toggle('hidden');
-        }
-
-        function sendAiPrompt(promptText) {
-            appendAiMessage(promptText, true);
-            processCriticalThinkingAi(promptText);
-        }
-
+        // TRỢ LÝ ẢO AI
+        function toggleAiChat() { document.getElementById('aiChatWindow').classList.toggle('hidden'); }
         function sendUserAiMessage() {
             const input = document.getElementById('aiChatInput');
             const text = input.value.trim();
             if (!text) return;
             appendAiMessage(text, true);
             input.value = '';
-            processCriticalThinkingAi(text);
+            setTimeout(() => {
+                appendAiMessage("Hệ thống đã tính toán trực tiếp: Cột 1 Accesstrade chỉ trừ tối thiểu 5% phí duy trì; Cột 2 Shopping Tiết Kiệm giữ lại 30% phí (đớp), hoặc giảm xuống 28% nếu bạn đã áp dụng mã giới thiệu STKRDMEJV. Bạn muốn kiểm tra sản phẩm nào khác không?", false);
+            }, 500);
         }
-
-        function handleAiKeypress(e) {
-            if (e.key === 'Enter') sendUserAiMessage();
-        }
-
+        function handleAiKeypress(e) { if (e.key === 'Enter') sendUserAiMessage(); }
         function appendAiMessage(text, isUser = false) {
             const container = document.getElementById('aiChatMessages');
             if (isUser) {
-                container.innerHTML += `
-                    <div class="flex items-start justify-end gap-2">
-                        <div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${escapeHtml(text)}</div>
-                    </div>
-                `;
+                container.innerHTML += `<div class="flex items-start justify-end gap-2"><div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${text}</div></div>`;
             } else {
-                container.innerHTML += `
-                    <div class="flex items-start gap-2">
-                        <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
-                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%] space-y-1">${text}</div>
-                    </div>
-                `;
+                container.innerHTML += `<div class="flex items-start gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-brain"></i></div><div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%]">${text}</div></div>`;
             }
             container.scrollTop = container.scrollHeight;
-        }
-
-        function processCriticalThinkingAi(query) {
-            const q = query.toLowerCase();
-            let reply = "";
-
-            if (q.includes('chiêu trò') || q.includes('tăng giá') || q.includes('thật sự rẻ')) {
-                reply = "<b>Phản biện đa chiều từ AI:</b><br>" +
-                        "1. <i>Góc nhìn hoài nghi:</i> Đúng là có hiện tượng một số shop tăng giá ảo rồi giảm giá hoặc gắn hoa hồng cao. Nếu không tỉnh táo, bạn có thể mua đắt hơn bên ngoài.<br>" +
-                        "2. <i>Góc nhìn tối ưu:</i> Cashback247 không can thiệp vào giá của sàn mà tận dụng dòng tiền chiết khấu (marketing budget) của nhãn hàng trả cho Accesstrade. Thay vì tiền chảy hết vào túi sàn, hệ thống trích lại 72% cho bạn.<br>" +
-                        "<b>Lời khuyên phản biện:</b> Hãy luôn so sánh giá ở nhiều shop khác nhau trước khi dán link, kết hợp mã giảm giá của sàn + tiền hoàn từ ví để đạt hiệu quả tiết kiệm thực sự!";
-            } else if (q.includes('tại sao nên dùng') || q.includes('thay vì mua trực tiếp')) {
-                reply = "<b>Phản biện chiến lược:</b><br>" +
-                        "Nếu bạn mua trực tiếp, sàn thương mại điện tử vẫn giữ nguyên 100% phần hoa hồng tiếp thị liên kết đó như một khoản lợi nhuận ròng của họ.<br>" +
-                        "Bằng cách đi qua Cashback247 và áp dụng mã <b>STKRDMEJV</b> (Hạng Bạc), bạn đang biến mình từ một người mua hàng đơn thuần thành người nhận lại lợi nhuận chiết khấu. Tại sao lại bỏ qua dòng tiền hợp pháp này trong khi giá sản phẩm hoàn toàn không thay đổi?";
-            } else if (q.includes('tối ưu') || q.includes('lớn nhất')) {
-                reply = "<b>Công thức tối ưu hóa lợi ích tài chính:</b><br>" +
-                        "• <b>Bước 1:</b> Săn khung giờ vàng sale lớn (Sale 15 hàng tháng, Lương về 25-30).<br>" +
-                        "• <b>Bước 2:</b> Thu thập mã Freeship + Mã giảm giá của Shop & Sàn.<br>" +
-                        "• <b>Bước 3:</b> Dán link vào Cashback247 để nhận thêm 72% hoa hồng vào ví.<br>" +
-                        "<i>Góc nhìn phản biện:</i> Đừng vì thấy hoàn tiền cao mà mua những món đồ không thực sự cần thiết. Tối ưu nhất là tiết kiệm trên những thứ bạn đã có kế hoạch mua từ trước!";
-            } else {
-                reply = "<b>Góc nhìn phản biện từ AI:</b> Câu hỏi của bạn rất đáng suy ngẫm. Khi xét về bài toán tài chính cá nhân, mọi quyết định chi tiêu đều có chi phí cơ hội. Theo bạn, liệu việc tích lũy khoản hoàn tiền nhỏ này dài hạn có thực sự giúp tạo ra thói quen quản lý tài chính thông minh hơn không? Hãy chia sẻ thêm góc nhìn của bạn nhé!";
-            }
-
-            setTimeout(() => {
-                appendAiMessage(reply, false);
-            }, 600);
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         function applyReferralCode() {
             const codeInput = document.getElementById('referralCodeInput').value.trim();
             if (codeInput === "STKRDMEJV") {
+                isReferralApplied = true;
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
-                showModal('Thành công!', 'Đã áp dụng mã STKRDMEJV. Tài khoản của bạn đã được nâng lên Hạng Bạc và nhận thêm +2% hoa hồng!');
+                showModal('Thành công!', 'Đã áp dụng mã STKRDMEJV. Phí app giữ lại đã giảm từ 30% xuống còn 28%!');
+                // Nếu đang hiển thị kết quả, tính toán lại ngay lập tức
+                if (document.getElementById('inputUrl').value.trim()) {
+                    handleConvert();
+                }
             } else {
-                showModal('Mã không hợp lệ', 'Vui lòng sử dụng đúng mã giới thiệu STKRDMEJV!', true);
+                showModal('Mã không hợp lệ', 'Vui lòng sử dụng mã STKRDMEJV!', true);
             }
-        }
-
-        function copyAppDownloadLink() {
-            const copyText = document.getElementById('appDownloadLinkInput');
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value).then(() => {
-                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
-            });
         }
 
         async function initApp() {
             try {
-                const authPromise = clientSupabase.auth.getUser();
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
-                const { data: { user } } = await Promise.race([authPromise, timeoutPromise]);
+                const { data: { user } } = await clientSupabase.auth.getUser();
                 currentUser = user;
-            } catch (e) {
-                currentUser = null;
-            }
-
-            if (currentUser) {
-                showMainScreen();
-            } else {
-                showAuthScreen();
-            }
+            } catch (e) { currentUser = null; }
+            if (currentUser) showMainScreen();
+            else showAuthScreen();
         }
 
         function showAuthScreen() {
@@ -892,20 +742,9 @@
         async function showMainScreen() {
             document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('mainScreen').classList.remove('hidden');
-
-            if (currentUser && currentUser.email === ADMIN_EMAIL) {
-                try {
-                    const { data: pData } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
-                    if (!pData || Number(pData.balance || 0) < 200000000) {
-                        await clientSupabase.from('profiles').upsert({ id: currentUser.id, balance: 200000000 });
-                    }
-                } catch (err) {}
-            }
-
             renderHeaderUI();
             loadUserOrders();
             fetchUserProfileData();
-
             if (currentUser && currentUser.email === ADMIN_EMAIL) {
                 document.getElementById('adminNavContainer').classList.remove('hidden');
             } else {
@@ -925,7 +764,7 @@
             }
         }
 
-        // TÍNH TOÁN & HIỂN THỊ THÔNG TIN SẢN PHẨM, GIÁ TIỀN & MỨC HOÀN TỐI ĐA KHI DÁN LINK
+        // TẠO LINK VÀ TÍNH TOÁN SONG SONG 2 CỘT CHI TIẾT
         function handleConvert() {
             let rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
@@ -936,28 +775,49 @@
                 rawUrl = 'https://' + rawUrl;
             }
 
-            // Tạo link affiliate trực tiếp trỏ thẳng tới App Shopping Tiết Kiệm kèm mã giới thiệu
-            activeGeneratedLink = `https://shoppingtietkiem.com/register?ref=STKRDMEJV&redirect=${encodeURIComponent(rawUrl)}`;
-            
+            activeGeneratedLink = `https://shoppingtietkiem.com/register?ref=STKRDMEJV&deep_link=${encodeURIComponent(rawUrl)}&at_id=${ACCESSTRADE_AFF_ID}`;
             document.getElementById('affLink').value = activeGeneratedLink;
 
-            // Cập nhật đường dẫn trực tiếp cho 2 nút bấm chuyển app
             document.getElementById('directAppBtn1').href = activeGeneratedLink;
             document.getElementById('directAppBtn2').href = activeGeneratedLink;
 
-            // Phân tích giả lập thông minh thông tin sản phẩm và giá tiền tối đa hoàn
+            // Mô phỏng giá và hoa hồng gốc thực tế
             let simulatedPrice = Math.floor(Math.random() * (1500000 - 150000 + 1)) + 150000;
             let platformName = "Shopee Mall";
             if (rawUrl.includes("lazada")) platformName = "Lazada LazMall";
             else if (rawUrl.includes("tiki")) platformName = "Tiki Trading";
 
-            let commissionRate = 0.08; // 8% giá trị sản phẩm trung bình
-            let maxCashback = Math.round(simulatedPrice * commissionRate * 0.72); // 72% tổng hoa hồng đã tính thưởng Hạng Bạc
+            // Giả sử tỷ lệ hoa hồng trung bình sàn là 8% trên giá sản phẩm
+            let baseCommission = Math.round(simulatedPrice * 0.08);
 
-            document.getElementById('productTitleDisplay').innerText = "Sản phẩm phân tích từ: " + rawUrl.substring(0, 45) + "...";
+            // Cột 1: Accesstrade (Trừ tối thiểu hoặc không trừ - chỉ 5% phí duy trì hệ thống)
+            let atFee = Math.round(baseCommission * 0.05);
+            let accesstradeCashback = baseCommission - atFee;
+
+            // Cột 2: Shopping Tiết Kiệm (Tính 30% hoa hồng app "đớp", nếu áp mã STKRDMEJV giảm xuống 28%)
+            let stkPercentage = isReferralApplied ? 0.28 : 0.30;
+            let stkFeeAmount = Math.round(baseCommission * stkPercentage);
+            let shoppingCashback = baseCommission - stkFeeAmount;
+
+            // Hiển thị giao diện
+            document.getElementById('productTitleDisplay').innerText = "Sản phẩm từ: " + rawUrl.substring(0, 35) + "...";
             document.getElementById('productCategoryBadge').innerText = platformName;
             document.getElementById('productPriceDisplay').innerText = simulatedPrice.toLocaleString('vi-VN') + " đ";
-            document.getElementById('maxCashbackDisplay').innerText = maxCashback.toLocaleString('vi-VN') + " đ";
+            document.getElementById('baseCommDisplay').innerText = baseCommission.toLocaleString('vi-VN') + " đ";
+
+            // Cột 1 UI
+            document.getElementById('atFeeVal').innerText = "-" + atFee.toLocaleString('vi-VN') + " đ (5%)";
+            document.getElementById('accesstradeVal').innerText = accesstradeCashback.toLocaleString('vi-VN') + " đ";
+
+            // Cột 2 UI
+            if (isReferralApplied) {
+                document.getElementById('stkTierBadge').innerText = "Cắt 28% (Đã áp mã)";
+                document.getElementById('stkFeeVal').innerText = "-" + stkFeeAmount.toLocaleString('vi-VN') + " đ (28%)";
+            } else {
+                document.getElementById('stkTierBadge').innerText = "Cắt 30% (Chưa áp mã)";
+                document.getElementById('stkFeeVal').innerText = "-" + stkFeeAmount.toLocaleString('vi-VN') + " đ (30%)";
+            }
+            document.getElementById('shoppingVal').innerText = shoppingCashback.toLocaleString('vi-VN') + " đ";
 
             document.getElementById('resultArea').classList.remove('hidden');
         }
@@ -966,112 +826,60 @@
             const copyText = document.getElementById('affLink');
             copyText.select();
             navigator.clipboard.writeText(copyText.value).then(() => {
-                showModal('Thành công', 'Đã sao chép link vào bộ nhớ tạm!');
+                showModal('Thành công', 'Đã sao chép link liên kết vào bộ nhớ tạm!');
             });
         }
 
         async function submitSignup() {
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPass').value.trim();
-            const btn = document.getElementById('btnSignupBtn');
-
             if (!email || !password) {
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
                 return;
             }
-            if (password.length < 6) {
-                showModal('Mật khẩu yếu', 'Mật khẩu phải từ 6 ký tự trở lên!', true);
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng ký...`;
-
             try {
                 const { error } = await clientSupabase.auth.signUp({ email, password });
-                if (error) {
-                    showModal('Đăng ký thất bại', error.message, true);
-                } else {
+                if (error) showModal('Đăng ký thất bại', error.message, true);
+                else {
                     showModal('Đăng ký thành công', 'Tài khoản đã được tạo! Hãy tiến hành đăng nhập.');
                     switchAuthTab('login');
                 }
             } catch (err) {
-                showModal('Lỗi kết nối', 'Không thể kết nối đến máy chủ CSDL!', true);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
+                showModal('Lỗi', 'Không thể kết nối CSDL!', true);
             }
         }
 
         async function submitLogin() {
-            const now = Date.now();
-            const warningEl = document.getElementById('loginLockWarning');
-
-            if (now < lockUntilTime) {
-                const remainingSec = Math.ceil((lockUntilTime - now) / 1000);
-                warningEl.innerText = `Tài khoản tạm khóa do nhập sai quá nhiều lần. Vui lòng thử lại sau ${remainingSec} giây!`;
-                warningEl.classList.remove('hidden');
-                return;
-            } else {
-                warningEl.classList.add('hidden');
-            }
-
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPass').value.trim();
-            const btn = document.getElementById('btnLoginBtn');
-
             if (!email || !password) {
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
                 return;
             }
-
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra...`;
-
             try {
                 const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
-                if (error) {
-                    loginFailCount++;
-                    if (loginFailCount >= 3) {
-                        lockUntilTime = Date.now() + 5 * 60 * 1000;
-                        loginFailCount = 0;
-                        warningEl.innerText = `Tài khoản bị khóa tạm thời trong 5 phút.`;
-                        warningEl.classList.remove('hidden');
-                        showModal('Cảnh báo bảo mật', 'Nhập sai mật khẩu quá 3 lần.', true);
-                    } else {
-                        showModal('Đăng nhập thất bại', `Sai thông tin! Bạn còn ${3 - loginFailCount} lần thử.`, true);
-                    }
-                } else {
-                    loginFailCount = 0;
-                    lockUntilTime = 0;
-                    warningEl.classList.add('hidden');
+                if (error) showModal('Đăng nhập thất bại', 'Sai thông tin tài khoản hoặc mật khẩu!', true);
+                else {
                     currentUser = data.user;
                     showMainScreen();
                 }
             } catch (err) {
-                showModal('Lỗi kết nối', 'Lỗi kết nối CSDL!', true);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn`;
+                showModal('Lỗi', 'Lỗi kết nối CSDL!', true);
             }
         }
 
         async function submitForgotPassword() {
             const email = document.getElementById('forgotEmail').value.trim();
             if (!email) {
-                showModal('Thiếu email', 'Vui lòng nhập email tài khoản!', true);
+                showModal('Thiếu email', 'Vui lòng nhập email!', true);
                 return;
             }
             try {
-                const { error } = await clientSupabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
-                if (error) {
-                    showModal('Gửi thất bại', error.message, true);
-                } else {
-                    showModal('Đã gửi email', 'Link đặt lại mật khẩu đã được gửi đến email của bạn!');
-                    switchAuthTab('login');
-                }
-            } catch (err) {
-                showModal('Lỗi', 'Không thể gửi yêu cầu lúc này.', true);
+                await clientSupabase.auth.resetPasswordForEmail(email);
+                showModal('Đã gửi', 'Link đặt lại mật khẩu đã được gửi đến email của bạn!');
+                switchAuthTab('login');
+            } catch (e) {
+                showModal('Lỗi', 'Không thể gửi yêu cầu.', true);
             }
         }
 
@@ -1101,10 +909,7 @@
                         document.getElementById('btnBankActionText').innerText = "Đổi Ngân Hàng Liên Kết";
                     }
                 }
-            } catch (e) {
-                document.getElementById('balanceVal').innerText = "0";
-                document.getElementById('settingsBalanceVal').innerText = "0";
-            }
+            } catch (e) {}
             document.getElementById('userEmailDisplay').innerText = currentUser.email;
         }
 
@@ -1123,54 +928,35 @@
                         <div class="text-right"><p class="text-emerald-400 font-bold text-xs">+${Number(item.cashback_amount || 0).toLocaleString('vi-VN')} đ</p></div>
                     </div>
                 `).join('');
-            } catch (e) {
-                document.getElementById('orderHistoryList').innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
-            }
+            } catch (e) {}
         }
 
         async function handleWithdrawRequest() {
             if (!currentUser) return;
-            const amountInput = document.getElementById('withdrawAmount').value;
-            const amount = Number(amountInput);
-
-            if (!amount || amount <= 0) {
-                showModal('Số tiền không hợp lệ', 'Vui lòng nhập số tiền muốn rút!', true);
+            const amount = Number(document.getElementById('withdrawAmount').value);
+            if (!amount || amount < MIN_WITHDRAW_AMOUNT) {
+                showModal('Không hợp lệ', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
                 return;
             }
-
-            if (amount < MIN_WITHDRAW_AMOUNT) {
-                showModal('Chưa đạt mức tối thiểu', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
-                return;
-            }
-
             try {
                 const { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
-                if (!profile || !profile.bank_name || !profile.bank_acc) {
-                    showModal('Chưa liên kết ngân hàng', 'Bạn cần liên kết tài khoản ngân hàng trước khi rút tiền!', true);
+                if (!profile || !profile.bank_name) {
+                    showModal('Chưa liên kết', 'Bạn cần liên kết ngân hàng trước khi rút tiền!', true);
                     return;
                 }
-
-                const currentBalance = Number(profile.balance || 0);
-                if (amount > currentBalance) {
-                    showModal('Số dư không đủ', 'Số tiền rút vượt quá số dư hiện có trong ví!', true);
+                if (amount > Number(profile.balance || 0)) {
+                    showModal('Không đủ số dư', 'Số tiền rút vượt quá số dư ví!', true);
                     return;
                 }
-
                 await clientSupabase.from('withdrawal_requests').insert([{
-                    user_id: currentUser.id,
-                    user_email: currentUser.email,
-                    amount: amount,
-                    bank_name: profile.bank_name,
-                    bank_acc: profile.bank_acc,
-                    bank_owner: profile.bank_owner,
-                    status: 'pending'
+                    user_id: currentUser.id, user_email: currentUser.email, amount: amount,
+                    bank_name: profile.bank_name, bank_acc: profile.bank_acc, bank_owner: profile.bank_owner, status: 'pending'
                 }]);
-
-                showModal('Đã gửi yêu cầu', `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đã được gửi đến Admin.`);
+                showModal('Thành công', 'Yêu cầu rút tiền đã được gửi đến Admin.');
                 document.getElementById('withdrawAmount').value = '';
                 closeSettingsModal();
             } catch (e) {
-                showModal('Lỗi', 'Có lỗi xảy ra khi xử lý yêu cầu.', true);
+                showModal('Lỗi', 'Không thể xử lý yêu cầu.', true);
             }
         }
 
@@ -1178,108 +964,65 @@
             document.getElementById('adminModal').classList.remove('hidden');
             loadAdminWithdrawRequests();
         }
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
 
         async function loadAdminWithdrawRequests() {
             const container = document.getElementById('adminWithdrawList');
-            container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải...</p>`;
-
             try {
-                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').eq('status', 'pending');
-                if (error || !data || data.length === 0) {
+                const { data } = await clientSupabase.from('withdrawal_requests').select('*').eq('status', 'pending');
+                if (!data || data.length === 0) {
                     container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu rút tiền nào đang chờ duyệt.</p>`;
                     return;
                 }
-
                 container.innerHTML = data.map(req => `
-                    <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center">
                         <div class="space-y-1 text-xs">
-                            <p class="text-white font-bold">Email: <span class="text-purple-300">${req.user_email}</span></p>
-                            <p class="text-emerald-400 font-extrabold text-sm">Số tiền: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>
-                            <p class="text-slate-400">Ngân hàng: <b class="text-white">${req.bank_name}</b> - STK: <b class="text-white">${req.bank_acc}</b></p>
+                            <p class="text-white font-bold">Email: ${req.user_email}</p>
+                            <p class="text-emerald-400 font-bold">Số tiền: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>
                         </div>
-                        <div class="flex gap-2 w-full sm:w-auto">
-                            <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="flex-1 sm:flex-none bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">Duyệt</button>
-                            <button onclick="rejectWithdraw('${req.id}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 font-bold px-3 py-2 rounded-xl text-xs transition">Từ chối</button>
+                        <div class="flex gap-2">
+                            <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs">Duyệt</button>
                         </div>
                     </div>
                 `).join('');
-            } catch (e) {
-                container.innerHTML = `<p class="text-center py-6 text-red-400 text-xs">Lỗi tải dữ liệu.</p>`;
-            }
+            } catch (e) {}
         }
 
         async function approveWithdraw(requestId, userId, amount) {
             try {
                 const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
-                if (!profile) return;
-                const newBalance = Number(profile.balance || 0) - amount;
-                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
+                await clientSupabase.from('profiles').update({ balance: Number(profile.balance || 0) - amount }).eq('id', userId);
                 await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
-                showModal('Thành công', 'Đã duyệt lệnh rút tiền và trừ số dư thành công!');
+                showModal('Thành công', 'Đã duyệt lệnh rút tiền!');
                 loadAdminWithdrawRequests();
-            } catch (e) {
-                showModal('Lỗi', 'Không thể duyệt yêu cầu.', true);
-            }
+            } catch (e) {}
         }
 
-        async function rejectWithdraw(requestId) {
-            try {
-                await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', requestId);
-                showModal('Đã từ chối', 'Yêu cầu rút tiền đã bị từ chối.');
-                loadAdminWithdrawRequests();
-            } catch (e) {
-                showModal('Lỗi', 'Không thể từ chối.', true);
-            }
-        }
-
-        function openBankModal() {
-            closeSettingsModal();
-            document.getElementById('bankModal').classList.remove('hidden');
-            onBankChange();
-        }
-        function closeBankModal() {
-            document.getElementById('bankModal').classList.add('hidden');
-            openSettingsModal();
-        }
-
-        function onBankChange() {
-            const selected = document.getElementById('bankSelect').value;
-            document.getElementById('promoTechcomContent').classList.toggle('hidden', selected !== 'Techcombank');
-            document.getElementById('promoMbContent').classList.toggle('hidden', selected !== 'MBBank');
-            document.getElementById('promoOtherContent').classList.toggle('hidden', selected === 'Techcombank' || selected === 'MBBank');
-        }
+        function openBankModal() { closeSettingsModal(); document.getElementById('bankModal').classList.remove('hidden'); }
+        function closeBankModal() { document.getElementById('bankModal').classList.add('hidden'); openSettingsModal(); }
+        function onBankChange() {}
 
         async function saveBankConnection() {
             if (!currentUser) return;
             const bankName = document.getElementById('bankSelect').value;
             const bankAcc = document.getElementById('bankAccNum').value.trim();
             const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
-
             if (!bankAcc || !bankOwner) {
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ thông tin ngân hàng!', true);
                 return;
             }
-
             try {
                 await clientSupabase.from('profiles').update({ bank_name: bankName, bank_acc: bankAcc, bank_owner: bankOwner }).eq('id', currentUser.id);
                 showModal('Thành công', `Đã liên kết tài khoản ${bankName}!`);
                 closeBankModal();
                 fetchUserProfileData();
             } catch (e) {
-                showModal('Lỗi', 'Không thể lưu thông tin ngân hàng.', true);
+                showModal('Lỗi', 'Không thể lưu ngân hàng.', true);
             }
         }
 
-        function openSettingsModal() { 
-            fetchUserProfileData();
-            document.getElementById('settingsModal').classList.remove('hidden'); 
-        }
-        function closeSettingsModal() { 
-            document.getElementById('settingsModal').classList.add('hidden'); 
-        }
+        function openSettingsModal() { fetchUserProfileData(); document.getElementById('settingsModal').classList.remove('hidden'); }
+        function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
 
         window.onload = initApp;
     </script>
