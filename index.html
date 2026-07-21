@@ -212,57 +212,40 @@
                         </span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Mua sắm thông minh, tích lũy hoàn tiền</h1>
-                    <p class="text-slate-400 text-sm max-w-lg">Dán đường dẫn sản phẩm từ các sàn thương mại điện tử lớn để tạo liên kết nhận chiết khấu trực tiếp an toàn vào ví.</p>
+                    <p class="text-slate-400 text-sm max-w-lg">Truy cập trực tiếp qua Shopping Tiết Kiệm để nhận hoàn tiền trọn đời tự động an toàn vào ví.</p>
                 </div>
             </div>
 
-            <!-- PHẦN TẠO LINK HOÀN TIỀN -->
-            <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-5">
+            <!-- PHẦN CHUYỂN HƯỚNG SHOPPING TIẾT KIỆM (ĐÃ BỎ HOÀN TOÀN KHUNG NHẬP LINK) -->
+            <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-4">
                 <h2 class="text-base font-bold text-emerald-400 flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
-                        <i class="fa-solid fa-link"></i>
+                        <i class="fa-solid fa-bag-shopping"></i>
                     </div>
-                    Tạo Link Hoàn Tiền Nhanh
+                    Chuyển Hướng Mua Sắm Tiết Kiệm
                 </h2>
-                
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input type="url" id="inputUrl" placeholder="Dán link sản phẩm Shopee, Lazada, Tiki..." 
-                           class="flex-1 bg-slate-900/90 border border-slate-700/80 rounded-2xl px-4.5 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
-                    <button onclick="handleConvert()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-7 py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Tạo Link
-                    </button>
-                </div>
 
-                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM -->
-                <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
-                    <div class="flex justify-between items-center">
-                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Thông tin sản phẩm phân tích:</p>
-                        <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Affiliate ID: AT2107363</span>
-                    </div>
+                <div class="space-y-3">
+                    <!-- Nút chuyển hướng chính -->
+                    <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 px-4 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Chuyển Hướng Qua Shopping Tiết Kiệm
+                    </a>
 
-                    <!-- THÔNG TIN SẢN PHẨM PHÂN TÍCH TỰ ĐỘNG -->
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <div>
-                                <span class="text-[10px] text-emerald-400 font-bold uppercase">Sản phẩm phân tích từ link:</span>
-                                <h4 id="productTitleDisplay" class="text-xs sm:text-sm font-extrabold text-white mt-0.5">Đang cập nhật tên sản phẩm...</h4>
+                    <!-- Quy định và Hướng dẫn ẩn/hiện theo chính sách app và pháp luật Việt Nam -->
+                    <div class="pt-2 text-xs text-slate-400 space-y-2 border-t border-slate-800/80">
+                        <p class="leading-relaxed">
+                            Tuân thủ chính sách bảo mật, điều khoản dịch vụ và các quy định của pháp luật Việt Nam về thương mại điện tử, bảo vệ quyền lợi người tiêu dùng.
+                        </p>
+                        <div>
+                            <span onclick="toggleGuideSection()" class="text-emerald-400 font-bold cursor-pointer hover:underline inline-flex items-center gap-1 select-none">
+                                <i id="guideIcon" class="fa-solid fa-chevron-right text-[10px] transition-transform"></i> Hướng dẫn chi tiết
+                            </span>
+                            <div id="guideContentBox" class="hidden mt-2 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5 animate-zoom">
+                                <p><b>Bước 1:</b> Nhấn vào nút "Chuyển Hướng Qua Shopping Tiết Kiệm" ở trên.</p>
+                                <p><b>Bước 2:</b> Đăng nhập hoặc đăng ký tài khoản trên ứng dụng với mã giới thiệu <b>STKRDMEJV</b>.</p>
+                                <p><b>Bước 3:</b> Chọn sản phẩm mua sắm trên các sàn liên kết để nhận chiết khấu tiền hoàn tự động về ví.</p>
                             </div>
-                            <span id="productCategoryBadge" class="text-[10px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-2 py-0.5 rounded font-bold whitespace-nowrap">Shopee Mall</span>
                         </div>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <input type="text" id="affLink" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 font-mono select-all">
-                        <button onclick="copyAffLink()" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-4 py-2.5 rounded-xl text-xs font-semibold transition active:scale-95 flex items-center gap-1.5">
-                            <i class="fa-regular fa-copy"></i> Sao chép
-                        </button>
-                    </div>
-
-                    <!-- NÚT BẤM SAU KHI GẮN LINK -->
-                    <div class="pt-2">
-                        <a id="directAppBtn" href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3.5 px-4 rounded-xl text-sm transition flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-teal-500/20">
-                            <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Tìm link lập tức vào Shopping Tiết Kiệm
-                        </a>
                     </div>
                 </div>
             </section>
@@ -431,7 +414,7 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và bấm nút tìm link để vào thẳng Shopping Tiết Kiệm.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Nhấn nút chuyển hướng để vào thẳng Shopping Tiết Kiệm.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
@@ -454,7 +437,7 @@
             <div class="space-y-3.5 text-xs">
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase">Tiêu đề lỗi</label>
-                    <input type="text" id="reportTitle" placeholder="Ví dụ: Không tạo được link sản phẩm..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400">
+                    <input type="text" id="reportTitle" placeholder="Ví dụ: Lỗi chuyển hướng..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400">
                 </div>
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase">Mô tả chi tiết</label>
@@ -516,7 +499,6 @@
                 </button>
             </div>
 
-            <!-- Các nút tính năng thêm trong cài đặt -->
             <div class="grid grid-cols-2 gap-2">
                 <button onclick="closeSettingsModal(); openReportModal();" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-xs font-bold text-amber-400 flex items-center justify-center gap-2 transition">
                     <i class="fa-solid fa-triangle-exclamation"></i> Báo lỗi hệ thống
@@ -559,7 +541,7 @@
     </div>
 
 
-    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG ================= -->
+    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG (CÓ QR TECHCOMBANK ĐÚNG ẢNH CẤP) ================= -->
     <div id="bankModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
@@ -596,12 +578,13 @@
                 </div>
 
                 <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
+                    <!-- QR Techcombank chuẩn từ ảnh cung cấp 1000016682_3.jpg -->
                     <div id="promoTechcomContent" class="space-y-2 text-center">
                         <p class="text-emerald-400 font-bold text-left"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
-                        <p class="text-slate-300 text-left">Sử dụng mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">qr</span></p>
+                        <p class="text-slate-300 text-left">Sử dụng mã giới thiệu / Quét mã QR:</p>
                         <div class="flex justify-center pt-1">
-                            <div class="w-40 h-40 bg-white p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center shadow-lg relative overflow-hidden">
-                                <img src="1000016682.jpg" alt="QR Techcombank" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Techcombank_Referral_qr';">
+                            <div class="w-48 h-48 bg-white p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center shadow-lg relative overflow-hidden">
+                                <img src="1000016682_3.jpg" alt="Mã QR Techcombank" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='1000016682.jpg';">
                             </div>
                         </div>
                     </div>
@@ -609,9 +592,7 @@
                     <div id="promoMbContent" class="hidden space-y-2.5">
                         <p class="text-emerald-400 font-bold"><i class="fa-solid fa-gift"></i> Chương trình giới thiệu MB Bank:</p>
                         <p class="text-slate-300 leading-relaxed text-[11px]">
-                            Đăng ký App MBBank để nhận ngay <b class="text-amber-400">30,000 VND</b> vào tài khoản! Mời thêm bạn bè đăng ký App MBBank để có cơ hội nhận thêm hàng chục triệu đồng. 
-                            <br><br>
-                            Nếu bạn không truy cập được link giới thiệu trên Zalo, hãy sao chép link lên trình duyệt web để đăng ký, và nhập mã giới thiệu là số điện thoại người giới thiệu - để nhận ưu đãi và sử dụng vô vàn tiện ích của App MBBank nhé. Mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">UKWK35QD7DRG3CGOI4T1U</span>
+                            Đăng ký App MBBank để nhận ngay <b class="text-amber-400">30,000 VND</b> vào tài khoản! Mời thêm bạn bè đăng ký App MBBank để nhận thêm ưu đãi. Mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">UKWK35QD7DRG3CGOI4T1U</span>
                         </p>
                         <div class="pt-1">
                             <a href="https://mbbank.onelink.me/QPF5?pid=SF%20Email%20Warmup&c=SF_Email_WarmUP_AppInstall&af_force_deeplink=true&af_dp=mbbank%3A%2F%2F&referral_code=UKWK35QD7DRG3CGOI4T1U" target="_blank" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center justify-center gap-1.5">
@@ -677,12 +658,11 @@
 
         const ACCESSTRADE_AFF_ID = "AT2107363";           
         let currentUser = null;
-        let activeGeneratedLink = ""; 
         const ADMIN_EMAIL = "tvty832@gmail.com"; 
 
         let loginFailCount = 0;
         let lockUntilTime = 0;
-        const MIN_WITHDRAW_AMOUNT = 10000; // Định mức rút tiền tối thiểu 10k
+        const MIN_WITHDRAW_AMOUNT = 10000;
 
         function showModal(title, message, isError = false) {
             document.getElementById('modalTitle').innerText = title;
@@ -742,6 +722,19 @@
             closeReportModal();
         }
 
+        // HÀM ẨN/HIỆN PHẦN HƯỚNG DẪN KHI BẤM VÀO CHỮ "HƯỚNG DẪN CHI TIẾT"
+        function toggleGuideSection() {
+            const box = document.getElementById('guideContentBox');
+            const icon = document.getElementById('guideIcon');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                icon.className = "fa-solid fa-chevron-down text-[10px] transition-transform";
+            } else {
+                box.classList.add('hidden');
+                icon.className = "fa-solid fa-chevron-right text-[10px] transition-transform";
+            }
+        }
+
         // ================= TRỢ LÝ ẢO AI CÓ TƯ DUY PHẢN BIỆN =================
         function toggleAiChat() {
             const win = document.getElementById('aiChatWindow');
@@ -795,7 +788,7 @@
                 reply = "<b>Phản biện đa chiều từ AI:</b><br>" +
                         "1. <i>Góc nhìn hoài nghi:</i> Đúng là có hiện tượng một số shop tăng giá ảo rồi giảm giá hoặc gắn hoa hồng cao. Nếu không tỉnh táo, bạn có thể mua đắt hơn bên ngoài.<br>" +
                         "2. <i>Góc nhìn tối ưu:</i> Cashback247 không can thiệp vào giá của sàn mà tận dụng dòng tiền chiết khấu (marketing budget) của nhãn hàng trả cho Accesstrade. Thay vì tiền chảy hết vào túi sàn, hệ thống trích lại cho bạn.<br>" +
-                        "<b>Lời khuyên phản biện:</b> Hãy luôn so sánh giá ở nhiều shop khác nhau trước khi dán link, kết hợp mã giảm giá của sàn + tiền hoàn từ ví để đạt hiệu quả tiết kiệm thực sự!";
+                        "<b>Lời khuyên phản biện:</b> Hãy luôn so sánh giá ở nhiều shop khác nhau trước khi mua, kết hợp mã giảm giá của sàn + tiền hoàn từ ví để đạt hiệu quả tiết kiệm thực sự!";
             } else if (q.includes('tại sao nên dùng') || q.includes('thay vì mua trực tiếp')) {
                 reply = "<b>Phản biện chiến lược:</b><br>" +
                         "Nếu bạn mua trực tiếp, sàn thương mại điện tử vẫn giữ nguyên 100% phần hoa hồng tiếp thị liên kết đó như một khoản lợi nhuận ròng của họ.<br>" +
@@ -804,7 +797,7 @@
                 reply = "<b>Công thức tối ưu hóa lợi ích tài chính:</b><br>" +
                         "• <b>Bước 1:</b> Săn khung giờ vàng sale lớn (Sale 15 hàng tháng, Lương về 25-30).<br>" +
                         "• <b>Bước 2:</b> Thu thập mã Freeship + Mã giảm giá của Shop & Sàn.<br>" +
-                        "• <b>Bước 3:</b> Dán link vào Cashback247 để nhận thêm hoàn hồng vào ví.<br>" +
+                        "• <b>Bước 3:</b> Chuyển hướng qua Shopping Tiết Kiệm để nhận thêm hoàn hồng vào ví.<br>" +
                         "<i>Góc nhìn phản biện:</i> Đừng vì thấy hoàn tiền cao mà mua những món đồ không thực sự cần thiết. Tối ưu nhất là tiết kiệm trên những thứ bạn đã có kế hoạch mua từ trước!";
             } else {
                 reply = "<b>Góc nhìn phản biện từ AI:</b> Câu hỏi của bạn rất đáng suy ngẫm. Khi xét về bài toán tài chính cá nhân, mọi quyết định chi tiêu đều có chi phí cơ hội. Theo bạn, liệu việc tích lũy khoản hoàn tiền nhỏ này dài hạn có thực sự giúp tạo ra thói quen quản lý tài chính thông minh hơn không? Hãy chia sẻ thêm góc nhìn của bạn nhé!";
@@ -894,43 +887,6 @@
                     </button>
                 `;
             }
-        }
-
-        // TÍNH TOÁN & HIỂN THỊ THÔNG TIN SẢN PHẨM KHI DÁN LINK
-        function handleConvert() {
-            let rawUrl = document.getElementById('inputUrl').value.trim();
-            if (!rawUrl) {
-                showModal('Thiếu đường dẫn', 'Vui lòng dán link sản phẩm cần tạo!', true);
-                return;
-            }
-            if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
-                rawUrl = 'https://' + rawUrl;
-            }
-
-            // Tạo link affiliate trực tiếp trỏ thẳng tới App Shopping Tiết Kiệm kèm mã giới thiệu
-            activeGeneratedLink = `https://shoppingtietkiem.com/register?ref=STKRDMEJV&redirect=${encodeURIComponent(rawUrl)}`;
-            
-            document.getElementById('affLink').value = activeGeneratedLink;
-
-            // Cập nhật đường dẫn trực tiếp cho nút bấm chuyển app
-            document.getElementById('directAppBtn').href = activeGeneratedLink;
-
-            let platformName = "Shopee Mall";
-            if (rawUrl.includes("lazada")) platformName = "Lazada LazMall";
-            else if (rawUrl.includes("tiki")) platformName = "Tiki Trading";
-
-            document.getElementById('productTitleDisplay').innerText = "Sản phẩm phân tích từ: " + rawUrl.substring(0, 45) + "...";
-            document.getElementById('productCategoryBadge').innerText = platformName;
-
-            document.getElementById('resultArea').classList.remove('hidden');
-        }
-
-        function copyAffLink() {
-            const copyText = document.getElementById('affLink');
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value).then(() => {
-                showModal('Thành công', 'Đã sao chép link vào bộ nhớ tạm!');
-            });
         }
 
         async function submitSignup() {
