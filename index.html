@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cashback247 - Hệ Thống Hoàn Tiền Thông Minh</title>
+  <title>Cashback247 - Nền Tảng Hoàn Tiền & Tích Lũy Thông Minh</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,19 +16,19 @@
     .bg-cashback-pattern {
       background-color: #030712;
       background-image: 
-        radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.18) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(5, 150, 105, 0.1) 0%, transparent 60%),
-        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+        radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(5, 150, 105, 0.08) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
     }
 
     .glass-panel {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
     }
     .glass-card {
       background: rgba(30, 41, 59, 0.7);
@@ -50,21 +50,22 @@
 
 <body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- ================= SẢNH ĐĂNG NHẬP / ĐĂNG KÝ (MẶC ĐỊNH HIỂN THỊ) ================= -->
+    <!-- ================= SẢNH ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU ================= -->
     <div id="authScreen" class="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-4 overflow-y-auto">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-emerald-500/10 rounded-full blur-[140px]"></div>
             <div class="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-teal-500/10 rounded-full blur-[140px]"></div>
         </div>
 
-        <div class="glass-panel border border-slate-700/60 p-8 sm:p-10 rounded-[2.5rem] max-w-md w-full space-y-7 relative z-10 animate-zoom my-auto">
+        <!-- 1. FORM ĐĂNG NHẬP -->
+        <div id="loginCard" class="glass-panel border border-slate-700/60 p-8 sm:p-10 rounded-[2.5rem] max-w-md w-full space-y-7 relative z-10 animate-zoom my-auto">
             <div class="text-center space-y-3">
-                <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center text-slate-950 text-2xl mx-auto shadow-2xl shadow-emerald-500/30 transform hover:rotate-6 transition-transform">
-                    <i class="fa-solid fa-wallet"></i>
+                <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center text-slate-950 text-2xl mx-auto shadow-2xl shadow-emerald-500/30">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <div>
                     <h1 class="text-3xl font-black text-white tracking-tight bg-gradient-to-r from-white via-slate-100 to-emerald-400 bg-clip-text text-transparent">Cashback247</h1>
-                    <p class="text-xs text-slate-400 mt-1 font-medium">Đăng nhập để sử dụng hệ thống hoàn tiền</p>
+                    <p class="text-xs text-slate-400 mt-1 font-medium">Hệ thống hoàn tiền chính thống & bảo mật cao</p>
                 </div>
             </div>
 
@@ -73,60 +74,145 @@
                     <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase tracking-wider">Email tài khoản</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500"><i class="fa-regular fa-envelope"></i></span>
-                        <input type="email" id="emailInput" placeholder="name@example.com" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
+                        <input type="email" id="loginEmail" placeholder="name@example.com" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
                     </div>
                 </div>
                 <div class="space-y-1.5">
-                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase tracking-wider">Mật khẩu</label>
+                    <div class="flex justify-between items-center ml-1">
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">Mật khẩu</label>
+                        <button onclick="switchAuthTab('forgot')" class="text-[11px] font-bold text-emerald-400 hover:underline">Quên mật khẩu?</button>
+                    </div>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" id="passInput" placeholder="••••••••" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
+                        <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
                     </div>
                 </div>
             </div>
 
-            <div class="flex gap-3 pt-2">
-                <button onclick="submitAuth('login')" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+            <div class="space-y-3 pt-2">
+                <button onclick="submitLogin()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn
                 </button>
-                <button onclick="submitAuth('signup')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl text-sm transition-all border border-slate-700 hover:border-slate-600 active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i> Đăng ký
+                <div class="text-center pt-2">
+                    <p class="text-xs text-slate-400">Chưa có tài khoản ví? <button onclick="switchAuthTab('signup')" class="text-emerald-400 font-bold hover:underline ml-1">Đăng ký miễn phí</button></p>
+                </div>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+                <i class="fa-solid fa-lock text-emerald-500"></i> Dữ liệu được mã hóa chuẩn SSL 256-bit
+            </div>
+        </div>
+
+        <!-- 2. FORM ĐĂNG KÝ -->
+        <div id="signupCard" class="hidden glass-panel border border-slate-700/60 p-8 sm:p-10 rounded-[2.5rem] max-w-md w-full space-y-7 relative z-10 animate-zoom my-auto">
+            <div class="text-center space-y-3">
+                <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-teal-500 via-emerald-400 to-teal-300 flex items-center justify-center text-slate-950 text-2xl mx-auto shadow-2xl shadow-teal-500/30">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black text-white tracking-tight bg-gradient-to-r from-white via-slate-100 to-teal-400 bg-clip-text text-transparent">Tạo Tài Khoản</h1>
+                    <p class="text-xs text-slate-400 mt-1 font-medium">Đăng ký ví thông minh để nhận hoàn tiền trọn đời</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase tracking-wider">Email liên kết</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500"><i class="fa-regular fa-envelope"></i></span>
+                        <input type="email" id="signupEmail" placeholder="name@example.com" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-400 input-glow transition-all font-medium">
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase tracking-wider">Mật khẩu bảo mật (từ 6 ký tự)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="signupPass" placeholder="••••••••" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-400 input-glow transition-all font-medium">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-2">
+                <button onclick="submitSignup()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-teal-500/20 active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví
                 </button>
+                <div class="text-center pt-2">
+                    <p class="text-xs text-slate-400">Đã có tài khoản ví? <button onclick="switchAuthTab('login')" class="text-teal-400 font-bold hover:underline ml-1">Đăng nhập</button></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. FORM QUÊN MẬT KHẨU -->
+        <div id="forgotCard" class="hidden glass-panel border border-slate-700/60 p-8 sm:p-10 rounded-[2.5rem] max-w-md w-full space-y-7 relative z-10 animate-zoom my-auto">
+            <div class="text-center space-y-3">
+                <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-500 via-orange-400 to-yellow-300 flex items-center justify-center text-slate-950 text-2xl mx-auto shadow-2xl shadow-amber-500/30">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black text-white tracking-tight bg-gradient-to-r from-white via-slate-100 to-amber-400 bg-clip-text text-transparent">Khôi Phục Mật Khẩu</h1>
+                    <p class="text-xs text-slate-400 mt-1 font-medium">Nhập email của bạn để nhận liên kết đặt lại mật khẩu</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase tracking-wider">Email đã đăng ký</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500"><i class="fa-regular fa-envelope"></i></span>
+                        <input type="email" id="forgotEmail" placeholder="name@example.com" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 input-glow transition-all font-medium">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-2">
+                <button onclick="submitForgotPassword()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Gửi link khôi phục
+                </button>
+                <div class="text-center pt-2">
+                    <p class="text-xs text-slate-400">Đã nhớ lại mật khẩu? <button onclick="switchAuthTab('login')" class="text-amber-400 font-bold hover:underline ml-1">Quay lại đăng nhập</button></p>
+                </div>
             </div>
         </div>
     </div>
 
 
-    <!-- ================= GIAO DIỆN CHÍNH (CHỈ HIỆN KHI ĐÃ ĐĂNG NHẬP) ================= -->
+    <!-- ================= GIAO DIỆN CHÍNH (UY TÍN & HIỆN ĐẠI) ================= -->
     <div id="mainScreen" class="hidden flex-1 flex flex-col animate-zoom">
-        <header class="bg-slate-900/80 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
+        <header class="bg-slate-900/90 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
             <div class="max-w-4xl mx-auto px-4 py-3.5 flex justify-between items-center">
                 <div class="flex items-center gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 shadow-lg shadow-emerald-500/20">
                         <i class="fa-solid fa-wallet text-base"></i>
                     </div>
-                    <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">Cashback247</span>
+                    <div>
+                        <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">Cashback247</span>
+                        <span class="block text-[9px] text-emerald-400 font-bold tracking-widest uppercase">Verified System</span>
+                    </div>
                 </div>
                 <div id="authSection"></div>
             </div>
         </header>
 
         <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 space-y-6">
-            <!-- Banner -->
+            <!-- Banner uy tín -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/80 via-slate-900 to-teal-950/60 border border-emerald-500/20 p-6 sm:p-8 shadow-2xl">
                 <div class="absolute -right-6 -bottom-6 text-emerald-500/10 text-9xl pointer-events-none">
-                    <i class="fa-solid fa-coins"></i>
+                    <i class="fa-solid fa-award"></i>
                 </div>
                 <div class="relative z-10 space-y-3">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        <i class="fa-solid fa-shield-halved text-[10px]"></i> Đã bảo mật & Đăng nhập thành công
-                    </span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống liên kết chính thức
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                            <i class="fa-solid fa-bolt text-[10px]"></i> Hoàn tiền tự động 24/7
+                        </span>
+                    </div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Mua sắm thông minh, tích lũy hoàn tiền</h1>
-                    <p class="text-slate-400 text-sm max-w-lg">Dán đường dẫn sản phẩm từ các sàn thương mại điện tử để tạo liên kết nhận chiết khấu trực tiếp vào ví của bạn.</p>
+                    <p class="text-slate-400 text-sm max-w-lg">Dán đường dẫn sản phẩm từ các sàn thương mại điện tử lớn để tạo liên kết nhận chiết khấu trực tiếp an toàn vào ví.</p>
                 </div>
             </div>
 
-            <!-- Tool Box -->
+            <!-- Tool Box tạo link -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-5">
                 <h2 class="text-base font-bold text-emerald-400 flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
@@ -136,14 +222,14 @@
                 </h2>
                 
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <input type="url" id="inputUrl" placeholder="Dán link sản phẩm Shopee, Lazada..." 
+                    <input type="url" id="inputUrl" placeholder="Dán link sản phẩm Shopee, Lazada, Tiki..." 
                            class="flex-1 bg-slate-900/90 border border-slate-700/80 rounded-2xl px-4.5 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
                     <button onclick="handleConvert()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-7 py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Tạo Link
                     </button>
                 </div>
 
-                <!-- Result Box -->
+                <!-- Kết quả -->
                 <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-3.5 animate-zoom">
                     <div class="flex justify-between items-center">
                         <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Link mua hàng tích điểm của bạn:</p>
@@ -155,20 +241,19 @@
                             <i class="fa-regular fa-copy"></i> Sao chép
                         </button>
                     </div>
-                    <!-- Nút mở link xử lý chống đơ trang -->
                     <button onclick="openShoppingLink()" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3.5 rounded-xl text-sm transition flex items-center justify-center gap-2 active:scale-95 shadow-lg">
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở ứng dụng / Mua ngay lập tức
                     </button>
                 </div>
             </section>
 
-            <!-- History Section -->
+            <!-- Lịch sử -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-4">
                 <h2 class="text-base font-bold text-white flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 text-sm">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                     </div>
-                    Lịch Sử Hoàn Tiền
+                    Lịch Sử Hoàn Tiền Gần Đây
                 </h2>
                 <div id="orderHistoryList" class="space-y-2.5 text-sm text-slate-400">
                     <p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>
@@ -176,9 +261,27 @@
             </section>
         </main>
 
-        <footer class="py-6 text-center text-xs text-slate-600 border-t border-slate-900">
-            <p>&copy; 2026 Cashback247 System. All rights reserved.</p>
+        <footer class="py-6 text-center text-xs text-slate-600 border-t border-slate-900 space-y-1">
+            <p>&copy; 2026 Cashback247 System. Secured with SSL Encryption.</p>
+            <p class="text-slate-700">Nền tảng tích lũy hoàn tiền thông minh hàng đầu.</p>
         </footer>
+    </div>
+
+
+    <!-- ================= MODAL THÔNG BÁO CAO CẤP ================= -->
+    <div id="customModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="glass-panel border border-slate-700/85 p-7 rounded-[2rem] max-w-sm w-full space-y-5 shadow-2xl relative animate-zoom text-center">
+            <div id="modalIcon" class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-2xl mb-2">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="space-y-1.5">
+                <h3 id="modalTitle" class="text-lg font-extrabold text-white">Thông báo</h3>
+                <p id="modalMessage" class="text-xs text-slate-300 font-medium px-2 leading-relaxed"></p>
+            </div>
+            <button onclick="closeModal()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg shadow-emerald-500/20">
+                Xác nhận
+            </button>
+        </div>
     </div>
 
 
@@ -187,9 +290,9 @@
         <div class="glass-panel border border-slate-700/80 p-7 rounded-3xl max-w-sm w-full space-y-5 shadow-2xl relative animate-zoom">
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mx-auto flex items-center justify-center text-xl mb-3">
-                    <i class="fa-solid fa-gear"></i>
+                    <i class="fa-solid fa-user-gear"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-white">Cài Đặt Tài Khoản</h3>
+                <h3 class="text-xl font-extrabold text-white">Quản Lý Tài Khoản</h3>
                 <p id="userEmailDisplay" class="text-xs text-slate-400 truncate px-2 font-medium"></p>
             </div>
 
@@ -200,7 +303,7 @@
 
             <div class="space-y-2 pt-1">
                 <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-bold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất ra sảnh
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất tài khoản
                 </button>
                 <button onclick="closeSettingsModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-sm transition border border-slate-700">Đóng</button>
             </div>
@@ -217,6 +320,42 @@
         const ACCESSTRADE_AFF_ID = "AT2107363";           
         let currentUser = null;
         let activeGeneratedLink = ""; 
+
+        function showModal(title, message, isError = false) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            const iconEl = document.getElementById('modalIcon');
+            if (isError) {
+                iconEl.className = "w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 mx-auto flex items-center justify-center text-2xl mb-2";
+                iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            } else {
+                iconEl.className = "w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-2xl mb-2";
+                iconEl.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            }
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const loginCard = document.getElementById('loginCard');
+            const signupCard = document.getElementById('signupCard');
+            const forgotCard = document.getElementById('forgotCard');
+            
+            loginCard.classList.add('hidden');
+            signupCard.classList.add('hidden');
+            forgotCard.classList.add('hidden');
+
+            if (tab === 'signup') {
+                signupCard.classList.remove('hidden');
+            } else if (tab === 'forgot') {
+                forgotCard.classList.remove('hidden');
+            } else {
+                loginCard.classList.remove('hidden');
+            }
+        }
 
         async function initApp() {
             try {
@@ -250,7 +389,7 @@
             if (currentUser) {
                 authSection.innerHTML = `
                     <button onclick="openSettingsModal()" class="bg-slate-900 border border-emerald-500/30 px-4 py-2 rounded-2xl text-xs font-bold text-emerald-400 flex items-center gap-2 shadow-inner hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-gear text-emerald-500"></i> 
+                        <i class="fa-solid fa-user-shield text-emerald-500"></i> 
                         <span><span id="balanceVal">0</span> đ</span>
                     </button>
                 `;
@@ -261,7 +400,7 @@
         function handleConvert() {
             const rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
-                alert('⚠️ Vui lòng dán link sản phẩm cần tạo!');
+                showModal('Thiếu đường dẫn', 'Vui lòng dán link sản phẩm cần tạo!', true);
                 return;
             }
             let validUrl = rawUrl;
@@ -278,7 +417,7 @@
 
         function openShoppingLink() {
             if (!activeGeneratedLink) {
-                alert('⚠️ Chưa có liên kết nào được tạo!');
+                showModal('Chưa có liên kết', 'Chưa có liên kết nào được tạo!', true);
                 return;
             }
             try {
@@ -296,41 +435,82 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(copyText.value).then(() => {
-                alert("📋 Đã sao chép link thành công!");
+                showModal('Thành công', 'Đã sao chép link vào bộ nhớ tạm!');
             }).catch(() => {
-                alert("❌ Không thể sao chép tự động, vui lòng chọn thủ công!");
+                showModal('Lỗi sao chép', 'Không thể sao chép tự động, vui lòng chọn thủ công!', true);
             });
         }
 
-        async function submitAuth(type) {
-            const email = document.getElementById('emailInput').value.trim();
-            const password = document.getElementById('passInput').value.trim();
+        async function submitSignup() {
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPass').value.trim();
 
-            if (!email || !password) return alert('⚠️ Vui lòng nhập đầy đủ Email và Mật khẩu!');
-            if (password.length < 6) return alert('⚠️ Mật khẩu phải từ 6 ký tự trở lên!');
+            if (!email || !password) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu đăng ký!', true);
+                return;
+            }
+            if (password.length < 6) {
+                showModal('Mật khẩu yếu', 'Mật khẩu phải từ 6 ký tự trở lên!', true);
+                return;
+            }
 
             try {
-                if (type === 'signup') {
-                    const { data, error } = await clientSupabase.auth.signUp({ email, password });
-                    if (error) {
-                        alert('❌ ' + error.message);
-                    } else {
-                        if (data.user) {
-                            await clientSupabase.from('profiles').insert([{ id: data.user.id, email: email, balance: 0 }]);
-                        }
-                        alert('🎉 Đăng ký thành công! Bạn có thể bấm Đăng nhập ngay.');
+                const { data, error } = await clientSupabase.auth.signUp({ email, password });
+                if (error) {
+                    showModal('Đăng ký thất bại', error.message, true);
+                } else {
+                    if (data.user) {
+                        await clientSupabase.from('profiles').insert([{ id: data.user.id, email: email, balance: 0 }]);
                     }
-                } else if (type === 'login') {
-                    const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
-                    if (error) {
-                        alert('❌ Sai tài khoản hoặc mật khẩu đăng nhập!');
-                    } else {
-                        currentUser = data.user;
-                        showMainScreen();
-                    }
+                    showModal('Đăng ký thành công', 'Tài khoản của bạn đã được tạo! Hãy chuyển sang đăng nhập.');
+                    switchAuthTab('login');
                 }
             } catch (err) {
-                alert('❌ Lỗi kết nối đến máy chủ CSDL!');
+                showModal('Lỗi kết nối', 'Không thể kết nối đến máy chủ CSDL!', true);
+            }
+        }
+
+        async function submitLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPass').value.trim();
+
+            if (!email || !password) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu để đăng nhập!', true);
+                return;
+            }
+
+            try {
+                const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    showModal('Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu đăng nhập!', true);
+                } else {
+                    currentUser = data.user;
+                    showMainScreen();
+                }
+            } catch (err) {
+                showModal('Lỗi kết nối', 'Lỗi kết nối đến máy chủ CSDL!', true);
+            }
+        }
+
+        async function submitForgotPassword() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            if (!email) {
+                showModal('Thiếu email', 'Vui lòng nhập email tài khoản cần khôi phục!', true);
+                return;
+            }
+
+            try {
+                const { error } = await clientSupabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.href,
+                });
+                if (error) {
+                    showModal('Gửi thất bại', error.message, true);
+                } else {
+                    showModal('Đã gửi email', 'Đường dẫn đặt lại mật khẩu đã được gửi đến email của bạn!');
+                    switchAuthTab('login');
+                }
+            } catch (err) {
+                showModal('Lỗi hệ thống', 'Không thể gửi yêu cầu lúc này.', true);
             }
         }
 
