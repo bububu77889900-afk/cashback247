@@ -273,20 +273,48 @@
     </div>
 
 
-    <!-- ================= MODAL CÀI ĐẶT & ĐĂNG XUẤT ================= -->
-    <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="glass-panel border border-slate-700/80 p-7 rounded-3xl max-w-sm w-full space-y-5 shadow-2xl relative animate-zoom">
+    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN / NGÂN HÀNG ================= -->
+    <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mx-auto flex items-center justify-center text-xl mb-3">
                     <i class="fa-solid fa-user-gear"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-white">Quản Lý Tài Khoản</h3>
+                <h3 class="text-xl font-extrabold text-white">Quản Lý Tài Khoản & Ví</h3>
                 <p id="userEmailDisplay" class="text-xs text-slate-400 truncate px-2 font-medium"></p>
             </div>
 
+            <!-- Số dư ví -->
             <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex justify-between items-center">
                 <span class="text-xs text-slate-400 font-medium">Số dư ví hoàn tiền:</span>
                 <span class="text-sm font-black text-emerald-400"><span id="settingsBalanceVal">0</span> đ</span>
+            </div>
+
+            <!-- Khu vực Liên kết Ngân hàng -->
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-emerald-400"></i> Ngân hàng liên kết</span>
+                    <span id="bankStatusBadge" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-semibold">Chưa liên kết</span>
+                </div>
+                <div id="linkedBankInfo" class="hidden text-xs text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
+                    <p><span class="text-slate-500">Ngân hàng:</span> <span id="lblBankName" class="font-bold text-white"></span></p>
+                    <p><span class="text-slate-500">Số tài khoản:</span> <span id="lblBankAcc" class="font-bold text-white"></span></p>
+                    <p><span class="text-slate-500">Chủ tài khoản:</span> <span id="lblBankOwner" class="font-bold text-white"></span></p>
+                </div>
+                <button onclick="openBankModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-link"></i> <span id="btnBankActionText">Liên kết / Đổi Ngân Hàng (Techcombank & MB)</span>
+                </button>
+            </div>
+
+            <!-- Khu vực Rút tiền -->
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+                <span class="text-xs font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Yêu cầu rút tiền</span>
+                <div class="space-y-2">
+                    <input type="number" id="withdrawAmount" placeholder="Nhập số tiền muốn rút (VNĐ)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                    <button onclick="handleWithdraw()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md">
+                        Rút tiền về Ngân hàng liên kết
+                    </button>
+                </div>
             </div>
 
             <div class="space-y-2 pt-1">
@@ -294,6 +322,68 @@
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất tài khoản
                 </button>
                 <button onclick="closeSettingsModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-sm transition border border-slate-700">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG (CHỈ TECHCOMBANK & MB BANK + MÃ GIỚI THIỆU) ================= -->
+    <div id="bankModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-xl mb-3">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-white">Liên Kết Ngân Hàng</h3>
+                <p class="text-xs text-slate-400 font-medium">Hỗ trợ độc quyền: Techcombank hoặc MB Bank</p>
+            </div>
+
+            <div class="space-y-3.5">
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Chọn Ngân Hàng</label>
+                    <select id="bankSelect" onchange="onBankChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
+                        <option value="Techcombank">Techcombank</option>
+                        <option value="MBBank">MB Bank (Ngân hàng TMCP Quân Đội)</option>
+                    </select>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Số tài khoản / Số điện thoại đăng ký</label>
+                    <input type="text" id="bankAccNum" placeholder="Nhập số tài khoản ngân hàng" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Họ và tên chủ tài khoản (Không dấu)</label>
+                    <input type="text" id="bankAccOwner" placeholder="NGUYEN VAN A" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 uppercase">
+                </div>
+
+                <!-- Box thông tin & Hướng dẫn mã giới thiệu theo lựa chọn ngân hàng -->
+                <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
+                    <div id="promoTechcomContent" class="space-y-2">
+                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
+                        <p class="text-slate-300">Quét mã QR dưới đây hoặc dùng mã: <span class="font-mono text-emerald-400 font-bold">qr</span></p>
+                        <div class="flex justify-center pt-1">
+                            <img src="1000016682.jpg" alt="QR Techcombank" class="w-32 h-32 object-contain rounded-xl border border-slate-700 bg-white p-1">
+                        </div>
+                    </div>
+
+                    <div id="promoMbContent" class="hidden space-y-2">
+                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-gift"></i> Chương trình giới thiệu MB Bank:</p>
+                        <p class="text-slate-300 leading-relaxed text-[11px]">Đăng ký App MBBank để nhận ngay 30,000VND vào tài khoản! Mời thêm bạn bè đăng ký App MBBank để có cơ hội nhận thêm hàng chục triệu đồng. Nhập mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">UKWK35QD7DRG3CGOI4T1U</span> (hoặc số điện thoại người giới thiệu).</p>
+                        <div class="pt-1">
+                            <a href="https://mbbank.onelink.me/QPF5?pid=SF%20Email%20Warmup&c=SF_Email_WarmUP_AppInstall&af_force_deeplink=true&af_dp=mbbank%3A%2F%2F&referral_code=UKWK35QD7DRG3CGOI4T1U" target="_blank" class="block text-center bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 border border-teal-500/30 font-bold py-2 px-3 rounded-lg text-xs transition">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Mở link tải App MBBank
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-1">
+                <button onclick="saveBankConnection()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg shadow-emerald-500/20">
+                    Xác nhận liên kết ngân hàng
+                </button>
+                <button onclick="closeBankModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-sm transition border border-slate-700">Hủy bỏ</button>
             </div>
         </div>
     </div>
@@ -375,6 +465,7 @@
             document.getElementById('mainScreen').classList.remove('hidden');
             renderHeaderUI();
             loadUserOrders();
+            fetchUserProfileData();
         }
 
         function renderHeaderUI() {
@@ -386,11 +477,10 @@
                         <span><span id="balanceVal">0</span> đ</span>
                     </button>
                 `;
-                fetchUserBalance();
             }
         }
 
-        // Đã gộp và mã hóa chuẩn không bị lỗi vòng lặp
+        // Đã sửa nối link chuẩn xác không dính chập
         function handleConvert() {
             let rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
@@ -525,14 +615,24 @@
             showAuthScreen();
         }
 
-        async function fetchUserBalance() {
+        async function fetchUserProfileData() {
             if (!currentUser) return;
             try {
-                const { data } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
+                const { data } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 if (data) {
-                    const formattedBalance = Number(data.balance || 0).toLocaleString('vi-VN');
-                    document.getElementById('balanceVal').innerText = formattedBalance;
-                    document.getElementById('settingsBalanceVal').innerText = formattedBalance;
+                    const balance = Number(data.balance || 0);
+                    document.getElementById('balanceVal').innerText = balance.toLocaleString('vi-VN');
+                    document.getElementById('settingsBalanceVal').innerText = balance.toLocaleString('vi-VN');
+
+                    if (data.bank_name && data.bank_acc) {
+                        document.getElementById('bankStatusBadge').innerText = "Đã liên kết";
+                        document.getElementById('bankStatusBadge').className = "text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-md font-semibold";
+                        document.getElementById('linkedBankInfo').classList.remove('hidden');
+                        document.getElementById('lblBankName').innerText = data.bank_name;
+                        document.getElementById('lblBankAcc').innerText = data.bank_acc;
+                        document.getElementById('lblBankOwner').innerText = data.bank_owner || '---';
+                        document.getElementById('btnBankActionText').innerText = "Đổi Ngân Hàng Liên Kết";
+                    }
                 }
             } catch (e) {
                 document.getElementById('balanceVal').innerText = "0";
@@ -561,8 +661,105 @@
             }
         }
 
+        // Xử lý Rút tiền
+        async function handleWithdraw() {
+            if (!currentUser) return;
+            const amountInput = document.getElementById('withdrawAmount').value;
+            const amount = Number(amountInput);
+
+            if (!amount || amount <= 0) {
+                showModal('Số tiền không hợp lệ', 'Vui lòng nhập số tiền muốn rút!', true);
+                return;
+            }
+
+            try {
+                // Kiểm tra đã liên kết ngân hàng chưa
+                const { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                if (!profile || !profile.bank_name || !profile.bank_acc) {
+                    showModal('Chưa liên kết ngân hàng', 'Bạn bắt buộc phải liên kết tài khoản Techcombank hoặc MB Bank trước khi rút tiền!', true);
+                    return;
+                }
+
+                const currentBalance = Number(profile.balance || 0);
+                if (amount > currentBalance) {
+                    showModal('Số dư không đủ', 'Số tiền rút vượt quá số dư hiện có trong ví!', true);
+                    return;
+                }
+
+                // Cập nhật trừ tiền trong CSDL
+                const newBalance = currentBalance - amount;
+                const { error: updateErr } = await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
+                
+                if (updateErr) {
+                    showModal('Lỗi hệ thống', 'Không thể thực hiện giao dịch lúc này.', true);
+                    return;
+                }
+
+                showModal('Gửi yêu cầu thành công', `Đã tạo lệnh rút ${amount.toLocaleString('vi-VN')} đ về tài khoản ${profile.bank_name} (${profile.bank_acc}). Hệ thống sẽ xử lý trong 24h.`);
+                document.getElementById('withdrawAmount').value = '';
+                fetchUserProfileData();
+            } catch (e) {
+                showModal('Lỗi giao dịch', 'Có lỗi xảy ra khi xử lý yêu cầu rút tiền.', true);
+            }
+        }
+
+        // Quản lý Modal Ngân Hàng
+        function openBankModal() {
+            closeSettingsModal();
+            document.getElementById('bankModal').classList.remove('hidden');
+            onBankChange();
+        }
+        function closeBankModal() {
+            document.getElementById('bankModal').classList.add('hidden');
+            openSettingsModal();
+        }
+
+        function onBankChange() {
+            const selected = document.getElementById('bankSelect').value;
+            const techBox = document.getElementById('promoTechcomContent');
+            const mbBox = document.getElementById('promoMbContent');
+
+            if (selected === 'Techcombank') {
+                techBox.classList.remove('hidden');
+                mbBox.classList.add('hidden');
+            } else {
+                techBox.classList.add('hidden');
+                mbBox.classList.remove('hidden');
+            }
+        }
+
+        async function saveBankConnection() {
+            if (!currentUser) return;
+            const bankName = document.getElementById('bankSelect').value;
+            const bankAcc = document.getElementById('bankAccNum').value.trim();
+            const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
+
+            if (!bankAcc || !bankOwner) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ số tài khoản và tên chủ tài khoản!', true);
+                return;
+            }
+
+            try {
+                const { error } = await clientSupabase.from('profiles').update({
+                    bank_name: bankName,
+                    bank_acc: bankAcc,
+                    bank_owner: bankOwner
+                }).eq('id', currentUser.id);
+
+                if (error) {
+                    showModal('Lỗi liên kết', error.message, true);
+                } else {
+                    showModal('Thành công', `Đã liên kết thành công tài khoản ${bankName}!`);
+                    closeBankModal();
+                    fetchUserProfileData();
+                }
+            } catch (e) {
+                showModal('Lỗi hệ thống', 'Không thể lưu thông tin ngân hàng.', true);
+            }
+        }
+
         function openSettingsModal() { 
-            fetchUserBalance();
+            fetchUserProfileData();
             document.getElementById('settingsModal').classList.remove('hidden'); 
         }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
