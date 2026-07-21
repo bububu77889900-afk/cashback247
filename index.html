@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cashback247 - Nền Tảng Hoàn Tiền & Tích Lũy Thông Minh</title>
+  <title>Cashback247 - Hệ Thống Hoàn Tiền & Tích Lũy Thông Minh Cao Cấp</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,13 +25,13 @@
     }
 
     .glass-panel {
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
     }
     .glass-card {
-      background: rgba(30, 41, 59, 0.7);
+      background: rgba(30, 41, 59, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -43,12 +43,11 @@
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
     .input-glow:focus {
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
     }
     #aiChatMessages::-webkit-scrollbar { width: 6px; }
     #aiChatMessages::-webkit-scrollbar-thumb { background-color: #4a5568; border-radius: 3px; }
 
-    /* CSS CHO TRỢ LÝ ẢO KÉO THẢ */
     #draggableAiContainer {
       position: fixed;
       bottom: 24px;
@@ -61,11 +60,11 @@
 
 <body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- ================= SẢNH ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU ================= -->
+    <!-- ================= MÀN HÌNH XÁC THỰC (ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU) ================= -->
     <div id="authScreen" class="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-4 overflow-y-auto">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-emerald-500/10 rounded-full blur-[140px]"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-teal-500/10 rounded-full blur-[140px]"></div>
+            <div class="absolute top-1/4 left-1/4 w-[32rem] h-[32rem] bg-emerald-500/10 rounded-full blur-[140px]"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[32rem] h-[32rem] bg-teal-500/10 rounded-full blur-[140px]"></div>
         </div>
 
         <!-- 1. FORM ĐĂNG NHẬP -->
@@ -140,7 +139,7 @@
             </div>
 
             <div class="space-y-3 pt-2">
-                <button onclick="submitSignup()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-teal-500/20 active:scale-95 flex items-center justify-center gap-2">
+                <button onclick="submitSignup()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-teal-500/20 active:scale-95 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví
                 </button>
                 <div class="text-center pt-2">
@@ -640,7 +639,7 @@
     </div>
 
 
-    <!-- ================= SCRIPTS ================= -->
+    <!-- ================= SCRIPTS TÍCH HỢP TOÀN DIỆN ================= -->
     <script>
         const SUPABASE_URL = 'https://srceotyuclehrkozotoy.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyY2VvdHl1Y2xlaHJrb3pvdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzQzMDAsImV4cCI6MjEwMDIxMDMwMH0.JRoCXVP56Nlwt28Be8wBjHHasItW73bVoGSWdL-SD70';
@@ -727,7 +726,7 @@
         const draggableContainer = document.getElementById('draggableAiContainer');
         const aiHeader = document.getElementById('aiChatHeader');
         let isDragging = false;
-        let startX, startY, initialX, initialY;
+        let startX, startY;
 
         aiHeader.addEventListener('mousedown', dragStart);
         document.addEventListener('mousemove', drag);
@@ -743,7 +742,6 @@
             const clientY = e.clientY || e.touches[0].clientY;
             
             const rect = draggableContainer.getBoundingClientRect();
-            // Lưu khoảng cách ban đầu để giữ vị trí tuyệt đối khi kéo
             draggableContainer.style.bottom = 'auto';
             draggableContainer.style.right = 'auto';
             draggableContainer.style.top = rect.top + 'px';
@@ -761,7 +759,6 @@
             let newX = clientX - startX;
             let newY = clientY - startY;
 
-            // Giới hạn trong màn hình
             const maxX = window.innerWidth - draggableContainer.offsetWidth;
             const maxY = window.innerHeight - draggableContainer.offsetHeight;
 
@@ -776,7 +773,6 @@
             isDragging = false;
         }
 
-        // Xử lý gửi tin nhắn AI & Dò link / tính toán
         function sendUserAiMessage() {
             const input = document.getElementById('aiChatInput');
             const text = input.value.trim();
