@@ -208,7 +208,7 @@
                 <div class="relative z-10 space-y-3">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống liên kết chính thức
+                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống liên kết chính thức (ID: AT2107363)
                         </span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Mua sắm thông minh, tích lũy hoàn tiền</h1>
@@ -233,10 +233,11 @@
                     </button>
                 </div>
 
-                <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-3.5 animate-zoom">
+                <!-- KẾT QUẢ & KHUNG TÍNH TỈ LỆ HOA HỒNG & 2 NÚT LỰA CHỌN -->
+                <div id="resultArea" class="hidden p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
                     <div class="flex justify-between items-center">
                         <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Link mua hàng tích điểm của bạn:</p>
-                        <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Đã tối ưu Affiliate</span>
+                        <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Affiliate ID: AT2107363</span>
                     </div>
                     <div class="flex gap-2">
                         <input type="text" id="affLink" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 font-mono select-all">
@@ -244,13 +245,47 @@
                             <i class="fa-regular fa-copy"></i> Sao chép
                         </button>
                     </div>
-                    <button onclick="openShoppingLink()" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3.5 rounded-xl text-sm transition flex items-center justify-center gap-2 active:scale-95 shadow-lg">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở ứng dụng / Mua ngay lập tức
-                    </button>
+
+                    <!-- KHUNG TÍNH TỈ LỆ HOA HỒNG -->
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-percent text-xs"></i> Bảng Ước Tính Tỉ Lệ Hoa Hồng & Hoàn Tiền
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Tự động áp dụng</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">Mức Chiết Khấu Gốc</span>
+                                <span class="text-sm font-extrabold text-white">70% Tổng HH</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">Thưởng Hạng Bạc (STKRDMEJV)</span>
+                                <span class="text-sm font-extrabold text-emerald-400">+2% Hoa Hồng</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">Tổng Hoàn Nhận Về Ví</span>
+                                <span class="text-sm font-extrabold text-amber-400">72% Giá Trị HH</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 italic text-center">Tiền hoàn sẽ được hệ thống đối soát và tự động cộng dồn vào ví của bạn sau khi đơn hàng thành công.</p>
+                    </div>
+
+                    <!-- 2 NÚT LỰA CHỌN SAU KHI TẠO LINK -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <!-- Nút 1: App Shopping Tiết Kiệm -->
+                        <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-teal-500/20">
+                            <i class="fa-solid fa-mobile-screen-button text-sm"></i> 1. Mở App Shopping Tiết Kiệm
+                        </a>
+                        <!-- Nút 2: Hoàn tiền Accesstrade 100% hoa hồng -->
+                        <button onclick="openShoppingLink()" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-lg">
+                            <i class="fa-solid fa-bolt text-amber-400 text-sm"></i> 2. Mua Ngay (Nhận 100% HH Accesstrade)
+                        </button>
+                    </div>
                 </div>
             </section>
 
-            <!-- ================= BẢNG RIÊNG: MÃ GIỚI THIỆU & LÊN HẠNG BẠC (ĐẶT DƯỚI Ô DÁN LINK) ================= -->
+            <!-- ================= BẢNG RIÊNG: MÃ GIỚI THIỆU & LÊN HẠNG BẠC ================= -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-teal-500/30 shadow-xl space-y-5 bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/40">
                 <div class="flex items-center justify-between">
                     <h2 class="text-base font-bold text-teal-300 flex items-center gap-2.5">
@@ -265,7 +300,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-                    <!-- Phần nhập mã giới thiệu & Link tải app bên dưới (chữ nhỏ nằm gọn trong phần hướng dẫn) -->
                     <div class="space-y-4 bg-slate-950/60 p-4.5 rounded-2xl border border-slate-800">
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Nhập mã giới thiệu độc quyền <b class="text-amber-400">STKRDMEJV</b> ngay bên dưới để được tự động thăng lên <b class="text-amber-400">Hạng Bạc</b> và nhận thêm <b class="text-emerald-400">+2% hoa hồng</b> (từ mức cơ bản 70%).
@@ -283,7 +317,6 @@
                             <i class="fa-solid fa-circle-check"></i> Đã áp dụng thành công mã STKRDMEJV! Tài khoản đã lên Hạng Bạc (+2% hoa hồng).
                         </div>
 
-                        <!-- Phần chữ nhỏ hướng dẫn kết hợp link tải app có gắn mã STKRDMEJV -->
                         <div class="pt-2 border-t border-slate-800/80 space-y-2">
                             <p class="text-[11px] text-slate-400 leading-relaxed">
                                 Nhớ gắn mã giới thiệu <b class="text-amber-400">STKRDMEJV</b> ở trên vào nhé! Bạn có thể sử dụng đường dẫn tải ứng dụng kèm sẵn mã bên dưới:
@@ -297,11 +330,9 @@
                         </div>
                     </div>
 
-                    <!-- Phần hình ảnh minh họa mua sắm tiết kiệm kèm NÚT MỞ TẢI LIỀN RIÊNG BIỆT -->
                     <div class="relative overflow-hidden rounded-2xl border border-slate-700/60 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950/30 p-5 text-center space-y-3 shadow-inner">
                         <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
                         
-                        <!-- Hình ảnh minh họa App Shopping Tiết Kiệm -->
                         <div class="w-16 h-16 rounded-2xl bg-white p-2 mx-auto shadow-xl shadow-emerald-500/20 border border-slate-700 flex items-center justify-center">
                             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%23ffffff'/><path d='M160 160V120c0-44.1 35.9-80 80-80s80 35.9 80 80v40' fill='none' stroke='%230f766e' stroke-width='36' stroke-linecap='round'/><path d='M110 160h292l20 280H90l20-280z' fill='none' stroke='%230f766e' stroke-width='36' stroke-linejoin='round'/><path d='M200 240l60 60 100-100' fill='none' stroke='%2310b981' stroke-width='36' stroke-linecap='round' stroke-linejoin='round'/></svg>" alt="Shopping Tiết Kiệm Logo" class="w-full h-full object-contain">
                         </div>
@@ -311,7 +342,6 @@
                             <p class="text-[11px] text-slate-400 mt-1">Tối ưu hóa từng đồng chi tiêu với tỉ lệ hoàn tiền tốt nhất thị trường.</p>
                         </div>
 
-                        <!-- NÚT MỞ TẢI LIỀN ĐỘC LẬP RIÊNG BIỆT -->
                         <div class="pt-2">
                             <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng Ngay (Đã kèm mã STKRDMEJV)
@@ -345,7 +375,7 @@
     </div>
 
 
-    <!-- ================= MODAL MENU 3 GẠCH (ĐÃ XÓA MỤC KIỂM TRA HẠNG THÀNH VIÊN) ================= -->
+    <!-- ================= MODAL MENU 3 GẠCH ================= -->
     <div id="menuDropdownModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 z-50">
         <div class="glass-panel border-t sm:border border-slate-700/85 p-6 sm:p-8 rounded-t-[2.5rem] sm:rounded-[2rem] max-w-md w-full space-y-4 shadow-2xl relative animate-zoom">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -364,7 +394,7 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-building-columns text-teal-400"></i> Liên kết tài khoản Ngân hàng</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và sao chép link rút gọn.\n3. Mua sắm qua link để nhận tiền hoàn vào ví tự động.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm Shopee/Lazada vào ô tạo link.\n2. Bấm Tạo Link và chọn phương thức mua sắm phù hợp.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
@@ -392,9 +422,9 @@
     </div>
 
 
-    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN / NGÂN HÀNG ================= -->
+    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN / QUY ĐỊNH ================= -->
     <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
+        <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mx-auto flex items-center justify-center text-xl mb-3">
                     <i class="fa-solid fa-user-gear"></i>
@@ -431,6 +461,17 @@
                         Gửi yêu cầu rút tiền (Chờ Admin duyệt)
                     </button>
                 </div>
+            </div>
+
+            <!-- PHẦN QUY ĐỊNH & CHÍNH SÁCH TRỪ KHI HOÀN TRẢ ĐƠN HÀNG -->
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-2 text-xs">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-exclamation text-xs"></i> Quy Định Về Hoàn Tiền & Đổi Trả Sản Phẩm
+                </span>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
+                    <li><b>Quy trình rút tiền:</b> Số dư hợp lệ từ hoàn tiền sẽ được chuyển thẳng về tài khoản ngân hàng liên kết của bạn sau khi Admin kiểm tra và thực hiện lệnh chuyển khoản thủ công.</li>
+                    <li><b>Chính sách khấu trừ khi đổi trả (Bảo lưu quỹ đối soát):</b> Trường hợp đơn hàng phát sinh yêu cầu <i>Hoàn hàng, Trả tiền hoặc Hủy đơn</i> sau khi hệ thống đã tạm tính hoa hồng (Ví dụ: Bạn nhận 100.000đ hoa hồng từ đơn hàng nhưng sau đó sản phẩm bị hoàn trả), hệ thống sẽ tiến hành <b>khấu trừ tương ứng 100% phần hoa hồng đã tạm ứng hoặc tỷ lệ chiết khấu phát sinh</b> khỏi số dư ví tích lũy của bạn để đảm bảo cân đối tài chính đối soát với nhà bán hàng.</li>
+                </ul>
             </div>
 
             <div class="space-y-2 pt-1">
