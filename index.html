@@ -304,7 +304,6 @@
         const SUPABASE_URL = 'https://srceotyuclehrkozotoy.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyY2VvdHl1Y2xlaHJrb3pvdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzQzMDAsImV4cCI6MjEwMDIxMDMwMH0.JRoCXVP56Nlwt28Be8wBjHHasItW73bVoGSWdL-SD70';
         
-        // Tối ưu hóa cấu hình client để tránh nghẽn luồng mạng cục bộ
         const clientSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
             auth: {
                 persistSession: true,
@@ -351,10 +350,8 @@
 
         async function initApp() {
             try {
-                // Thêm timeout bảo vệ để không bị treo nếu mạng chập chờn
                 const authPromise = clientSupabase.auth.getUser();
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
-                
                 const { data: { user } } = await Promise.race([authPromise, timeoutPromise]);
                 currentUser = user;
             } catch (e) {
@@ -393,6 +390,7 @@
             }
         }
 
+        // Đã gộp và mã hóa chuẩn không bị lỗi vòng lặp
         function handleConvert() {
             let rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
@@ -400,13 +398,11 @@
                 return;
             }
             
-            try {
-                const urlObj = new URL(rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl);
-                rawUrl = urlObj.origin + urlObj.pathname;
-            } catch (e) {}
+            if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
+                rawUrl = 'https://' + rawUrl;
+            }
 
-            const encoded = encodeURIComponent(rawUrl);
-            activeGeneratedLink = `https://fast.accesstrade.vn/deep_link/v2?aff_id=${ACCESSTRADE_AFF_ID}&url=${encoded}`;
+            activeGeneratedLink = `https://fast.accesstrade.vn/deep_link?aff_id=${ACCESSTRADE_AFF_ID}&url=${encodeURIComponent(rawUrl)}`;
             
             document.getElementById('affLink').value = activeGeneratedLink;
             document.getElementById('resultArea').classList.remove('hidden');
@@ -438,7 +434,6 @@
             });
         }
 
-        // Đã sửa tối ưu loại bỏ lệnh insert profile thủ công gây nghẽn/lỗi đăng ký
         async function submitSignup() {
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPass').value.trim();
@@ -472,7 +467,6 @@
             }
         }
 
-        // Tối ưu hóa xử lý đăng nhập siêu tốc, không bị đơ
         async function submitLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPass').value.trim();
@@ -541,7 +535,6 @@
                     document.getElementById('settingsBalanceVal').innerText = formattedBalance;
                 }
             } catch (e) {
-                // Nếu bảng profiles chưa có sẵn hàng, hiển thị mặc định 0đ an toàn
                 document.getElementById('balanceVal').innerText = "0";
                 document.getElementById('settingsBalanceVal').innerText = "0";
             }
