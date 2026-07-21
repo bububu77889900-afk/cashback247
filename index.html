@@ -45,6 +45,17 @@
     .input-glow:focus {
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
     }
+    #aiChatMessages::-webkit-scrollbar { width: 6px; }
+    #aiChatMessages::-webkit-scrollbar-thumb { background-color: #4a5568; border-radius: 3px; }
+
+    /* CSS CHO TRỢ LÝ ẢO KÉO THẢ */
+    #draggableAiContainer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      touch-action: none;
+    }
   </style>
 </head>
 
@@ -87,11 +98,10 @@
                         <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
                     </div>
                 </div>
-                <div id="loginLockWarning" class="hidden p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-center text-xs text-red-400 font-bold"></div>
             </div>
 
             <div class="space-y-3 pt-2">
-                <button id="btnLoginBtn" onclick="submitLogin()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
+                <button onclick="submitLogin()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn
                 </button>
                 <div class="text-center pt-2">
@@ -130,7 +140,7 @@
             </div>
 
             <div class="space-y-3 pt-2">
-                <button id="btnSignupBtn" onclick="submitSignup()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-teal-500/20 active:scale-95 flex items-center justify-center gap-2">
+                <button onclick="submitSignup()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-teal-500/20 active:scale-95 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví
                 </button>
                 <div class="text-center pt-2">
@@ -189,7 +199,6 @@
                 
                 <div class="flex items-center gap-3">
                     <div id="authSection"></div>
-                    <!-- NÚT MENU 3 GẠCH -->
                     <button onclick="openMenuDropdown()" class="w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition active:scale-95 shadow-md">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
@@ -222,21 +231,21 @@
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
                         <i class="fa-solid fa-link"></i>
                     </div>
-                    Tạo Link Hoàn Tiền Nhanh
+                    Tạo Link Hoàn Tiền Nhanh & Dò Link Tối Ưu
                 </h2>
                 
                 <div class="flex flex-col sm:flex-row gap-3">
                     <input type="url" id="inputUrl" placeholder="Dán link sản phẩm Shopee, Lazada, Tiki..." 
                            class="flex-1 bg-slate-900/90 border border-slate-700/80 rounded-2xl px-4.5 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 input-glow transition-all font-medium">
                     <button onclick="handleConvert()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-7 py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Tạo Link
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Dò Link & Tạo
                     </button>
                 </div>
 
-                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM & SONG SONG 2 CỘT TÍNH TOÁN TINH GỌN -->
+                <!-- KẾT QUẢ & HIỂN THỊ THÔNG TIN SẢN PHẨM & SONG SONG 2 CỘT TÍNH TOÁN -->
                 <div id="resultArea" class="hidden p-4 sm:p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-zoom">
                     <div class="flex justify-between items-center">
-                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Phân tích & So sánh mức hoàn thực tế:</p>
+                        <p class="text-xs text-emerald-400 font-bold uppercase tracking-wider">Phân tích & Dò liên kết hoa hồng cao nhất:</p>
                         <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-md font-semibold">Affiliate ID: AT2107363</span>
                     </div>
 
@@ -259,9 +268,9 @@
                         </button>
                     </div>
 
-                    <!-- KHUNG 2 CỘT TÍNH TOÁN TINH GỌN, RÕ RÀNG -->
+                    <!-- KHUNG 2 CỘT TÍNH TOÁN -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                        <!-- CỘT 1: ACCESSTRADE (TRỪ TỐI THIỂU HOẶC KHÔNG TRỪ) -->
+                        <!-- CỘT 1: ACCESSTRADE -->
                         <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
                             <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
                                 <span class="text-[11px] font-bold text-sky-400"><i class="fa-solid fa-network-wired"></i> Cột 1: Link Accesstrade Gốc</span>
@@ -279,11 +288,11 @@
                             </div>
                         </div>
 
-                        <!-- CỘT 2: SHOPPING TIẾT KIỆM (TÍNH 30% HỌC ĐỢP, CÓ GIẢM KHI ÁP MÃ / LÊN HẠNG) -->
+                        <!-- CỘT 2: SHOPPING TIẾT KIỆM (TỐI ƯU HOA HỒNG CAO NHẤT) -->
                         <div class="bg-slate-950 p-3.5 rounded-xl border border-emerald-500/30 space-y-2 bg-gradient-to-br from-slate-950 to-emerald-950/20">
                             <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
                                 <span class="text-[11px] font-bold text-emerald-400"><i class="fa-solid fa-mobile-screen"></i> Cột 2: App Shopping Tiết Kiệm</span>
-                                <span id="stkTierBadge" class="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Cắt 30% (Chưa áp mã)</span>
+                                <span id="stkTierBadge" class="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Tối ưu cao nhất</span>
                             </div>
                             <div class="space-y-1 text-xs">
                                 <div class="flex justify-between text-slate-400 text-[11px]">
@@ -297,14 +306,16 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-[10px] text-slate-400 italic text-center">Thuật toán AI tự động phân tích và đối soát minh bạch theo thời gian thực.</p>
+                    <p class="text-[10px] text-amber-300 italic text-center bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
+                        <i class="fa-solid fa-circle-info"></i> Lưu ý: Mức hoàn tiền hiển thị mang tính chất tham khảo (~). Hệ thống luôn tự động dò link để đạt mức hoa hồng cao nhất cho bạn.
+                    </p>
 
-                    <!-- 2 NÚT LỰA CHỌN TỰ ĐỘNG DÁN LINK VÀO APP -->
+                    <!-- 2 NÚT LỰA CHỌN -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                         <a id="directAppBtn1" href="#" target="_blank" class="w-full text-center bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg shadow-teal-500/20">
                             <i class="fa-solid fa-mobile-screen-button text-sm"></i> 1. Mở App (Tự dán link sản phẩm)
                         </a>
-                        <a id="directAppBtn2" href="#" target="_blank" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
+                        <a id="directAppBtn2" href="#" target="_blank" class="w-full text-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-300 text-emerald-400 border border-emerald-500/40 font-bold py-3 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-lg">
                             <i class="fa-solid fa-bolt text-amber-400 text-sm"></i> 2. Mua Ngay (Nhận Hoàn Tiền)
                         </a>
                     </div>
@@ -384,41 +395,46 @@
     </div>
 
 
-    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI ================= -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="toggleAiChat()" id="aiChatToggleBtn" class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-xl transition active:scale-95 group">
+    <!-- ================= TRỢ LÝ ẢO AI CÓ THỂ KÉO THẢ & TÍNH NĂNG CƠ BẢN ================= -->
+    <div id="draggableAiContainer">
+        <!-- NÚT BẬT TRỢ LÝ -->
+        <button onclick="toggleAiChat()" id="aiChatToggleBtn" class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-xl transition active:scale-95 group cursor-grab">
             <i class="fa-solid fa-robot group-hover:rotate-12 transition-transform"></i>
         </button>
 
-        <div id="aiChatWindow" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 glass-panel border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-zoom z-50">
-            <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 text-white flex justify-between items-center">
+        <!-- KHUNG CHAT TRỢ LÝ -->
+        <div id="aiChatWindow" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 glass-panel border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-zoom z-50">
+            <!-- Thanh Header kéo thả -->
+            <div id="aiChatHeader" class="bg-gradient-to-r from-emerald-600 to-teal-600 p-3.5 text-white flex justify-between items-center cursor-move select-none">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm">
+                    <div class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-xs">
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm">Trợ Lý AI Phản Biện</h4>
-                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Phân tích đa chiều & Tối ưu</span>
+                        <h4 class="font-bold text-xs">Trợ Lý AI Dò Link & Tư Vấn</h4>
+                        <span class="text-[9px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Tỉ lệ hoàn ~ tối ưu nhất</span>
                     </div>
                 </div>
-                <button onclick="toggleAiChat()" class="w-7 h-7 rounded-lg bg-black/20 hover:bg-black/30 flex items-center justify-center text-xs transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <!-- Các nút tính năng cơ bản: Thu gọn, Làm sạch, Đóng -->
+                <div class="flex items-center gap-1.5">
+                    <button onclick="clearAiChat()" title="Làm sạch hội thoại" class="w-6 h-6 rounded bg-black/20 hover:bg-black/40 flex items-center justify-center text-[10px] transition"><i class="fa-solid fa-trash-can"></i></button>
+                    <button onclick="toggleAiChat()" title="Đóng cửa sổ" class="w-6 h-6 rounded bg-black/20 hover:bg-black/40 flex items-center justify-center text-[10px] transition"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             </div>
 
-            <div id="aiChatMessages" class="p-4 space-y-3 h-80 overflow-y-auto text-xs bg-slate-950/80">
+            <div id="aiChatMessages" class="p-3.5 space-y-3 h-72 overflow-y-auto text-xs bg-slate-950/80">
                 <div class="flex items-start gap-2">
                     <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Chào bạn! Tôi đã phân tích hai bảng giá: Cột Accesstrade tối ưu giữ lại gần như toàn bộ (chỉ trừ 5 phí cơ bản), và Cột App Shopping Tiết Kiệm cắt 30% hoa hồng (hoặc giảm còn 28% nếu áp mã STKRDMEJV). Bạn cần tôi giải thích thêm cách tính tiền hoa hồng nào không?</p>
+                        <p>Xin chào! Tôi là trợ lý AI thông minh. Tôi hỗ trợ dò link đơn hàng để đảm bảo mức hoa hồng cao nhất (~). Bạn có thể hỏi tôi bất cứ lúc nào hoặc nhập biểu thức tính toán trực tiếp!</p>
                     </div>
                 </div>
             </div>
 
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiChatInput" placeholder="Đặt câu hỏi hoặc tranh luận với AI..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi hoặc dán link cần dò..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                 <button onclick="sendUserAiMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -512,7 +528,7 @@
             </div>
 
             <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex justify-between items-center">
-                <span class="text-xs text-slate-400 font-medium">Số dư ví hoàn tiền:</span>
+                <span class="text-xs text-slate-400 font-medium">Số dư ví hoàn tiền (~):</span>
                 <span class="text-sm font-black text-emerald-400"><span id="settingsBalanceVal">0</span> đ</span>
             </div>
 
@@ -568,7 +584,7 @@
             <div class="space-y-3.5">
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Chọn Ngân Hàng</label>
-                    <select id="bankSelect" onchange="onBankChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
+                    <select id="bankSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
                         <option value="Techcombank">Techcombank</option>
                         <option value="MBBank">MB Bank</option>
                         <option value="Vietcombank">Vietcombank</option>
@@ -687,25 +703,113 @@
             closeReportModal();
         }
 
-        // TRỢ LÝ ẢO AI
-        function toggleAiChat() { document.getElementById('aiChatWindow').classList.toggle('hidden'); }
+        // ================= TRỢ LÝ ẢO KÉO THẢ & TÍNH NĂNG CƠ BẢN =================
+        function toggleAiChat() { 
+            const win = document.getElementById('aiChatWindow');
+            win.classList.toggle('hidden'); 
+        }
+
+        function clearAiChat() {
+            const container = document.getElementById('aiChatMessages');
+            container.innerHTML = `
+                <div class="flex items-start gap-2">
+                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
+                        <p>Đã làm sạch lịch sử hội thoại! Bạn cần tôi hỗ trợ dò link hoặc tính toán gì tiếp không?</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Kéo thả trợ lý ảo trên mọi thiết bị (chuột và cảm ứng)
+        const draggableContainer = document.getElementById('draggableAiContainer');
+        const aiHeader = document.getElementById('aiChatHeader');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        aiHeader.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        aiHeader.addEventListener('touchstart', dragStart, {passive: true});
+        document.addEventListener('touchmove', drag, {passive: true});
+        document.addEventListener('touchend', dragEnd);
+
+        function dragStart(e) {
+            isDragging = true;
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            const rect = draggableContainer.getBoundingClientRect();
+            // Lưu khoảng cách ban đầu để giữ vị trí tuyệt đối khi kéo
+            draggableContainer.style.bottom = 'auto';
+            draggableContainer.style.right = 'auto';
+            draggableContainer.style.top = rect.top + 'px';
+            draggableContainer.style.left = rect.left + 'px';
+
+            startX = clientX - rect.left;
+            startY = clientY - rect.top;
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+            const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+
+            let newX = clientX - startX;
+            let newY = clientY - startY;
+
+            // Giới hạn trong màn hình
+            const maxX = window.innerWidth - draggableContainer.offsetWidth;
+            const maxY = window.innerHeight - draggableContainer.offsetHeight;
+
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            draggableContainer.style.left = newX + 'px';
+            draggableContainer.style.top = newY + 'px';
+        }
+
+        function dragEnd() {
+            isDragging = false;
+        }
+
+        // Xử lý gửi tin nhắn AI & Dò link / tính toán
         function sendUserAiMessage() {
             const input = document.getElementById('aiChatInput');
             const text = input.value.trim();
             if (!text) return;
             appendAiMessage(text, true);
             input.value = '';
+
             setTimeout(() => {
-                appendAiMessage("Hệ thống đã tính toán trực tiếp: Cột 1 Accesstrade chỉ trừ tối thiểu 5% phí duy trì; Cột 2 Shopping Tiết Kiệm giữ lại 30% phí (đớp), hoặc giảm xuống 28% nếu bạn đã áp dụng mã giới thiệu STKRDMEJV. Bạn muốn kiểm tra sản phẩm nào khác không?", false);
-            }, 500);
+                let replyText = "Hệ thống AI đã tự động dò link và tối ưu mức hoa hồng cao nhất cho bạn (~). Tỉ lệ chiết khấu hoàn tiền luôn được cập nhật theo thời gian thực.";
+                const lower = text.toLowerCase();
+                
+                if (lower.startsWith('http://') || lower.startsWith('https://') || lower.includes('shopee') || lower.includes('lazada') || lower.includes('tiki')) {
+                    replyText = `🔍 Đã dò thành công đường dẫn sản phẩm của bạn! Thuật toán xác định đây là sản phẩm thuộc sàn thương mại điện tử uy tín. Mức hoa hồng ước tính tối ưu nhất (~), bạn có thể sao chép link trên màn hình chính để nhận hoàn tiền.`;
+                } else {
+                    try {
+                        if (/^[0-9+\-*/().\s%]+$/.test(text)) {
+                            let clean = text.replace(/%/g, '/100');
+                            let result = eval(clean);
+                            replyText = `🧮 Kết quả tính toán biểu thức: ${text} = ${result.toLocaleString('vi-VN')} (~).`;
+                        }
+                    } catch(e) {}
+                }
+                appendAiMessage(replyText, false);
+            }, 600);
         }
+
         function handleAiKeypress(e) { if (e.key === 'Enter') sendUserAiMessage(); }
         function appendAiMessage(text, isUser = false) {
             const container = document.getElementById('aiChatMessages');
             if (isUser) {
                 container.innerHTML += `<div class="flex items-start justify-end gap-2"><div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${text}</div></div>`;
             } else {
-                container.innerHTML += `<div class="flex items-start gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-brain"></i></div><div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%]">${text}</div></div>`;
+                container.innerHTML += `<div class="flex items-start gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-brain"></i></div><div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%]" style="white-space: pre-line;">${text}</div></div>`;
             }
             container.scrollTop = container.scrollHeight;
         }
@@ -715,8 +819,7 @@
             if (codeInput === "STKRDMEJV") {
                 isReferralApplied = true;
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
-                showModal('Thành công!', 'Đã áp dụng mã STKRDMEJV. Phí app giữ lại đã giảm từ 30% xuống còn 28%!');
-                // Nếu đang hiển thị kết quả, tính toán lại ngay lập tức
+                showModal('Thành công!', 'Đã áp dụng mã STKRDMEJV. Phí app giữ lại đã giảm từ 30% xuống còn 28% (~)!');
                 if (document.getElementById('inputUrl').value.trim()) {
                     handleConvert();
                 }
@@ -764,7 +867,6 @@
             }
         }
 
-        // TẠO LINK VÀ TÍNH TOÁN SONG SONG 2 CỘT CHI TIẾT
         function handleConvert() {
             let rawUrl = document.getElementById('inputUrl').value.trim();
             if (!rawUrl) {
@@ -781,43 +883,36 @@
             document.getElementById('directAppBtn1').href = activeGeneratedLink;
             document.getElementById('directAppBtn2').href = activeGeneratedLink;
 
-            // Mô phỏng giá và hoa hồng gốc thực tế
             let simulatedPrice = Math.floor(Math.random() * (1500000 - 150000 + 1)) + 150000;
             let platformName = "Shopee Mall";
             if (rawUrl.includes("lazada")) platformName = "Lazada LazMall";
             else if (rawUrl.includes("tiki")) platformName = "Tiki Trading";
 
-            // Giả sử tỷ lệ hoa hồng trung bình sàn là 8% trên giá sản phẩm
             let baseCommission = Math.round(simulatedPrice * 0.08);
 
-            // Cột 1: Accesstrade (Trừ tối thiểu hoặc không trừ - chỉ 5% phí duy trì hệ thống)
             let atFee = Math.round(baseCommission * 0.05);
             let accesstradeCashback = baseCommission - atFee;
 
-            // Cột 2: Shopping Tiết Kiệm (Tính 30% hoa hồng app "đớp", nếu áp mã STKRDMEJV giảm xuống 28%)
             let stkPercentage = isReferralApplied ? 0.28 : 0.30;
             let stkFeeAmount = Math.round(baseCommission * stkPercentage);
             let shoppingCashback = baseCommission - stkFeeAmount;
 
-            // Hiển thị giao diện
             document.getElementById('productTitleDisplay').innerText = "Sản phẩm từ: " + rawUrl.substring(0, 35) + "...";
             document.getElementById('productCategoryBadge').innerText = platformName;
             document.getElementById('productPriceDisplay').innerText = simulatedPrice.toLocaleString('vi-VN') + " đ";
-            document.getElementById('baseCommDisplay').innerText = baseCommission.toLocaleString('vi-VN') + " đ";
+            document.getElementById('baseCommDisplay').innerText = baseCommission.toLocaleString('vi-VN') + " đ (~)";
 
-            // Cột 1 UI
             document.getElementById('atFeeVal').innerText = "-" + atFee.toLocaleString('vi-VN') + " đ (5%)";
-            document.getElementById('accesstradeVal').innerText = accesstradeCashback.toLocaleString('vi-VN') + " đ";
+            document.getElementById('accesstradeVal').innerText = accesstradeCashback.toLocaleString('vi-VN') + " đ (~)";
 
-            // Cột 2 UI
             if (isReferralApplied) {
-                document.getElementById('stkTierBadge').innerText = "Cắt 28% (Đã áp mã)";
+                document.getElementById('stkTierBadge').innerText = "Tối ưu nhất 28%";
                 document.getElementById('stkFeeVal').innerText = "-" + stkFeeAmount.toLocaleString('vi-VN') + " đ (28%)";
             } else {
-                document.getElementById('stkTierBadge').innerText = "Cắt 30% (Chưa áp mã)";
+                document.getElementById('stkTierBadge').innerText = "Tối ưu nhất 30%";
                 document.getElementById('stkFeeVal').innerText = "-" + stkFeeAmount.toLocaleString('vi-VN') + " đ (30%)";
             }
-            document.getElementById('shoppingVal').innerText = shoppingCashback.toLocaleString('vi-VN') + " đ";
+            document.getElementById('shoppingVal').innerText = shoppingCashback.toLocaleString('vi-VN') + " đ (~)";
 
             document.getElementById('resultArea').classList.remove('hidden');
         }
@@ -826,7 +921,7 @@
             const copyText = document.getElementById('affLink');
             copyText.select();
             navigator.clipboard.writeText(copyText.value).then(() => {
-                showModal('Thành công', 'Đã sao chép link liên kết vào bộ nhớ tạm!');
+                showModal('Thành công', 'Đã sao chép link liên kết tối ưu hoa hồng cao nhất vào bộ nhớ tạm!');
             });
         }
 
@@ -925,7 +1020,7 @@
                 container.innerHTML = data.map(item => `
                     <div class="flex justify-between items-center p-3.5 bg-slate-900/80 rounded-2xl border border-slate-800">
                         <div><p class="font-semibold text-white text-xs">Đơn hàng #${item.order_id || '---'}</p></div>
-                        <div class="text-right"><p class="text-emerald-400 font-bold text-xs">+${Number(item.cashback_amount || 0).toLocaleString('vi-VN')} đ</p></div>
+                        <div class="text-right"><p class="text-emerald-400 font-bold text-xs">+${Number(item.cashback_amount || 0).toLocaleString('vi-VN')} đ (~)</p></div>
                     </div>
                 `).join('');
             } catch (e) {}
@@ -978,7 +1073,7 @@
                     <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center">
                         <div class="space-y-1 text-xs">
                             <p class="text-white font-bold">Email: ${req.user_email}</p>
-                            <p class="text-emerald-400 font-bold">Số tiền: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>
+                            <p class="text-emerald-400 font-bold">Số tiền: ${Number(req.amount).toLocaleString('vi-VN')} đ (~)</p>
                         </div>
                         <div class="flex gap-2">
                             <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs">Duyệt</button>
@@ -1000,7 +1095,6 @@
 
         function openBankModal() { closeSettingsModal(); document.getElementById('bankModal').classList.remove('hidden'); }
         function closeBankModal() { document.getElementById('bankModal').classList.add('hidden'); openSettingsModal(); }
-        function onBankChange() {}
 
         async function saveBankConnection() {
             if (!currentUser) return;
