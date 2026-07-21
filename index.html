@@ -216,6 +216,7 @@
                 </div>
             </div>
 
+            <!-- PHẦN TẠO LINK HOÀN TIỀN -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-5">
                 <h2 class="text-base font-bold text-emerald-400 flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
@@ -249,7 +250,7 @@
                 </div>
             </section>
 
-            <!-- ================= BẢNG RIÊNG: MÃ GIỚI THIỆU & LÊN HẠNG BẠC ================= -->
+            <!-- ================= BẢNG RIÊNG: MÃ GIỚI THIỆU & LÊN HẠNG BẠC (ĐẶT DƯỚI Ô DÁN LINK) ================= -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-teal-500/30 shadow-xl space-y-5 bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/40">
                 <div class="flex items-center justify-between">
                     <h2 class="text-base font-bold text-teal-300 flex items-center gap-2.5">
@@ -264,7 +265,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-                    <!-- Phần nhập mã -->
+                    <!-- Phần nhập mã giới thiệu -->
                     <div class="space-y-3.5 bg-slate-950/60 p-4.5 rounded-2xl border border-slate-800">
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Nhập mã giới thiệu độc quyền ngay bên dưới để được tự động thăng lên <b class="text-amber-400">Hạng Bạc</b> và nhận thêm <b class="text-emerald-400">+2% hoa hồng</b> (từ mức cơ bản 70%).
@@ -422,7 +423,7 @@
     </div>
 
 
-    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG ================= -->
+    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG & SỬA LỖI ẢNH QR ================= -->
     <div id="bankModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
@@ -459,7 +460,7 @@
                 </div>
 
                 <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
-                    <!-- SỬA LỖI HIỂN THỊ ẢNH MÃ QR BẰNG KHUNG SVG/VIETQR ĐỘNG CHUẨN XÁC -->
+                    <!-- SỬA LỖI HIỂN THỊ ẢNH MÃ QR BẰNG KHUNG VIETQR ĐỘNG CHUẨN XÁC KÈM FALLBACK -->
                     <div id="promoTechcomContent" class="space-y-2 text-center">
                         <p class="text-emerald-400 font-bold text-left"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
                         <p class="text-slate-300 text-left">Sử dụng mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">qr</span></p>
