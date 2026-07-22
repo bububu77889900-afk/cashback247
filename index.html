@@ -266,49 +266,59 @@
                             </div>
                             Gian Hàng Mua Sắm & Hoàn Tiền Trực Tiếp
                         </h2>
-                        <p class="text-xs text-slate-400 mt-1">Chọn sản phẩm/dịch vụ bên dưới để mua hàng và nhận hoàn tiền tự động ngay lập tức.</p>
+                        <p class="text-xs text-slate-400 mt-1">Chọn ứng dụng muốn mua, sao chép liên kết dán vào Cashback247 để nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi xác nhận đơn!</p>
                     </div>
                     <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                        <i class="fa-solid fa-bolt text-[9px]"></i> Hoàn tiền đến 15%
+                        <i class="fa-solid fa-bolt text-[9px]"></i> Hoàn tiền hấp dẫn
                     </span>
                 </div>
 
-                <!-- Danh sách các sản phẩm/gian hàng mẫu (Bạn có thể thay đổi link mua hàng ở đây) -->
+                <!-- Khung nhập liên kết tùy chỉnh cho người dùng -->
+                <div class="bg-slate-950/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+                    <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider">Dán liên kết sản phẩm từ Shopee / Lazada / TikTok Shop vào đây:</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="customProductLinkInput" placeholder="https://shopee.vn/san-pham-cua-ban..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                        <button onclick="submitCustomProductLink()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-5 py-3 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Gửi liên kết nhận hoàn tiền
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết sản phẩm của bạn qua ứng dụng Shopping Tiết Kiệm và cộng ngay từ 1.000đ đến 50.000đ vào ví sau khi xác nhận đơn thành công!</p>
+                </div>
+
+                <!-- Danh sách các ứng dụng/gian hàng mua sắm -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Sản phẩm 1 -->
+                    <!-- Shopee -->
                     <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between space-y-3 hover:border-emerald-500/50 transition">
                         <div class="space-y-2">
                             <div class="flex justify-between items-start">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/10 text-teal-300 border border-teal-500/20">Shopee Mall</span>
-                                <span class="text-xs font-black text-emerald-400">Hoàn 10% vào ví</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-500/10 text-orange-400 border border-orange-500/20">Shopee</span>
+                                <span class="text-xs font-black text-emerald-400">Nhận 1K - 50K vào ví</span>
                             </div>
-                            <h3 class="font-bold text-white text-sm">Gói Voucher Mua Sắm Điện Tử & Gia Dụng</h3>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">Tích hợp ưu đãi hoàn tiền độc quyền dành riêng cho thành viên Cashback247.</p>
+                            <h3 class="font-bold text-white text-sm">Mua sắm qua App/Web Shopee</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Mở ứng dụng hoặc web Shopee, sao chép link sản phẩm và dán vào khung bên trên để nhận tiền hoàn.</p>
                         </div>
                         <div class="pt-2 border-t border-slate-900 flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300">⚡ Tự động cộng ví</span>
-                            <!-- Link mua hàng (Bạn có thể cập nhật link của bạn vào href bên dưới) -->
-                            <a href="https://shopee.vn" target="_blank" onclick="simulateDirectProductPurchase(25000, 'Voucher Điện Tử & Gia Dụng')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
-                                <i class="fa-solid fa-cart-shopping text-xs"></i> Mua ngay
+                            <a href="https://shopee.vn" target="_blank" onclick="simulateDirectProductPurchase(30000, 'Shopee Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở Shopee
                             </a>
                         </div>
                     </div>
 
-                    <!-- Sản phẩm 2 -->
+                    <!-- Lazada -->
                     <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between space-y-3 hover:border-emerald-500/50 transition">
                         <div class="space-y-2">
                             <div class="flex justify-between items-start">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">Lazada VIP</span>
-                                <span class="text-xs font-black text-emerald-400">Hoàn 12% vào ví</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">Lazada</span>
+                                <span class="text-xs font-black text-emerald-400">Nhận 1K - 50K vào ví</span>
                             </div>
-                            <h3 class="font-bold text-white text-sm">Siêu Phẩm Thời Trang & Phụ Kiện Sành Điệu</h3>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">Mua sắm thời trang chính hãng, áp dụng mã hoàn tiền trực tiếp.</p>
+                            <h3 class="font-bold text-white text-sm">Mua sắm qua App/Web Lazada</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Mở ứng dụng hoặc web Lazada, sao chép link sản phẩm và dán vào khung bên trên để nhận tiền hoàn.</p>
                         </div>
                         <div class="pt-2 border-t border-slate-900 flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300">⚡ Tự động cộng ví</span>
-                            <!-- Link mua hàng (Bạn có thể cập nhật link của bạn vào href bên dưới) -->
-                            <a href="https://lazada.vn" target="_blank" onclick="simulateDirectProductPurchase(35000, 'Thời Trang & Phụ Kiện Sành Điệu')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
-                                <i class="fa-solid fa-cart-shopping text-xs"></i> Mua ngay
+                            <a href="https://lazada.vn" target="_blank" onclick="simulateDirectProductPurchase(35000, 'Lazada Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở Lazada
                             </a>
                         </div>
                     </div>
@@ -500,7 +510,7 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Nhấn nút chuyển hướng hoặc mua hàng trực tiếp để nhận hoàn tiền.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi giao dịch thành công.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm từ Shopee/Lazada vào web để nhận từ 1K đến 50K.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi xác nhận đơn.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
@@ -799,7 +809,7 @@
         async function simulateAppPurchase() {
             if (!currentUser) return;
             const randomOrderId = Math.floor(100000 + Math.random() * 900000);
-            const randomCashback = Math.floor(5 + Math.random() * 45) * 1000; // Từ 5,000 đến 50,000 đ
+            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000; // Từ 1,000 đến 50,000 đ
             
             try {
                 await clientSupabase.from('orders').insert([{
@@ -827,27 +837,72 @@
             }
         }
 
-        // Hàm giả lập khi click mua hàng trực tiếp từ các gian hàng/sản phẩm bên dưới
-        async function simulateDirectProductPurchase(cashbackVal, productName) {
+        // Hàm xử lý dán link sản phẩm tùy chỉnh và nhận hoàn tiền từ 1K đến 50K vào ví
+        async function submitCustomProductLink() {
             if (!currentUser) return;
+            const linkInput = document.getElementById('customProductLinkInput');
+            const linkVal = linkInput.value.trim();
+
+            if (!linkVal) {
+                showModal('Thiếu liên kết', 'Vui lòng dán liên kết sản phẩm cần mua vào ô!', true);
+                return;
+            }
+
             const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000; // Từ 1,000 đến 50,000 đ
 
             try {
                 await clientSupabase.from('orders').insert([{
                     user_id: currentUser.id,
                     order_id: String(randomOrderId),
-                    cashback_amount: cashbackVal
+                    cashback_amount: randomCashback
                 }]);
 
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
-                    title: 'Mua hàng trực tiếp thành công!',
-                    message: `Bạn vừa mua sản phẩm "${productName}" (Mã đơn #${randomOrderId}). Hoàn tiền +${cashbackVal.toLocaleString('vi-VN')} đ vào ví!`,
+                    title: 'Xác nhận liên kết thành công!',
+                    message: `Đã ghi nhận liên kết sản phẩm (Mã đơn #${randomOrderId}). Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví thành công!`,
                     type: 'order'
                 }]);
 
                 const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
-                const newBalance = Number(profile?.balance || 0) + cashbackVal;
+                const newBalance = Number(profile?.balance || 0) + randomCashback;
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
+
+                linkInput.value = '';
+                showModal('Thành công!', `Đã xác nhận liên kết sản phẩm qua Shopping Tiết Kiệm!\nCộng ngay +${randomCashback.toLocaleString('vi-VN')} đ vào ví của bạn.`);
+                
+                fetchUserProfileData();
+                loadUserOrders();
+                checkUnreadNotifications();
+            } catch (err) {
+                console.error("Custom link error:", err);
+                showModal('Lỗi', 'Không thể xử lý liên kết lúc này.', true);
+            }
+        }
+
+        // Hàm giả lập khi click mở ứng dụng mua sắm
+        async function simulateDirectProductPurchase(cashbackVal, appName) {
+            if (!currentUser) return;
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000;
+
+            try {
+                await clientSupabase.from('orders').insert([{
+                    user_id: currentUser.id,
+                    order_id: String(randomOrderId),
+                    cashback_amount: randomCashback
+                }]);
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: `Mua hàng qua ${appName}!`,
+                    message: `Bạn vừa mở ${appName} qua hệ thống (Mã đơn #${randomOrderId}). Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví!`,
+                    type: 'order'
+                }]);
+
+                const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
+                const newBalance = Number(profile?.balance || 0) + randomCashback;
                 await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
 
                 fetchUserProfileData();
@@ -1005,14 +1060,14 @@
             }
             else if (q.includes('hoàn tiền cao nhất') || q.includes('app nào') || q.includes('nền tảng nào') || q.includes('shopping tiết kiệm')) {
                 reply = "<b>Shopping Tiết Kiệm</b> hiện là nền tảng hoàn tiền <b>cao nhất hiện nay</b>!<br>" +
-                        "• Hoàn tiền tự động, uy tín và minh bạch.<br>" +
+                        "• Hoàn tiền tự động từ 1K đến 50K vào ví.<br>" +
                         "• Nhập mã giới thiệu <b class='text-amber-400'>STKRDMEJV</b> để thăng hạng Bạc và nhận thêm +2% hoa hồng trọn đời.";
             }
             else if (q.includes('cách nhận') || q.includes('dùng thế nào') || q.includes('hướng dẫn')) {
-                reply = "<b>Hướng dẫn nhận hoàn tiền cao nhất:</b><br>" +
-                        "1. Nhấn nút <b>'Chuyển Hướng Qua Shopping Tiết Kiệm'</b> hoặc chọn gian hàng mua sắm trực tiếp trên trang chủ.<br>" +
+                reply = "<b>Hướng dẫn nhận hoàn tiền nhanh:</b><br>" +
+                        "1. Dán liên kết sản phẩm từ Shopee/Lazada vào web Cashback247.<br>" +
                         "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
-                        "3. Mua sắm như bình thường và nhận chiết khấu tiền hoàn khủng về ví tự động!";
+                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi xác nhận đơn!";
             }
             else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
                 reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
