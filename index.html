@@ -216,7 +216,7 @@
                 </div>
             </div>
 
-            <!-- PHẦN CHUYỂN HƯỚNG SHOPPING TIẾT KIỆM (ĐÃ BỎ HOÀN TOÀN KHUNG NHẬP LINK) -->
+            <!-- PHẦN CHUYỂN HƯỚNG SHOPPING TIẾT KIỆM -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-4">
                 <h2 class="text-base font-bold text-emerald-400 flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
@@ -231,7 +231,7 @@
                         <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Chuyển Hướng Qua Shopping Tiết Kiệm
                     </a>
 
-                    <!-- Quy định và Hướng dẫn ẩn/hiện theo chính sách app và pháp luật Việt Nam -->
+                    <!-- Quy định và Hướng dẫn -->
                     <div class="pt-2 text-xs text-slate-400 space-y-2 border-t border-slate-800/80">
                         <p class="leading-relaxed">
                             Tuân thủ chính sách bảo mật, điều khoản dịch vụ và các quy định của pháp luật Việt Nam về thương mại điện tử, bảo vệ quyền lợi người tiêu dùng.
@@ -274,7 +274,7 @@
                             <div class="flex gap-2">
                                 <input type="text" id="referralCodeInput" value="STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-mono text-amber-300 font-bold select-all focus:outline-none">
                                 <button onclick="applyReferralCode()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1">
-                                    <i class="fa-solid fa-check"></i> Áp dụng mã
+                                    <i class="fa-solid fa-check"></i> Xác nhận mã
                                 </button>
                             </div>
                         </div>
@@ -340,7 +340,7 @@
     </div>
 
 
-    <!-- ================= NÚT & KHUNG TRỢ LÝ ẢO AI (CÓ TƯ DUY PHẢN BIỆN) ================= -->
+    <!-- ================= TRỢ LÝ ẢO AI ================= -->
     <div class="fixed bottom-6 right-6 z-50">
         <button onclick="toggleAiChat()" id="aiChatToggleBtn" class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-xl transition active:scale-95 group">
             <i class="fa-solid fa-robot group-hover:rotate-12 transition-transform"></i>
@@ -374,7 +374,6 @@
                 </div>
             </div>
 
-            <!-- Gợi ý câu hỏi phản biện nhanh -->
             <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
                 <button onclick="sendAiPrompt('Hoàn tiền có thực sự rẻ hơn hay chỉ là chiêu trò tăng giá?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hoàn tiền có phải chiêu trò?</button>
                 <button onclick="sendAiPrompt('Tại sao nên dùng Cashback247 thay vì mua trực tiếp trên sàn?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tại sao nên qua Cashback247?</button>
@@ -468,7 +467,7 @@
     </div>
 
 
-    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN / QUY ĐỊNH ================= -->
+    <!-- ================= MODAL CÀI ĐẶT & RÚT TIỀN ================= -->
     <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
@@ -541,7 +540,7 @@
     </div>
 
 
-    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG (CÓ QR TECHCOMBANK ĐÚNG ẢNH CẤP) ================= -->
+    <!-- ================= MODAL LIÊN KẾT NGÂN HÀNG ================= -->
     <div id="bankModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-3xl max-w-md w-full space-y-5 shadow-2xl relative animate-zoom my-auto">
             <div class="text-center space-y-1">
@@ -578,7 +577,6 @@
                 </div>
 
                 <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
-                    <!-- QR Techcombank chuẩn từ ảnh cung cấp 1000016682_3.jpg -->
                     <div id="promoTechcomContent" class="space-y-2 text-center">
                         <p class="text-emerald-400 font-bold text-left"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
                         <p class="text-slate-300 text-left">Sử dụng mã giới thiệu / Quét mã QR:</p>
@@ -722,7 +720,6 @@
             closeReportModal();
         }
 
-        // HÀM ẨN/HIỆN PHẦN HƯỚNG DẪN KHI BẤM VÀO CHỮ "HƯỚNG DẪN CHI TIẾT"
         function toggleGuideSection() {
             const box = document.getElementById('guideContentBox');
             const icon = document.getElementById('guideIcon');
@@ -735,7 +732,6 @@
             }
         }
 
-        // ================= TRỢ LÝ ẢO AI CÓ TƯ DUY PHẢN BIỆN =================
         function toggleAiChat() {
             const win = document.getElementById('aiChatWindow');
             win.classList.toggle('hidden');
@@ -816,7 +812,7 @@
             const codeInput = document.getElementById('referralCodeInput').value.trim();
             if (codeInput === "STKRDMEJV") {
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
-                showModal('Thành công!', 'Đã áp dụng mã STKRDMEJV. Tài khoản của bạn đã được nâng lên Hạng Bạc và nhận thêm +2% hoa hồng!');
+                showModal('Thành công!', 'Đã xác nhận mã STKRDMEJV. Tài khoản của bạn đã được nâng lên Hạng Bạc và nhận thêm +2% hoa hồng!');
             } else {
                 showModal('Mã không hợp lệ', 'Vui lòng sử dụng đúng mã giới thiệu STKRDMEJV!', true);
             }
