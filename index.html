@@ -247,7 +247,7 @@
                             <div id="guideContentBox" class="hidden mt-2 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5 animate-zoom">
                                 <p><b>Bước 1:</b> Bấm vào nút <b>"Chuyển Hướng Qua Shopping Tiết Kiệm"</b>.</p>
                                 <p><b>Bước 2:</b> Đăng ký tài khoản và <b>nhập mã giới thiệu của tôi (STKRDMEJV)</b>.</p>
-                                <p><b>Bước 3:</b> Dán link sản phẩm vào hệ thống để chờ Admin duyệt và nhận hoa hồng về ví!</p>
+                                <p><b>Bước 3:</b> Dán link sản phẩm vào hệ thống để chờ Admin duyệt và nhận hoa hồng về ví (Thời gian duyệt có thể mất từ 15 - 20 ngày tùy tiến độ hệ thống)!</p>
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                             <i class="fa-solid fa-paper-plane text-xs"></i> Gửi liên kết nhận hoàn tiền
                         </button>
                     </div>
-                    <p class="text-[10px] text-slate-400">Hệ thống sẽ gửi yêu cầu kèm Email và thông tin Ngân hàng của bạn thẳng đến hộp thư Admin (<b class="text-emerald-400">tvty832@gmail.com</b>) để kiểm tra và duyệt số tiền từ 1.000đ đến 50.000đ vào ví!</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống sẽ gửi yêu cầu kèm Email và thông tin Ngân hàng của bạn thẳng đến hộp thư Admin (<b class="text-emerald-400">tvty832@gmail.com</b>) để kiểm tra và duyệt số tiền từ 1.000đ đến 50.000đ vào ví! (Thời gian duyệt có thể mất từ 15 - 20 ngày tùy tiến độ).</p>
                 </div>
 
                 <!-- 2 Ô ỨNG DỤNG RIÊNG BIỆT -->
@@ -757,7 +757,7 @@
             } catch(e) {}
         }
 
-        // Gửi link sản phẩm nhận hoàn tiền (Chờ Admin duyệt số tiền từ 1K - 50K)
+        // Gửi link sản phẩm nhận hoàn tiền (Chờ Admin duyệt số tiền từ 1K - 50K trong 15-20 ngày)
         async function submitCustomProductLink() {
             if (!currentUser) return;
             const linkInput = document.getElementById('customProductLinkInput');
@@ -786,6 +786,14 @@
                     status: 'pending'
                 }]);
 
+                // Gửi thông báo xác nhận ngay cho người dùng về thời gian xử lý 15 - 20 ngày
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: 'Đã gửi yêu cầu hoàn tiền thành công!',
+                    message: `Hệ thống đã ghi nhận link sản phẩm, Email tài khoản (${currentUser.email}) và thông tin ngân hàng của bạn. Admin sẽ tiến hành kiểm tra và duyệt tiền về ví trong khoảng từ 15 - 20 ngày tùy theo tiến độ hệ thống.`,
+                    type: 'link_submitted'
+                }]);
+
                 // Thông báo ngay cho Admin
                 await notifyAdmin(
                     '🔗 Khách vừa gửi link sản phẩm hoàn tiền!',
@@ -793,7 +801,8 @@
                 );
 
                 linkInput.value = '';
-                showModal('Gửi liên kết thành công!', 'Liên kết của bạn đã được gửi đến Admin để kiểm tra và duyệt số tiền hoàn (1.000đ - 50.000đ) vào ví.');
+                showModal('Gửi liên kết thành công!', 'Liên kết và thông tin tài khoản của bạn đã được gửi đến Admin. Hệ thống sẽ duyệt tiền về ví trong vòng 15 - 20 ngày.');
+                checkUnreadNotifications();
             } catch (err) {
                 showModal('Lỗi', 'Không thể gửi liên kết lúc này.', true);
             }
@@ -884,7 +893,7 @@
             container.scrollTop = container.scrollHeight;
         }
         function processAiQuery(query) {
-            let reply = "Xin chào! Bạn có thể dán link sản phẩm ở mục gian hàng để Admin duyệt tiền hoàn hoặc liên hệ quản trị viên nhé.";
+            let reply = "Xin chào! Bạn có thể dán link sản phẩm ở mục gian hàng để Admin duyệt tiền hoàn (thời gian từ 15-20 ngày) hoặc liên hệ quản trị viên nhé.";
             setTimeout(() => appendAiMessage(reply, false), 400);
         }
 
