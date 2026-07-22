@@ -723,7 +723,8 @@
             auth: {
                 persistSession: true,
                 autoRefreshToken: true,
-                detectSessionInUrl: true
+                detectSessionInUrl: true,
+                storage: window.localStorage
             }
         });
 
@@ -1023,7 +1024,7 @@
             }
         }
 
-        * ================= BẢO MẬT & ĐĂNG NHẬP / ĐĂNG KÝ ================= -->
+        /* ================= BẢO MẬT & ĐĂNG NHẬP / ĐĂNG KÝ ================= -->
         async function submitLogin() {
             if (Date.now() < lockUntilTime) {
                 const waitSec = Math.ceil((lockUntilTime - Date.now()) / 1000);
@@ -1085,7 +1086,13 @@
             btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> Đang tạo tài khoản...`;
 
             try {
-                const { data, error } = await clientSupabase.auth.signUp({ email, password: pass });
+                const { data, error } = await clientSupabase.auth.signUp({ 
+                    email, 
+                    password: pass,
+                    options: {
+                        emailRedirectTo: window.location.origin + window.location.pathname
+                    }
+                });
 
                 btn.disabled = false;
                 btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
@@ -1118,7 +1125,7 @@
 
             try {
                 const { error } = await clientSupabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: window.location.origin
+                    redirectTo: window.location.origin + window.location.pathname
                 });
 
                 if (error) {
@@ -1140,7 +1147,7 @@
             closeSettingsModal();
         }
 
-        * ================= QUẢN LÝ TÀI KHOẢN & SỐ DƯ VÍ ================= -->
+        /* ================= QUẢN LÝ TÀI KHOẢN & SỐ DƯ VÍ ================= -->
         async function initLoggedInUser() {
             document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('mainScreen').classList.remove('hidden');
@@ -1251,7 +1258,7 @@
             }
         }
 
-        * ================= MODAL BẢO MẬT, RÚT TIỀN & NGÂN HÀNG ================= -->
+        /* ================= MODAL BẢO MẬT, RÚT TIỀN & NGÂN HÀNG ================= -->
         function openSettingsModal() {
             fetchUserProfileData();
             document.getElementById('settingsModal').classList.remove('hidden');
@@ -1346,7 +1353,7 @@
             }
         }
 
-        * ================= QUẢN TRỊ ADMIN ================= -->
+        /* ================= QUẢN TRỊ ADMIN ================= -->
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
             loadAdminWithdrawList();
@@ -1485,7 +1492,7 @@
             }
         }
 
-        * ================= TRỢ LÝ AI ================= -->
+        /* ================= TRỢ LÝ AI ================= -->
         function toggleAiChat() {
             const chatWin = document.getElementById('aiChatWindow');
             chatWin.classList.toggle('hidden');
@@ -1558,7 +1565,7 @@
             }, 500);
         }
 
-        /l* ================= XÁC THỰC LƯU TRỮ VÀ KHỞI TẠO ================= -->
+        /* ================= XÁC THỰC LƯU TRỮ VÀ KHỞI TẠO ================= -->
         clientSupabase.auth.onAuthStateChange((event, session) => {
             if (session?.user) {
                 currentUser = session.user;
