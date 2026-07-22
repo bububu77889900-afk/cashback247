@@ -48,7 +48,7 @@
   </style>
 </head>
 
-<body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+<body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950" onload="initApp()">
 
     <!-- ================= SẢNH ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU ================= -->
     <div id="authScreen" class="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-4 overflow-y-auto">
@@ -1104,7 +1104,7 @@
             }
             else {
                 reply = `Cảm ơn câu hỏi của bạn: "<i>${escapeHtml(query)}</i>".<br>` +
-                        "Tôi có thể hỗ trợ bạn trò chuyện, giải đáp thắc mắc hoặc hướng dẫn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b> (mã <b class='text-amber-400'>STKRDMEJV</b>). Bạn muốn tôi giúp gì cụ thể hơn không?";
+                        "I can assist you with chatting, answering questions, or optimizing shopping costs with the <b>Shopping Tiết Kiệm</b> app (code <b class='text-amber-400'>STKRDMEJV</b>). Would you like any specific help?";
             }
 
             setTimeout(() => {
@@ -1568,7 +1568,7 @@
 
             try {
                 await clientSupabase.from('profiles').update({ bank_name: bankName, bank_acc: bankAcc, bank_owner: bankOwner }).eq('id', currentUser.id);
-                showModal('Thành công', 'Đã liên kết tài khoản ngân hàng thành công!');
+                showModal('Thành công', 'Đã cập nhật thông tin tài khoản ngân hàng liên kết thành công!');
                 closeBankModal();
                 fetchUserProfileData();
             } catch (e) {
@@ -1583,8 +1583,6 @@
         function closeSettingsModal() {
             document.getElementById('settingsModal').classList.add('hidden');
         }
-
-        window.onload = initApp;
     </script>
 </body>
 </html>
