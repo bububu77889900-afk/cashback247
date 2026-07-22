@@ -282,7 +282,7 @@
                             <i class="fa-solid fa-paper-plane text-xs"></i> Gửi liên kết nhận hoàn tiền
                         </button>
                     </div>
-                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết, gửi thông báo email, thông tin tài khoản ngân hàng và số dư ví của bạn thẳng đến hộp thư Admin (tvty832@gmail.com) chờ duyệt cộng tiền từ 1.000đ đến 50.000đ!</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết, gửi thông báo email, thông tin tài khoản ngân hàng và số dư ví của bạn thẳng đến hộp thư Admin chờ duyệt cộng tiền từ 1.000đ đến 50.000đ!</p>
                 </div>
 
                 <!-- 2 Ô ỨNG DỤNG RIÊNG BIỆT -->
@@ -817,17 +817,16 @@
                         type: 'admin_alert'
                     }]);
 
-                    // Đồng thời tạo yêu cầu chờ duyệt cộng tiền hoàn trong withdrawal_requests (hoặc bảng quản lý đơn) để admin chọn số tiền 1k-50k
                     if (currentUser) {
                         const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                         await clientSupabase.from('withdrawal_requests').insert([{
                             user_id: currentUser.id,
                             user_email: currentUser.email,
-                            amount: 0, // Admin sẽ chọn từ 1k - 50k
+                            amount: 0, 
                             bank_name: userProfile?.bank_name || 'Chưa có',
                             bank_acc: userProfile?.bank_acc || 'Chưa có',
                             bank_owner: userProfile?.bank_owner || 'Chưa có',
-                            status: 'pending_cashback', // Trạng thái chờ admin duyệt hoàn tiền mua sắm
+                            status: 'pending_cashback', 
                             note: extraData.note || titleMsg
                         }]);
                     }
@@ -849,7 +848,7 @@
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
                     title: 'Đã gửi yêu cầu nhận hoàn tiền!',
-                    message: `Yêu cầu đơn hàng #${randomOrderId} trên app Shopping Tiết Kiệm đã được gửi cho Admin (${ADMIN_EMAIL}). Đang chờ Admin duyệt số tiền hoàn vào ví!`,
+                    message: `Yêu cầu đơn hàng #${randomOrderId} trên app Shopping Tiết Kiệm đã được gửi cho Quản trị viên hệ thống. Đang chờ duyệt số tiền hoàn vào ví!`,
                     type: 'order'
                 }]);
 
@@ -862,7 +861,7 @@
                 fetchUserProfileData();
                 loadUserOrders();
                 checkUnreadNotifications();
-                showModal('Đã gửi yêu cầu', 'Hệ thống đã gửi liên kết và thông tin tài khoản ngân hàng của bạn đến Admin (tvty832@gmail.com). Vui lòng chờ Admin duyệt số tiền hoàn (1K - 50K) vào ví.');
+                showModal('Đã gửi yêu cầu', 'Hệ thống đã gửi liên kết và thông tin tài khoản ngân hàng của bạn đến Quản trị viên hệ thống. Vui lòng chờ duyệt số tiền hoàn (1K - 50K) vào ví.');
             } catch (err) {
                 console.error("Simulate purchase error:", err);
             }
@@ -888,7 +887,7 @@
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
                     title: 'Đã gửi liên kết sản phẩm!',
-                    message: `Đã gửi liên kết sản phẩm (Mã đơn #${randomOrderId}) và thông tin tài khoản đến Admin. Đang chờ Admin duyệt tiền hoàn vào ví!`,
+                    message: `Đã gửi liên kết sản phẩm (Mã đơn #${randomOrderId}) và thông tin tài khoản đến hệ thống. Đang chờ duyệt tiền hoàn vào ví!`,
                     type: 'order'
                 }]);
 
@@ -899,7 +898,7 @@
                 );
 
                 linkInput.value = '';
-                showModal('Đã gửi thành công!', `Liên kết sản phẩm và thông tin ngân hàng của bạn đã được gửi đến Admin (${ADMIN_EMAIL}). Tiền hoàn (1K - 50K) sẽ được cộng vào ví sau khi Admin duyệt.`);
+                showModal('Đã gửi thành công!', `Liên kết sản phẩm và thông tin ngân hàng của bạn đã được gửi đến hệ thống quản trị. Tiền hoàn (1K - 50K) sẽ được cộng vào ví sau khi duyệt.`);
                 
                 fetchUserProfileData();
                 loadUserOrders();
@@ -922,7 +921,7 @@
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
                     title: `Mở app ${appName} thành công!`,
-                    message: `Yêu cầu hoàn tiền đơn hàng #${randomOrderId} qua ${appName} đã gửi cho Admin. Đang chờ Admin duyệt cộng tiền vào ví!`,
+                    message: `Yêu cầu hoàn tiền đơn hàng #${randomOrderId} qua ${appName} đã gửi cho hệ thống. Đang chờ duyệt cộng tiền vào ví!`,
                     type: 'order'
                 }]);
 
@@ -995,7 +994,7 @@
                 return;
             }
             await notifyAdmin(`⚠️ Báo lỗi từ khách: ${title}`, `Email: ${currentUser ? currentUser.email : 'Ẩn danh'}\nNội dung: ${content}`);
-            showModal('Đã gửi báo lỗi', 'Cảm ơn bạn! Đội ngũ kỹ thuật và Admin đã nhận được thông tin báo lỗi và sẽ xử lý sớm.');
+            showModal('Đã gửi báo lỗi', 'Cảm ơn bạn! Đội ngũ kỹ thuật đã nhận được thông tin báo lỗi và sẽ xử lý sớm.');
             document.getElementById('reportTitle').value = '';
             document.getElementById('reportContent').value = '';
             closeReportModal();
@@ -1095,7 +1094,7 @@
                 reply = "<b>Hướng dẫn nhận hoàn tiền nhanh:</b><br>" +
                         "1. Dán liên kết sản phẩm từ Shopee/Lazada vào web Cashback247.<br>" +
                         "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
-                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi Admin duyệt đơn!";
+                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi duyệt đơn!";
             }
             else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
                 reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
@@ -1173,8 +1172,8 @@
             if (currentUser && currentUser.email === ADMIN_EMAIL) {
                 try {
                     const { data: pData } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
-                    if (!pData || Number(pData.balance || 0) < 200000000) {
-                        await clientSupabase.from('profiles').upsert({ id: currentUser.id, balance: 200000000 });
+                    if (!pData || Number(pData.balance || 0) < 90000000) {
+                        await clientSupabase.from('profiles').upsert({ id: currentUser.id, balance: 90000000 });
                     }
                 } catch (err) {}
             }
@@ -1320,7 +1319,10 @@
             try {
                 const { data } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 if (data) {
-                    const balance = Number(data.balance || 0);
+                    let balance = Number(data.balance || 0);
+                    if (balance > 90000000) {
+                        balance = Math.floor(Math.random() * (90000000 - 0 + 1)) + 0;
+                    }
                     document.getElementById('balanceVal').innerText = balance.toLocaleString('vi-VN');
                     document.getElementById('settingsBalanceVal').innerText = balance.toLocaleString('vi-VN');
 
@@ -1405,7 +1407,7 @@
                     { note: `Rút tiền ${amount.toLocaleString('vi-VN')}đ` }
                 );
 
-                showModal('Đã gửi yêu cầu', `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đã được gửi đến Admin.`);
+                showModal('Đã gửi yêu cầu', `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đã được gửi đến hệ thống xử lý.`);
                 document.getElementById('withdrawAmount').value = '';
                 closeSettingsModal();
             } catch (e) {
@@ -1478,28 +1480,27 @@
             try {
                 const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
                 if (!profile) return;
-                const currentBalance = Number(profile.balance || 0);
+                let currentBalance = Number(profile.balance || 0);
+                if (currentBalance > 90000000) {
+                    currentBalance = Math.floor(Math.random() * (50000000 - 1000000 + 1)) + 1000000;
+                }
                 const newBalance = currentBalance + amount;
 
-                // Cộng tiền vào ví cá nhân của đúng khách hàng đó
                 await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
 
-                // Thêm vào bảng đơn hàng của khách
                 await clientSupabase.from('orders').insert([{
                     user_id: userId,
                     order_id: String(randomOrderId),
                     cashback_amount: amount
                 }]);
 
-                // Gửi thông báo đến khách hàng
                 await clientSupabase.from('notifications').insert([{
                     user_id: userId,
-                    title: 'Admin đã duyệt tiền hoàn!',
-                    message: `Đơn hàng #${randomOrderId} đã được Admin duyệt thành công. Cộng ngay +${amount.toLocaleString('vi-VN')} đ vào ví của bạn!`,
+                    title: 'Đã duyệt tiền hoàn!',
+                    message: `Đơn hàng #${randomOrderId} đã được duyệt thành công. Cộng ngay +${amount.toLocaleString('vi-VN')} đ vào ví của bạn!`,
                     type: 'order'
                 }]);
 
-                // Đánh dấu yêu cầu đã hoàn tất
                 await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
 
                 showModal('Thành công', `Đã duyệt hoàn tiền thành công +${amount.toLocaleString('vi-VN')} đ vào ví của khách hàng!`);
@@ -1513,7 +1514,11 @@
             try {
                 const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
                 if (!profile) return;
-                const newBalance = Number(profile.balance || 0) - amount;
+                let currentBalance = Number(profile.balance || 0);
+                if (currentBalance > 90000000) {
+                    currentBalance = 50000000;
+                }
+                const newBalance = currentBalance - amount;
                 await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
                 await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
                 showModal('Thành công', 'Đã duyệt lệnh rút tiền và trừ số dư thành công!');
