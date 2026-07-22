@@ -446,19 +446,7 @@
             </div>
         </div>
     </div>
-
-<!-- ================= GIỎ HÀNG THÔNG MINH & HƯỚNG DẪN ỦNG HỘ ADMIN ================= -->
-<div id="shoppingCartModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-[2.5rem] max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom max-h-[90vh] overflow-y-auto">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-                <i class="fa-solid fa-cart-shopping text-emerald-400"></i> Giỏ Hàng & Tích Lũy Hoàn Tiền
-            </h3>
-            <button onclick="closeShoppingCartModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
+              
         <!-- Hướng dẫn ủng hộ Admin nhỏ gọn -->
         <div class="bg-gradient-to-r from-emerald-950/40 to-teal-950/40 border border-emerald-500/20 p-4 rounded-2xl space-y-2">
             <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs">
@@ -1724,5 +1712,161 @@
 
         window.onload = initApp;
     </script>
-</body>
-  </html>
+</body><!-- ================= GIỎ HÀNG THÔNG MINH & HƯỚNG DẪN ỦNG HỘ ADMIN ================= -->
+<div id="shoppingCartModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel border border-slate-700/80 p-6 sm:p-7 rounded-[2.5rem] max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-cart-shopping text-emerald-400"></i> Giỏ Hàng & Tích Lũy Hoàn Tiền
+            </h3>
+            <button onclick="closeShoppingCartModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Hướng dẫn ủng hộ Admin nhỏ gọn -->
+        <div class="bg-gradient-to-r from-emerald-950/40 to-teal-950/40 border border-emerald-500/20 p-4 rounded-2xl space-y-2">
+            <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs">
+                <i class="fa-solid fa-heart text-amber-400"></i> Góc Ủng Hộ & Đồng Hành Cùng Admin
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+                Khi bạn hoàn tất đơn hàng qua giỏ hàng hoặc app liên kết, hệ thống sẽ tự động ghi nhận hoa hồng nhỏ giúp duy trì máy chủ và phát triển công cụ miễn phí cho mọi người. Cảm ơn sự đồng hành của bạn! ❤️
+            </p>
+        </div>
+
+        <!-- Danh sách sản phẩm trong giỏ hàng -->
+        <div class="space-y-3">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Sản phẩm đã chọn mua:</h4>
+            <div id="cartItemsContainer" class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
+                <!-- Các sản phẩm sẽ được render tự động bằng JS -->
+                <div class="text-center py-6 text-slate-500 text-xs font-medium">Giỏ hàng của bạn đang trống.</div>
+            </div>
+        </div>
+
+        <!-- Tổng tiền & Nút hành động -->
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400">Tổng giá trị sản phẩm:</span>
+                <span id="cartTotalPrice" class="font-black text-white text-sm">0 đ</span>
+            </div>
+            <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-2">
+                <span class="text-emerald-400 font-bold">Hoàn tiền dự kiến vào ví:</span>
+                <span id="cartTotalCashback" class="font-black text-emerald-400 text-sm">0 đ</span>
+            </div>
+        </div>
+
+        <div class="space-y-2 pt-1">
+            <button onclick="checkoutCartAndSupportAdmin()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bag-shopping"></i> Tiến hành đặt hàng & Gửi thông tin hoàn tiền
+            </button>
+            <button onclick="closeShoppingCartModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Tiếp tục mua sắm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Script hỗ trợ quản lý giỏ hàng -->
+<script>
+    let userCart = [];
+
+    function openShoppingCartModal() {
+        document.getElementById('shoppingCartModal').classList.remove('hidden');
+        renderCartItems();
+    }
+
+    function closeShoppingCartModal() {
+        document.getElementById('shoppingCartModal').classList.add('hidden');
+    }
+
+    function addToCart(productName, price, cashback) {
+        userCart.push({ name: productName, price: price, cashback: cashback });
+        showModal('Đã thêm vào giỏ', `Đã thêm "${productName}" vào giỏ hàng thành công!`);
+        renderCartItems();
+    }
+
+    function renderCartItems() {
+        const container = document.getElementById('cartItemsContainer');
+        let totalVal = 0;
+        let totalCashbackVal = 0;
+
+        if (userCart.length === 0) {
+            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs font-medium">Giỏ hàng của bạn đang trống.</div>`;
+            document.getElementById('cartTotalPrice').innerText = '0 đ';
+            document.getElementById('cartTotalCashback').innerText = '0 đ';
+            return;
+        }
+
+        container.innerHTML = userCart.map((item, index) => {
+            totalVal += item.price;
+            totalCashbackVal += item.cashback;
+            return `
+                <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center text-xs">
+                    <div class="space-y-0.5 pr-2">
+                        <p class="font-bold text-white truncate max-w-[200px]">${item.name}</p>
+                        <p class="text-[10px] text-emerald-400">Hoàn tiền: +${item.cashback.toLocaleString('vi-VN')} đ</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold text-slate-200">${item.price.toLocaleString('vi-VN')} đ</span>
+                        <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('cartTotalPrice').innerText = totalVal.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('cartTotalCashback').innerText = '+' + totalCashbackVal.toLocaleString('vi-VN') + ' đ';
+    }
+
+    function removeFromCart(index) {
+        userCart.splice(index, 1);
+        renderCartItems();
+    }
+
+    async function checkoutCartAndSupportAdmin() {
+        if (userCart.length === 0) {
+            showModal('Giỏ hàng trống', 'Vui lòng thêm sản phẩm vào giỏ trước khi thanh toán!', true);
+            return;
+        }
+
+        const totalCashbackVal = userCart.reduce((sum, item) => sum + item.cashback, 0);
+        const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+
+        if (typeof currentUser !== 'undefined' && currentUser) {
+            try {
+                const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                const currentBalance = Number(userProfile?.balance || 0);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: 'Đã đặt hàng từ giỏ hàng!',
+                    message: `Đơn hàng giỏ #${randomOrderId} đã được gửi kèm thông tin hỗ trợ quỹ cho Quản trị viên. Đang chờ duyệt cộng tiền vào ví!`,
+                    type: 'order'
+                }]);
+
+                if (typeof notifyAdmin === 'function') {
+                    await notifyAdmin(
+                        '🛒 Khách đặt hàng qua Giỏ Hàng (Ủng hộ & Chờ duyệt hoàn tiền)!',
+                        `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn giỏ: #${randomOrderId}\nTổng hoàn tiền dự kiến: ${totalCashbackVal.toLocaleString('vi-VN')} đ`,
+                        { note: `Giỏ hàng #${randomOrderId} - Ủng hộ Admin` }
+                    );
+                }
+
+                userCart = [];
+                renderCartItems();
+                closeShoppingCartModal();
+                showModal('Đặt hàng thành công!', 'Giỏ hàng và thông tin tài khoản ngân hàng của bạn đã được gửi đến hệ thống quản trị để duyệt cộng tiền hoàn.');
+                
+                if (typeof fetchUserProfileData === 'function') fetchUserProfileData();
+                if (typeof loadUserOrders === 'function') loadUserOrders();
+                if (typeof checkUnreadNotifications === 'function') checkUnreadNotifications();
+            } catch (err) {
+                console.error("Checkout cart error:", err);
+                showModal('Lỗi', 'Không thể xử lý thanh toán giỏ hàng lúc này.', true);
+            }
+        } else {
+            showModal('Chưa đăng nhập', 'Vui lòng đăng nhập tài khoản ví để tiếp tục đặt hàng!', true);
+        }
+    }
+</script>
+ 
+          </html>
