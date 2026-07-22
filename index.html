@@ -189,6 +189,12 @@
                 
                 <div class="flex items-center gap-3">
                     <div id="authSection"></div>
+                    <!-- NÚT THÔNG BÁO VÀ HOẠT ĐỘNG -->
+                    <button onclick="openNotificationModal()" class="relative w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition active:scale-95 shadow-md">
+                        <i class="fa-regular fa-bell text-base"></i>
+                        <span id="notifBadgeDot" class="hidden absolute top-2 right-2 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
+                        <span id="notifBadgeCount" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white font-black text-[10px] flex items-center justify-center border-2 border-slate-900">0</span>
+                    </button>
                     <!-- NÚT MENU 3 GẠCH -->
                     <button onclick="openMenuDropdown()" class="w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition active:scale-95 shadow-md">
                         <i class="fa-solid fa-bars text-base"></i>
@@ -227,7 +233,7 @@
 
                 <div class="space-y-3">
                     <!-- Nút chuyển hướng chính -->
-                    <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 px-4 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center">
+                    <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 px-4 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center">
                         <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Chuyển Hướng Qua Shopping Tiết Kiệm
                     </a>
 
@@ -308,7 +314,7 @@
                         </div>
 
                         <div class="pt-2">
-                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
+                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng Ngay (Đã kèm mã STKRDMEJV)
                             </a>
                         </div>
@@ -387,6 +393,27 @@
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
+        </div>
+    </div>
+
+
+    <!-- ================= MODAL THÔNG BÁO & HOẠT ĐỘNG ================= -->
+    <div id="notificationModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="glass-panel border border-slate-700/85 p-6 sm:p-7 rounded-[2rem] max-w-md w-full space-y-4 shadow-2xl relative animate-zoom">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-bell text-emerald-400"></i> Thông Báo & Hoạt Động
+                </h3>
+                <button onclick="closeNotificationModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="notificationListContainer" class="space-y-3 max-h-80 overflow-y-auto pr-1 text-xs">
+                <p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>
+            </div>
+
+            <button onclick="closeNotificationModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Đóng</button>
         </div>
     </div>
 
@@ -702,6 +729,91 @@
             document.getElementById('menuDropdownModal').classList.add('hidden');
         }
 
+        function openNotificationModal() {
+            document.getElementById('notificationModal').classList.remove('hidden');
+            loadNotifications();
+        }
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').classList.add('hidden');
+        }
+
+        async function simulateAppPurchase() {
+            if (!currentUser) return;
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+            const randomCashback = Math.floor(5 + Math.random() * 45) * 1000; // Từ 5,000 đến 50,000 đ
+            const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN');
+
+            try {
+                // 1. Thêm vào bảng orders
+                await clientSupabase.from('orders').insert([{
+                    user_id: currentUser.id,
+                    order_id: String(randomOrderId),
+                    cashback_amount: randomCashback
+                }]);
+
+                // 2. Thêm vào bảng notifications
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: 'Đơn hàng hoàn tiền mới!',
+                    message: `Bạn vừa có đơn hàng mua sắm #${randomOrderId} trên app Shopping Tiết Kiệm thành công. Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví!`,
+                    type: 'order'
+                }]);
+
+                // 3. Cập nhật số dư ví trong profiles
+                const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
+                const newBalance = Number(profile?.balance || 0) + randomCashback;
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
+
+                fetchUserProfileData();
+                loadUserOrders();
+                checkUnreadNotifications();
+            } catch (err) {
+                console.error("Simulate purchase error:", err);
+            }
+        }
+
+        async function loadNotifications() {
+            const container = document.getElementById('notificationListContainer');
+            if (!currentUser) return;
+            container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Đang tải thông báo...</p>`;
+
+            try {
+                const { data } = await clientSupabase.from('notifications').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>`;
+                    return;
+                }
+
+                container.innerHTML = data.map(item => `
+                    <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-white text-xs flex items-center gap-1.5"><i class="fa-solid fa-circle-dot text-emerald-400 text-[8px]"></i> ${item.title}</span>
+                            <span class="text-[10px] text-slate-500">${new Date(item.created_at || Date.now()).toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})}</span>
+                        </div>
+                        <p class="text-slate-300 text-[11px] leading-relaxed">${item.message}</p>
+                    </div>
+                `).join('');
+
+                // Đánh dấu đã đọc chấm đỏ
+                document.getElementById('notifBadgeDot').classList.add('hidden');
+                document.getElementById('notifBadgeCount').classList.add('hidden');
+            } catch (e) {
+                container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>`;
+            }
+        }
+
+        async function checkUnreadNotifications() {
+            if (!currentUser) return;
+            try {
+                const { data } = await clientSupabase.from('notifications').select('*').eq('user_id', currentUser.id);
+                if (data && data.length > 0) {
+                    document.getElementById('notifBadgeDot').classList.remove('hidden');
+                    document.getElementById('notifBadgeCount').innerText = data.length;
+                    document.getElementById('notifBadgeCount').classList.remove('hidden');
+                }
+            } catch (e) {}
+        }
+
         function openReportModal() {
             document.getElementById('reportModal').classList.remove('hidden');
         }
@@ -781,7 +893,6 @@
             const q = query.toLowerCase().trim();
             let reply = "";
 
-            // 1. Xử lý các phép toán cơ bản (1+1, 2+2, nhân chia,...)
             if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.match(/^\s*1\s*\+\s*1\s*=?\s*$/) || q.match(/^\s*2\s*\+\s*2\s*=?\s*$/)) {
                 try {
                     const sanitized = q.replace(/[^0-9\+\-\*\/\.]/g, '');
@@ -791,7 +902,6 @@
                     reply = "Xin lỗi, tôi tính toán chưa ra kết quả này.";
                 }
             }
-            // 2. Chào hỏi & Trò chuyện xã giao thường ngày
             else if (q.match(/^(chào|hi|hello|alo|chào bot|shop ơi|chúc 1 ngày tốt lành|xin chào)/)) {
                 reply = "Xin chào bạn! Rất vui được trò chuyện và hỗ trợ bạn hôm nay. Bạn đang cần tìm hiểu về hoàn tiền mua sắm hay muốn trò chuyện, hỏi đáp vấn đề gì cứ nói với tôi nhé!";
             } 
@@ -801,11 +911,9 @@
             else if (q.match(/(khỏe không|thế nào rồi|bạn thế nào)/)) {
                 reply = "Cảm ơn bạn đã hỏi thăm, tôi là AI nên luôn luôn tràn đầy năng lượng và sẵn sàng giúp đỡ bạn! Còn bạn thế nào rồi?";
             }
-            // 3. Câu hỏi về thời tiết (Phản hồi thân thiện)
             else if (q.includes('thời tiết') || q.includes('trời mưa') || q.includes('nắng không')) {
                 reply = "Vì tôi là trợ lý trực tuyến nên không cập nhật được chính xác vị trí hiện tại của bạn, nhưng khuyên bạn trước khi ra đường nhớ xem app thời tiết hoặc mang theo ô/áo mưa để phòng hờ nhé!";
             }
-            // 4. App hoàn tiền & Shopping Tiết Kiệm
             else if (q.includes('hoàn tiền cao nhất') || q.includes('app nào') || q.includes('nền tảng nào') || q.includes('shopping tiết kiệm')) {
                 reply = "<b>Shopping Tiết Kiệm</b> hiện là nền tảng hoàn tiền <b>cao nhất hiện nay</b>!<br>" +
                         "• Hoàn tiền tự động, uy tín và minh bạch.<br>" +
@@ -817,14 +925,12 @@
                         "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
                         "3. Mua sắm như bình thường và nhận chiết khấu tiền hoàn khủng về ví tự động!";
             }
-            // 5. Cảm ơn / Tạm biệt
             else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
                 reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
             }
             else if (q.match(/(tạm biệt|bye|chào nhé)/)) {
                 reply = "Tạm biệt bạn! Hẹn gặp lại bạn lần sau nhé. Chúc bạn một ngày tốt lành!";
             }
-            // 6. Mặc định thông minh cho các câu hỏi thông thường khác
             else {
                 reply = `Cảm ơn câu hỏi của bạn: "<i>${escapeHtml(query)}</i>".<br>` +
                         "Tôi có thể hỗ trợ bạn trò chuyện, giải đáp thắc mắc hoặc hướng dẫn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b> (mã <b class='text-amber-400'>STKRDMEJV</b>). Bạn muốn tôi giúp gì cụ thể hơn không?";
@@ -896,6 +1002,7 @@
             renderHeaderUI();
             loadUserOrders();
             fetchUserProfileData();
+            checkUnreadNotifications();
 
             if (currentUser && currentUser.email === ADMIN_EMAIL) {
                 document.getElementById('adminNavContainer').classList.remove('hidden');
