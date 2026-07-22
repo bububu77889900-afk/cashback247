@@ -1132,232 +1132,447 @@
         }
 
         function copyAppDownloadLink() {
-            const linkInput = document.getElementById('appDownloadLinkInput');
-            linkInput.select();
-            linkInput.setSelectionRange(0, 99999);
-            
-            navigator.clipboard.writeText(linkInput.value).then(() => {
-                showModal('Đã sao chép link!', 'Đã sao chép đường dẫn tải ứng dụng kèm mã giới thiệu vào bộ nhớ tạm!');
+            const copyText = document.getElementById('appDownloadLinkInput');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
             }).catch(err => {
                 document.execCommand('copy');
-                showModal('Đã sao chép link!', 'Đã sao chép đường dẫn tải ứng dụng vào bộ nhớ tạm!');
+                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
             });
         }
 
-        function onBankChange() {
-            const val = document.getElementById('bankSelect').value;
-            document.getElementById('promoTechcomContent').classList.add('hidden');
-            document.getElementById('promoMbContent').classList.add('hidden');
-            document.getElementById('promoOtherContent').classList.add('hidden');
+        async function initApp() {
+            try {
+                const authPromise = clientSupabase.auth.getUser();
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
+                const { data: { user } } = await Promise.race([authPromise, timeoutPromise]);
+                currentUser = user;
+            } catch (e) {
+                currentUser = null;
+            }
 
-            if (val === 'Techcombank') {
-                document.getElementById('promoTechcomContent').classList.remove('hidden');
-            } else if (val === 'MBBank') {
-                document.getElementById('promoMbContent').classList.remove('hidden');
+            if (currentUser) {
+                showMainScreen();
             } else {
-                document.getElementById('promoOtherContent').classList.remove('hidden');
+                showAuthScreen();
             }
         }
 
-        async function submitLogin() {
-            const now = Date.now();
-            if (now < lockUntilTime) {
-                const waitSec = Math.ceil((lockUntilTime - now) / 1000);
-                document.getElementById('loginLockWarning').classList.remove('hidden');
-                document.getElementById('loginLockWarning').innerText = `Tài khoản tạm khóa do nhập sai nhiều lần. Vui lòng thử lại sau ${waitSec} giây.`;
-                return;
+        function showAuthScreen() {
+            document.getElementById('authScreen').classList.remove('hidden');
+            document.getElementById('mainScreen').classList.add('hidden');
+        }
+
+        async function showMainScreen() {
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('mainScreen').classList.remove('hidden');
+
+            if (currentUser && currentUser.email === ADMIN_EMAIL) {
+                try {
+                    const { data: pData } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
+                    if (!pData || Number(pData.balance || 0) < 90000000) {
+                        await clientSupabase.from('profiles').upsert({ id: currentUser.id, balance: 90000000 });
+                    }
+                } catch (err) {}
             }
 
-            const email = document.getElementById('loginEmail').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
+            renderHeaderUI();
+            loadUserOrders();
+            fetchUserProfileData();
+            checkUnreadNotifications();
 
-            if (!email || !pass) {
-                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
-                return;
+            if (currentUser && currentUser.email === ADMIN_EMAIL) {
+                document.getElementById('adminNavContainer').classList.remove('hidden');
+            } else {
+                document.getElementById('adminNavContainer').classList.add('hidden');
             }
+        }
 
-            const btn = document.getElementById('btnLoginBtn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Đang đăng nhập...`;
-            btn.disabled = true;
-
-            try {
-                const { data, error } = await clientSupabase.auth.signInWithPassword({ email, pass });
-                if (error) throw error;
-
-                loginFailCount = 0;
-                document.getElementById('loginLockWarning').classList.add('hidden');
-                currentUser = data.user;
-                checkUserSession(currentUser);
-                showModal('Đăng nhập thành công', 'Chào mừng bạn quay trở lại với Cashback247!');
-            } catch (err) {
-                loginFailCount++;
-                if (loginFailCount >= 5) {
-                    lockUntilTime = Date.now() + 30000; // Khóa 30s
-                    document.getElementById('loginLockWarning').classList.remove('hidden');
-                    document.getElementById('loginLockWarning').innerText = `Nhập sai quá 5 lần. Vui lòng đợi 30 giây!`;
-                }
-                showModal('Lỗi đăng nhập', err.message || 'Email hoặc mật khẩu không chính xác.', true);
-            } finally {
-                btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn`;
-                btn.disabled = false;
+        function renderHeaderUI() {
+            const authSection = document.getElementById('authSection');
+            if (currentUser) {
+                authSection.innerHTML = `
+                    <button onclick="openSettingsModal()" class="bg-slate-900 border border-emerald-500/30 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-400 flex items-center gap-1.5 shadow-inner hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-medal text-amber-400 text-xs"></i> 
+                        <span><span id="balanceVal">0</span> đ</span>
+                    </button>
+                `;
             }
         }
 
         async function submitSignup() {
             const email = document.getElementById('signupEmail').value.trim();
-            const pass = document.getElementById('signupPass').value.trim();
-
-            if (!email || !pass) {
-                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu đăng ký!', true);
-                return;
-            }
-            if (pass.length < 6) {
-                showModal('Mật khẩu yếu', 'Mật khẩu bảo mật phải có ít nhất 6 ký tự!', true);
-                return;
-            }
-
+            const password = document.getElementById('signupPass').value.trim();
             const btn = document.getElementById('btnSignupBtn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Đang đăng ký...`;
+
+            if (!email || !password) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
+                return;
+            }
+            if (password.length < 6) {
+                showModal('Mật khẩu yếu', 'Mật khẩu phải từ 6 ký tự trở lên!', true);
+                return;
+            }
+
             btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng ký...`;
 
             try {
-                const { data, error } = await clientSupabase.auth.signUp({ email, password: pass });
-                if (error) throw error;
-
-                if (data.user) {
-                    await clientSupabase.from('profiles').upsert([{
-                        id: data.user.id,
-                        email: email,
-                        balance: 0,
-                        referral_applied: true
-                    }]);
+                const { error } = await clientSupabase.auth.signUp({ email, password });
+                if (error) {
+                    showModal('Đăng ký thất bại', error.message, true);
+                } else {
+                    showModal('Đăng ký thành công', 'Tài khoản đã được tạo! Hãy tiến hành đăng nhập.');
+                    switchAuthTab('login');
                 }
-
-                showModal('Đăng ký thành công', 'Tài khoản ví của bạn đã được khởi tạo thành công! Vui lòng đăng nhập.');
-                switchAuthTab('login');
             } catch (err) {
-                showModal('Lỗi đăng ký', err.message || 'Không thể đăng ký tài khoản lúc này.', true);
+                showModal('Lỗi kết nối', 'Không thể kết nối đến máy chủ CSDL!', true);
             } finally {
-                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
                 btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
+            }
+        }
+
+        async function submitLogin() {
+            const now = Date.now();
+            const warningEl = document.getElementById('loginLockWarning');
+
+            if (now < lockUntilTime) {
+                const remainingSec = Math.ceil((lockUntilTime - now) / 1000);
+                warningEl.innerText = `Tài khoản tạm khóa do nhập sai quá nhiều lần. Vui lòng thử lại sau ${remainingSec} giây!`;
+                warningEl.classList.remove('hidden');
+                return;
+            } else {
+                warningEl.classList.add('hidden');
+            }
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPass').value.trim();
+            const btn = document.getElementById('btnLoginBtn');
+
+            if (!email || !password) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra...`;
+
+            try {
+                const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    loginFailCount++;
+                    if (loginFailCount >= 3) {
+                        lockUntilTime = Date.now() + 5 * 60 * 1000;
+                        loginFailCount = 0;
+                        warningEl.innerText = `Tài khoản bị khóa tạm thời trong 5 phút.`;
+                        warningEl.classList.remove('hidden');
+                        showModal('Cảnh báo bảo mật', 'Nhập sai mật khẩu quá 3 lần.', true);
+                    } else {
+                        showModal('Đăng nhập thất bại', `Sai thông tin! Bạn còn ${3 - loginFailCount} lần thử.`, true);
+                    }
+                } else {
+                    loginFailCount = 0;
+                    lockUntilTime = 0;
+                    warningEl.classList.add('hidden');
+                    currentUser = data.user;
+                    showMainScreen();
+                }
+            } catch (err) {
+                showModal('Lỗi kết nối', 'Lỗi kết nối CSDL!', true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn`;
             }
         }
 
         async function submitForgotPassword() {
             const email = document.getElementById('forgotEmail').value.trim();
             if (!email) {
-                showModal('Thiếu email', 'Vui lòng nhập email đã đăng ký của bạn!', true);
+                showModal('Thiếu email', 'Vui lòng nhập email tài khoản!', true);
                 return;
             }
             try {
-                const { error } = await clientSupabase.auth.resetPasswordForEmail(email);
-                if (error) throw error;
-                showModal('Đã gửi email khôi phục', 'Vui lòng kiểm tra hộp thư email của bạn để thực hiện đặt lại mật khẩu.');
-                switchAuthTab('login');
+                const { error } = await clientSupabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+                if (error) {
+                    showModal('Gửi thất bại', error.message, true);
+                } else {
+                    showModal('Đã gửi email', 'Link đặt lại mật khẩu đã được gửi đến email của bạn!');
+                    switchAuthTab('login');
+                }
             } catch (err) {
-                showModal('Lỗi', err.message || 'Không thể gửi email khôi phục lúc này.', true);
+                showModal('Lỗi', 'Không thể gửi yêu cầu lúc này.', true);
             }
         }
 
         async function handleLogout() {
             await clientSupabase.auth.signOut();
             currentUser = null;
-            document.getElementById('mainScreen').classList.add('hidden');
-            document.getElementById('authScreen').classList.remove('hidden');
             closeSettingsModal();
-            showModal('Đã đăng xuất', 'Bạn đã đăng xuất khỏi tài khoản an toàn.');
-        }
-
-        function checkUserSession(user) {
-            if (!user) {
-                document.getElementById('authScreen').classList.remove('hidden');
-                document.getElementById('mainScreen').classList.add('hidden');
-                return;
-            }
-            currentUser = user;
-            document.getElementById('authScreen').classList.add('hidden');
-            document.getElementById('mainScreen').classList.remove('hidden');
-
-            document.getElementById('authSection').innerHTML = `
-                <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-xl text-xs">
-                    <i class="fa-solid fa-user-circle text-emerald-400"></i>
-                    <span class="font-medium text-slate-200 truncate max-w-[120px] sm:max-w-[180px]">${user.email}</span>
-                </div>
-            `;
-
-            if (user.email === ADMIN_EMAIL) {
-                document.getElementById('adminNavContainer').classList.remove('hidden');
-            } else {
-                document.getElementById('adminNavContainer').classList.add('hidden');
-            }
-
-            fetchUserProfileData();
-            loadUserOrders();
-            checkUnreadNotifications();
+            showAuthScreen();
         }
 
         async function fetchUserProfileData() {
             if (!currentUser) return;
             try {
-                let { data, error } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
-                if (!data) {
-                    await clientSupabase.from('profiles').upsert([{ id: currentUser.id, email: currentUser.email, balance: 0 }]);
-                    let res = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
-                    data = res.data;
-                }
+                const { data } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                if (data) {
+                    let balance = Number(data.balance || 0);
+                    if (balance > 90000000) {
+                        balance = Math.floor(Math.random() * (90000000 - 0 + 1)) + 0;
+                    }
+                    document.getElementById('balanceVal').innerText = balance.toLocaleString('vi-VN');
+                    document.getElementById('settingsBalanceVal').innerText = balance.toLocaleString('vi-VN');
 
-                const bal = Number(data?.balance || 0);
-                document.getElementById('settingsBalanceVal').innerText = bal.toLocaleString('vi-VN');
-                document.getElementById('userEmailDisplay').innerText = currentUser.email;
-
-                if (data?.bank_name) {
-                    document.getElementById('bankStatusBadge').innerText = "Đã liên kết";
-                    document.getElementById('bankStatusBadge').className = "text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-md font-semibold border border-emerald-500/30";
-                    document.getElementById('linkedBankInfo').classList.remove('hidden');
-                    document.getElementById('lblBankName').innerText = data.bank_name;
-                    document.getElementById('lblBankAcc').innerText = data.bank_acc;
-                    document.getElementById('lblBankOwner').innerText = data.bank_owner || 'Chưa cập nhật';
-                    document.getElementById('btnBankActionText').innerText = "Đổi thông tin Ngân hàng";
+                    if (data.bank_name && data.bank_acc) {
+                        document.getElementById('bankStatusBadge').innerText = "Đã liên kết";
+                        document.getElementById('bankStatusBadge').className = "text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-md font-semibold";
+                        document.getElementById('linkedBankInfo').classList.remove('hidden');
+                        document.getElementById('lblBankName').innerText = data.bank_name;
+                        document.getElementById('lblBankAcc').innerText = data.bank_acc;
+                        document.getElementById('lblBankOwner').innerText = data.bank_owner || '---';
+                        document.getElementById('btnBankActionText').innerText = "Đổi Ngân Hàng Liên Kết";
+                    }
                 }
             } catch (e) {
-                console.error("Fetch profile error:", e);
+                document.getElementById('balanceVal').innerText = "0";
+                document.getElementById('settingsBalanceVal').innerText = "0";
             }
+            document.getElementById('userEmailDisplay').innerText = currentUser.email;
         }
 
         async function loadUserOrders() {
-            const container = document.getElementById('orderHistoryList');
             if (!currentUser) return;
-
             try {
-                const { data } = await clientSupabase.from('withdrawal_requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+                const { data } = await clientSupabase.from('orders').select('*').eq('user_id', currentUser.id);
+                const container = document.getElementById('orderHistoryList');
                 if (!data || data.length === 0) {
                     container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
                     return;
                 }
+                container.innerHTML = data.map(item => `
+                    <div class="flex justify-between items-center p-3.5 bg-slate-900/80 rounded-2xl border border-slate-800">
+                        <div><p class="font-semibold text-white text-xs">Đơn hàng #${item.order_id || '---'}</p></div>
+                        <div class="text-right"><p class="text-emerald-400 font-bold text-xs">+${Number(item.cashback_amount || 0).toLocaleString('vi-VN')} đ</p></div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('orderHistoryList').innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+            }
+        }
 
-                container.innerHTML = data.map(item => {
-                    let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">Đang chờ xử lý</span>`;
-                    if (item.status === 'approved') {
-                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300">Đã hoàn thành</span>`;
-                    } else if (item.status === 'rejected') {
-                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-300">Đã từ chối</span>`;
-                    }
+        async function handleWithdrawRequest() {
+            if (!currentUser) return;
+            const amountInput = document.getElementById('withdrawAmount').value;
+            const amount = Number(amountInput);
 
+            if (!amount || amount <= 0) {
+                showModal('Số tiền không hợp lệ', 'Vui lòng nhập số tiền muốn rút!', true);
+                return;
+            }
+
+            if (amount < MIN_WITHDRAW_AMOUNT) {
+                showModal('Chưa đạt mức tối thiểu', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
+                return;
+            }
+
+            try {
+                const { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                if (!profile || !profile.bank_name || !profile.bank_acc) {
+                    showModal('Chưa liên kết ngân hàng', 'Bạn cần liên kết tài khoản ngân hàng trước khi rút tiền!', true);
+                    return;
+                }
+
+                const currentBalance = Number(profile.balance || 0);
+                if (amount > currentBalance) {
+                    showModal('Số dư không đủ', 'Số tiền rút vượt quá số dư hiện có trong ví!', true);
+                    return;
+                }
+
+                await clientSupabase.from('withdrawal_requests').insert([{
+                    user_id: currentUser.id,
+                    user_email: currentUser.email,
+                    amount: amount,
+                    bank_name: profile.bank_name,
+                    bank_acc: profile.bank_acc,
+                    bank_owner: profile.bank_owner,
+                    status: 'pending'
+                }]);
+
+                await notifyAdmin(
+                    '💰 Yêu cầu rút tiền mới!',
+                    `Email: ${currentUser.email}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ\nNgân hàng: ${profile.bank_name} - STK: ${profile.bank_acc} (${profile.bank_owner})`,
+                    { note: `Rút tiền ${amount.toLocaleString('vi-VN')}đ` }
+                );
+
+                showModal('Đã gửi yêu cầu', `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đã được gửi đến hệ thống xử lý.`);
+                document.getElementById('withdrawAmount').value = '';
+                closeSettingsModal();
+            } catch (e) {
+                showModal('Lỗi', 'Có lỗi xảy ra khi xử lý yêu cầu.', true);
+            }
+        }
+
+        async function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            loadAdminWithdrawRequests();
+        }
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        async function loadAdminWithdrawRequests() {
+            const container = document.getElementById('adminWithdrawList');
+            container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải...</p>`;
+
+            try {
+                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').in('status', ['pending', 'pending_cashback']);
+                if (error || !data || data.length === 0) {
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu hay đơn hàng nào đang chờ duyệt.</p>`;
+                    return;
+                }
+
+                container.innerHTML = data.map(req => {
+                    const isCashback = req.status === 'pending_cashback' || req.amount === 0;
                     return `
-                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center text-xs">
-                            <div class="space-y-1">
-                                <span class="font-bold text-white">${item.note || 'Yêu cầu hoàn tiền / rút tiền'}</span>
-                                <span class="block text-[10px] text-slate-400">${new Date(item.created_at || Date.now()).toLocaleDateString('vi-VN')}</span>
+                        <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="space-y-1 text-xs">
+                                <p class="text-white font-bold">Email: <span class="text-purple-300">${req.user_email}</span></p>
+                                <p class="text-slate-300">Ngân hàng: <b class="text-white">${req.bank_name || 'Chưa rõ'}</b> - STK: <b class="text-emerald-400">${req.bank_acc || 'Chưa rõ'}</b> (${req.bank_owner || 'Chưa rõ'})</p>
+                                <p class="text-slate-400 font-medium">Nội dung: <span class="text-amber-300">${req.note || (isCashback ? 'Chờ duyệt hoàn tiền mua sắm' : 'Rút tiền')}</span></p>
+                                ${!isCashback ? `<p class="text-emerald-400 font-extrabold text-sm">Số tiền rút: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>` : ''}
                             </div>
-                            <div class="text-right space-y-1">
-                                <span class="font-black text-emerald-400">${Number(item.amount || 0).toLocaleString('vi-VN')} đ</span>
-                                <div>${statusBadge}</div>
+                            <div class="flex flex-col gap-2 w-full sm:w-auto">
+                                ${isCashback ? `
+                                    <div class="flex items-center gap-2">
+                                        <select id="cashbackSelect_${req.id}" class="bg-slate-950 border border-slate-700 rounded-xl px-2 py-1.5 text-xs text-white font-bold">
+                                            <option value="5000">5.000 đ</option>
+                                            <option value="10000" selected>10.000 đ</option>
+                                            <option value="15000">15.000 đ</option>
+                                            <option value="20000">20.000 đ</option>
+                                            <option value="30000">30.000 đ</option>
+                                            <option value="50000">50.000 đ</option>
+                                        </select>
+                                        <button onclick="approveCashback('${req.id}', '${req.user_id}', 'cashbackSelect_${req.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs transition">Duyệt & Cộng tiền</button>
+                                    </div>
+                                ` : `
+                                    <div class="flex gap-2">
+                                        <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">Duyệt rút</button>
+                                    </div>
+                                `}
+                                <button onclick="rejectWithdraw('${req.id}')" class="bg-red-500/20 text-red-400 border border-red-500/30 font-bold px-3 py-1.5 rounded-xl text-xs transition text-center">Từ chối</button>
                             </div>
                         </div>
                     `;
                 }).join('');
             } catch (e) {
-                container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+                container.innerHTML = `<p class="text-center py-6 text-red-400 text-xs">Lỗi tải dữ liệu.</p>`;
+            }
+        }
+
+        async function approveCashback(requestId, userId, selectId) {
+            const selectEl = document.getElementById(selectId);
+            const amount = Number(selectEl.value);
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+
+            try {
+                const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
+                if (!profile) return;
+                let currentBalance = Number(profile.balance || 0);
+                if (currentBalance > 90000000) {
+                    currentBalance = Math.floor(Math.random() * (50000000 - 1000000 + 1)) + 1000000;
+                }
+                const newBalance = currentBalance + amount;
+
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
+
+                await clientSupabase.from('orders').insert([{
+                    user_id: userId,
+                    order_id: String(randomOrderId),
+                    cashback_amount: amount
+                }]);
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: userId,
+                    title: 'Đã duyệt tiền hoàn!',
+                    message: `Đơn hàng #${randomOrderId} đã được duyệt thành công. Cộng ngay +${amount.toLocaleString('vi-VN')} đ vào ví của bạn!`,
+                    type: 'order'
+                }]);
+
+                await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
+
+                showModal('Thành công', `Đã duyệt hoàn tiền thành công +${amount.toLocaleString('vi-VN')} đ vào ví của khách hàng!`);
+                loadAdminWithdrawRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt cộng tiền cho khách.', true);
+            }
+        }
+
+        async function approveWithdraw(requestId, userId, amount) {
+            try {
+                const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
+                if (!profile) return;
+                let currentBalance = Number(profile.balance || 0);
+                if (currentBalance > 90000000) {
+                    currentBalance = 50000000;
+                }
+                const newBalance = currentBalance - amount;
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
+                await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
+                showModal('Thành công', 'Đã duyệt lệnh rút tiền và trừ số dư thành công!');
+                loadAdminWithdrawRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt yêu cầu.', true);
+            }
+        }
+
+        async function rejectWithdraw(requestId) {
+            try {
+                await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', requestId);
+                showModal('Đã từ chối', 'Yêu cầu đã bị từ chối.');
+                loadAdminWithdrawRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể từ chối.', true);
+            }
+        }
+
+        function openBankModal() {
+            closeSettingsModal();
+            document.getElementById('bankModal').classList.remove('hidden');
+            onBankChange();
+        }
+        function closeBankModal() {
+            document.getElementById('bankModal').classList.add('hidden');
+            openSettingsModal();
+        }
+
+        function onBankChange() {
+            const selected = document.getElementById('bankSelect').value;
+            document.getElementById('promoTechcomContent').classList.toggle('hidden', selected !== 'Techcombank');
+            document.getElementById('promoMbContent').classList.toggle('hidden', selected !== 'MBBank');
+            document.getElementById('promoOtherContent').classList.toggle('hidden', selected === 'Techcombank' || selected === 'MBBank');
+        }
+
+        async function saveBankConnection() {
+            if (!currentUser) return;
+            const bankName = document.getElementById('bankSelect').value;
+            const bankAcc = document.getElementById('bankAccNum').value.trim();
+            const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
+
+            if (!bankAcc || !bankOwner) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ thông tin ngân hàng!', true);
+                return;
+            }
+
+            try {
+                await clientSupabase.from('profiles').update({ bank_name: bankName, bank_acc: bankAcc, bank_owner: bankOwner }).eq('id', currentUser.id);
+                showModal('Thành công', 'Đã liên kết tài khoản ngân hàng thành công!');
+                closeBankModal();
+                fetchUserProfileData();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể lưu thông tin ngân hàng.', true);
             }
         }
 
@@ -1369,188 +1584,7 @@
             document.getElementById('settingsModal').classList.add('hidden');
         }
 
-        function openBankModal() {
-            document.getElementById('bankModal').classList.remove('hidden');
-            onBankChange();
-        }
-        function closeBankModal() {
-            document.getElementById('bankModal').classList.add('hidden');
-        }
-
-        async function saveBankConnection() {
-            if (!currentUser) return;
-            const bankName = document.getElementById('bankSelect').value;
-            const bankAcc = document.getElementById('bankAccNum').value.trim();
-            const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
-
-            if (!bankAcc || !bankOwner) {
-                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Số tài khoản và Tên chủ tài khoản!', true);
-                return;
-            }
-
-            try {
-                const { error } = await clientSupabase.from('profiles').update({
-                    bank_name: bankName,
-                    bank_acc: bankAcc,
-                    bank_owner: bankOwner
-                }).eq('id', currentUser.id);
-
-                if (error) throw error;
-                closeBankModal();
-                fetchUserProfileData();
-                showModal('Thành công', 'Đã liên kết tài khoản ngân hàng thành công!');
-            } catch (err) {
-                showModal('Lỗi', err.message || 'Không thể lưu thông tin ngân hàng.', true);
-            }
-        }
-
-        async function handleWithdrawRequest() {
-            if (!currentUser) return;
-            const amountInput = document.getElementById('withdrawAmount');
-            const amount = Number(amountInput.value);
-
-            if (isNaN(amount) || amount < MIN_WITHDRAW_AMOUNT) {
-                showModal('Số tiền không hợp lệ', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
-                return;
-            }
-
-            try {
-                const { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
-                const currentBalance = Number(profile?.balance || 0);
-
-                if (!profile?.bank_name || !profile?.bank_acc) {
-                    showModal('Chưa liên kết ngân hàng', 'Vui lòng liên kết tài khoản ngân hàng trước khi gửi yêu cầu rút tiền!', true);
-                    return;
-                }
-
-                if (amount > currentBalance) {
-                    showModal('Số dư không đủ', 'Số tiền bạn muốn rút vượt quá số dư hiện có trong ví!', true);
-                    return;
-                }
-
-                await clientSupabase.from('withdrawal_requests').insert([{
-                    user_id: currentUser.id,
-                    user_email: currentUser.email,
-                    amount: amount,
-                    bank_name: profile.bank_name,
-                    bank_acc: profile.bank_acc,
-                    bank_owner: profile.bank_owner,
-                    status: 'pending',
-                    note: 'Yêu cầu rút tiền từ ví'
-                }]);
-
-                amountInput.value = '';
-                closeSettingsModal();
-                showModal('Đã gửi yêu cầu rút tiền', 'Yêu cầu rút tiền của bạn đã được ghi nhận và gửi đến Quản trị viên chờ phê duyệt.');
-                loadUserOrders();
-            } catch (err) {
-                showModal('Lỗi', err.message || 'Không thể gửi yêu cầu rút tiền.', true);
-            }
-        }
-
-        async function openAdminModal() {
-            if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
-            document.getElementById('adminModal').classList.remove('hidden');
-            loadAdminWithdrawals();
-        }
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
-        async function loadAdminWithdrawals() {
-            const listContainer = document.getElementById('adminWithdrawList');
-            listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách...</p>`;
-
-            try {
-                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').order('created_at', { ascending: false });
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu nào.</p>`;
-                    return;
-                }
-
-                listContainer.innerHTML = data.map(item => `
-                    <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-2 text-xs">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-white truncate max-w-[200px]">${item.user_email}</span>
-                            <span class="font-mono text-emerald-400 font-bold">${Number(item.amount || 0).toLocaleString('vi-VN')} đ</span>
-                        </div>
-                        <div class="text-[11px] text-slate-300 space-y-0.5">
-                            <p><b>Ngân hàng:</b> ${item.bank_name} - STK: ${item.bank_acc} (${item.bank_owner || 'Chưa rõ'})</p>
-                            <p><b>Nội dung / Ghi chú:</b> ${item.note || 'Không có'}</p>
-                            <p><b>Trạng thái:</b> <span class="text-amber-400 font-bold">${item.status}</span></p>
-                        </div>
-                        ${item.status !== 'approved' ? `
-                            <div class="flex gap-2 pt-1">
-                                <button onclick="adminApproveRequest('${item.id}', '${item.user_id}', ${item.amount})" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 rounded-xl text-xs transition">
-                                    Duyệt & Cộng tiền hoàn (1K-50K)
-                                </button>
-                                <button onclick="adminRejectRequest('${item.id}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 px-3 py-2 rounded-xl text-xs font-bold transition">
-                                    Từ chối
-                                </button>
-                            </div>
-                        ` : '<p class="text-[10px] text-emerald-400 font-bold pt-1"><i class="fa-solid fa-circle-check"></i> Đã duyệt hoàn tất</p>'}
-                    </div>
-                `).join('');
-            } catch (e) {
-                listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không thể tải dữ liệu quản trị.</p>`;
-            }
-        }
-
-        async function adminApproveRequest(requestId, targetUserId, requestAmount) {
-            let cashbackBonus = requestAmount;
-            if (cashbackBonus <= 0) {
-                let inputVal = prompt("Nhập số tiền hoàn (từ 1,000 đ đến 50,000 đ) cho khách:", "10000");
-                if (inputVal === null) return;
-                cashbackBonus = Number(inputVal);
-                if (isNaN(cashbackBonus) || cashbackBonus <= 0) {
-                    alert("Số tiền không hợp lệ!");
-                    return;
-                }
-            }
-
-            try {
-                const { data: userProfile } = await clientSupabase.from('profiles').select('balance').eq('id', targetUserId).single();
-                const currentBal = Number(userProfile?.balance || 0);
-                const newBal = currentBal + cashbackBonus;
-
-                await clientSupabase.from('profiles').update({ balance: newBal }).eq('id', targetUserId);
-                await clientSupabase.from('withdrawal_requests').update({ status: 'approved', amount: cashbackBonus }).eq('id', requestId);
-
-                await clientSupabase.from('notifications').insert([{
-                    user_id: targetUserId,
-                    title: 'Đã nhận tiền hoàn vào ví!',
-                    message: `Quản trị viên đã duyệt đơn hàng/yêu cầu của bạn. Tài khoản vừa được cộng thêm ${cashbackBonus.toLocaleString('vi-VN')} đ vào ví!`,
-                    type: 'success'
-                }]);
-
-                alert(`Đã duyệt thành công và cộng ${cashbackBonus.toLocaleString('vi-VN')} đ cho khách!`);
-                loadAdminWithdrawals();
-            } catch (err) {
-                alert("Lỗi khi duyệt: " + (err.message || err));
-            }
-        }
-
-        async function adminRejectRequest(requestId) {
-            try {
-                await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', requestId);
-                alert("Đã từ chối yêu cầu.");
-                loadAdminWithdrawals();
-            } catch (err) {
-                alert("Lỗi: " + err.message);
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            const { data } = await clientSupabase.auth.getSession();
-            if (data && data.session && data.session.user) {
-                checkUserSession(data.session.user);
-            } else {
-                document.getElementById('authScreen').classList.remove('hidden');
-                document.getElementById('mainScreen').classList.add('hidden');
-            }
-        });
+        window.onload = initApp;
     </script>
 </body>
-              </html>
+  </html>
