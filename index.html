@@ -354,7 +354,7 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-sm">Trợ Lý AI Shopping</h4>
-                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Hỗ trợ hoàn tiền & Giải toán</span>
+                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Hỗ trợ hoàn tiền & Trò chuyện</span>
                     </div>
                 </div>
                 <button onclick="toggleAiChat()" class="w-7 h-7 rounded-lg bg-black/20 hover:bg-black/30 flex items-center justify-center text-xs transition">
@@ -368,21 +368,21 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Xin chào! Tôi là trợ lý AI chuyên hỗ trợ về app Shopping Tiết Kiệm – nền tảng hoàn tiền cao nhất hiện nay. Ngoài ra, tôi cũng có thể giúp bạn giải các phép tính cơ bản (như 1+1, 2+2,...) hoặc trả lời các câu hỏi nhanh.</p>
-                        <p class="text-[10px] text-slate-400">Bạn cần hỗ trợ gì hôm nay?</p>
+                        <p>Xin chào! Tôi là trợ lý AI thông minh, sẵn sàng trò chuyện, giải đáp thắc mắc, tính toán hoặc hỗ trợ bạn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b>.</p>
+                        <p class="text-[10px] text-slate-400">Bạn cần tôi giúp gì hôm nay?</p>
                     </div>
                 </div>
             </div>
 
             <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
+                <button onclick="sendAiPrompt('Chào bot, bạn khỏe không?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Chào bot!</button>
                 <button onclick="sendAiPrompt('1+1 bằng mấy?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">1+1 = ?</button>
-                <button onclick="sendAiPrompt('2+2 bằng mấy?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">2+2 = ?</button>
                 <button onclick="sendAiPrompt('App nào hoàn tiền cao nhất hiện nay?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">App hoàn tiền cao nhất?</button>
-                <button onclick="sendAiPrompt('Cách nhận hoàn tiền cao nhất?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Cách nhận tiền hoàn?</button>
+                <button onclick="sendAiPrompt('Thời tiết hôm nay thế nào?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Thời tiết thế nào?</button>
             </div>
 
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi, phép tính (1+1, 2+2...) hoặc tìm kiếm..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi, trò chuyện hoặc tính toán..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                 <button onclick="sendUserAiMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -781,42 +781,53 @@
             const q = query.toLowerCase().trim();
             let reply = "";
 
-            // 1. Xử lý các phép toán cơ bản (1+1, 2+2,...)
-            if (q.match(/^\s*1\s*\+\s*1\s*=?\s*$/)) {
-                reply = "1 + 1 = 2";
-            } else if (q.match(/^\s*2\s*\+\s*2\s*=?\s*$/)) {
-                reply = "2 + 2 = 4";
-            } else if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/)) {
+            // 1. Xử lý các phép toán cơ bản (1+1, 2+2, nhân chia,...)
+            if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.match(/^\s*1\s*\+\s*1\s*=?\s*$/) || q.match(/^\s*2\s*\+\s*2\s*=?\s*$/)) {
                 try {
-                    // Tính toán an toàn các phép tính đơn giản
                     const sanitized = q.replace(/[^0-9\+\-\*\/\.]/g, '');
                     const result = Function('"use strict";return (' + sanitized + ')')();
                     reply = `Kết quả của ${sanitized} là: <b class="text-emerald-400 font-bold">${result}</b>`;
                 } catch (e) {
-                    reply = "Xin lỗi, tôi chỉ có thể tính toán các phép toán cơ bản như 1+1, 2+2,...";
+                    reply = "Xin lỗi, tôi tính toán chưa ra kết quả này.";
                 }
             }
-            // 2. Các câu hỏi chào hỏi
-            else if (q.match(/^(chào|hi|hello|alo|chào bot|shop ơi)/)) {
-                reply = "Xin chào bạn! Tôi là trợ lý AI chuyên hỗ trợ về app <b>Shopping Tiết Kiệm</b> – nền tảng hoàn tiền cao nhất hiện nay. Bạn cần tôi hỗ trợ thông tin gì hoặc giải toán không?";
+            // 2. Chào hỏi & Trò chuyện xã giao thường ngày
+            else if (q.match(/^(chào|hi|hello|alo|chào bot|shop ơi|chúc 1 ngày tốt lành|xin chào)/)) {
+                reply = "Xin chào bạn! Rất vui được trò chuyện và hỗ trợ bạn hôm nay. Bạn đang cần tìm hiểu về hoàn tiền mua sắm hay muốn trò chuyện, hỏi đáp vấn đề gì cứ nói với tôi nhé!";
             } 
-            // 3. Câu hỏi về app hoàn tiền cao nhất
+            else if (q.match(/(bạn tên gì|ai tạo ra bạn|cậu là ai|mày là ai)/)) {
+                reply = "Tôi là trợ lý ảo thông minh của hệ thống Cashback247 và Shopping Tiết Kiệm, luôn sẵn sàng hỗ trợ bạn 24/7 mọi lúc mọi nơi!";
+            }
+            else if (q.match(/(khỏe không|thế nào rồi|bạn thế nào)/)) {
+                reply = "Cảm ơn bạn đã hỏi thăm, tôi là AI nên luôn luôn tràn đầy năng lượng và sẵn sàng giúp đỡ bạn! Còn bạn thế nào rồi?";
+            }
+            // 3. Câu hỏi về thời tiết (Phản hồi thân thiện)
+            else if (q.includes('thời tiết') || q.includes('trời mưa') || q.includes('nắng không')) {
+                reply = "Vì tôi là trợ lý trực tuyến nên không cập nhật được chính xác vị trí hiện tại của bạn, nhưng khuyên bạn trước khi ra đường nhớ xem app thời tiết hoặc mang theo ô/áo mưa để phòng hờ nhé!";
+            }
+            // 4. App hoàn tiền & Shopping Tiết Kiệm
             else if (q.includes('hoàn tiền cao nhất') || q.includes('app nào') || q.includes('nền tảng nào') || q.includes('shopping tiết kiệm')) {
                 reply = "<b>Shopping Tiết Kiệm</b> hiện là nền tảng hoàn tiền <b>cao nhất hiện nay</b>!<br>" +
                         "• Hoàn tiền tự động, uy tín và minh bạch.<br>" +
                         "• Nhập mã giới thiệu <b class='text-amber-400'>STKRDMEJV</b> để thăng hạng Bạc và nhận thêm +2% hoa hồng trọn đời.";
             }
-            // 4. Cách nhận hoàn tiền
             else if (q.includes('cách nhận') || q.includes('dùng thế nào') || q.includes('hướng dẫn')) {
                 reply = "<b>Hướng dẫn nhận hoàn tiền cao nhất:</b><br>" +
                         "1. Nhấn nút <b>'Chuyển Hướng Qua Shopping Tiết Kiệm'</b> trên trang chủ.<br>" +
                         "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
                         "3. Mua sắm như bình thường và nhận chiết khấu tiền hoàn khủng về ví tự động!";
             }
-            // 5. Mặc định
+            // 5. Cảm ơn / Tạm biệt
+            else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
+                reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
+            }
+            else if (q.match(/(tạm biệt|bye|chào nhé)/)) {
+                reply = "Tạm biệt bạn! Hẹn gặp lại bạn lần sau nhé. Chúc bạn một ngày tốt lành!";
+            }
+            // 6. Mặc định thông minh cho các câu hỏi thông thường khác
             else {
                 reply = `Cảm ơn câu hỏi của bạn: "<i>${escapeHtml(query)}</i>".<br>` +
-                        "Hãy nhớ sử dụng app <b>Shopping Tiết Kiệm</b> với mã giới thiệu <b class='text-amber-400'>STKRDMEJV</b> để được hoàn tiền cao nhất hiện nay nhé! Hoặc bạn có thể hỏi tôi các phép tính như 1+1, 2+2,...";
+                        "Tôi có thể hỗ trợ bạn trò chuyện, giải đáp thắc mắc hoặc hướng dẫn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b> (mã <b class='text-amber-400'>STKRDMEJV</b>). Bạn muốn tôi giúp gì cụ thể hơn không?";
             }
 
             setTimeout(() => {
