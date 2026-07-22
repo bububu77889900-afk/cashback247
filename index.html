@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cashback247 - Nền Tảng Hoàn Tiền & Tích Lũy Thông Minh</title>
   
+  <!-- Thẻ Open Graph (OG tags) để hiển thị preview khi gửi link -->
+  <meta property="og:title" content="Cùng mua sắm cùng nhận được hoa hồng với shopping tiết kiệm">
+  <meta property="og:description" content="Nền tảng mua sắm thông minh, hoàn tiền tự động và tích lũy hoa hồng hấp dẫn.">
+  <meta property="og:url" content="https://bububu77889900-afk.github.io/cashback247/">
+  <meta property="og:image" content="https://bububu77889900-afk.github.io/cashback247/logo.png">
+  <meta property="og:type" content="website">
+
+  <!-- Thẻ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cùng mua sắm cùng nhận được hoa hồng với shopping tiết kiệm">
+  <meta name="twitter:description" content="Nền tảng mua sắm thông minh, hoàn tiền tự động và tích lũy hoa hồng hấp dẫn.">
+  <meta name="twitter:image" content="https://bububu77889900-afk.github.io/cashback247/logo.png">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -958,7 +971,6 @@
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
                 showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại. Bạn có thể dán (Paste) mã này vào bất cứ đâu!');
             }).catch(err => {
-                // Fallback cho trình duyệt cũ
                 document.execCommand('copy');
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
                 showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại!');
