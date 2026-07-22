@@ -1568,7 +1568,7 @@
 
             try {
                 await clientSupabase.from('profiles').update({ bank_name: bankName, bank_acc: bankAcc, bank_owner: bankOwner }).eq('id', currentUser.id);
-                showModal('Thành công', 'Đã lưu thông tin tài khoản ngân hàng liên kết thành công!');
+                showModal('Thành công', 'Đã liên kết tài khoản ngân hàng thành công!');
                 closeBankModal();
                 fetchUserProfileData();
             } catch (e) {
@@ -1576,12 +1576,12 @@
             }
         }
 
-        function openSettingsModal() { 
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
             fetchUserProfileData();
-            document.getElementById('settingsModal').classList.remove('hidden'); 
         }
-        function closeSettingsModal() { 
-            document.getElementById('settingsModal').classList.add('hidden'); 
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
         }
 
         window.onload = initApp;
