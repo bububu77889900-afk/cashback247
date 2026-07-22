@@ -206,7 +206,7 @@
         <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 space-y-6">
             <div id="adminNavContainer" class="hidden">
                 <button onclick="openAdminModal()" class="w-full bg-gradient-to-r from-purple-600/30 to-indigo-600/30 hover:from-purple-600/40 hover:to-indigo-600/40 text-purple-300 border border-purple-500/40 font-bold py-3 px-4 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-user-shield text-sm"></i> Bảng Quản Trị Admin (Duyệt lệnh rút tiền & Xem thông báo đơn của khách)
+                    <i class="fa-solid fa-user-shield text-sm"></i> Bảng Quản Trị Admin (Duyệt lệnh rút tiền & Gửi tiền hoàn 1K-50K cho khách)
                 </button>
             </div>
 
@@ -266,7 +266,7 @@
                             </div>
                             Gian Hàng Mua Sắm & Tìm Kiếm Đơn Hàng Trực Tiếp
                         </h2>
-                        <p class="text-xs text-slate-400 mt-1">Dán link sản phẩm để hệ thống gửi thông báo trực tiếp đến tài khoản quản trị (Admin)!</p>
+                        <p class="text-xs text-slate-400 mt-1">Dán link sản phẩm để hệ thống gửi thông báo và số tài khoản ngân hàng trực tiếp đến quản trị viên (Admin)!</p>
                     </div>
                     <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
                         <i class="fa-solid fa-bolt text-[9px]"></i> Hoàn tiền hấp dẫn
@@ -282,7 +282,7 @@
                             <i class="fa-solid fa-paper-plane text-xs"></i> Gửi liên kết nhận hoàn tiền
                         </button>
                     </div>
-                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết, cộng từ 1.000đ đến 50.000đ vào ví và gửi thông báo email, số tài khoản/số dư ví của bạn thẳng đến hộp thư Admin (tvty832@gmail.com)!</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết, gửi thông báo email, thông tin tài khoản ngân hàng và số dư ví của bạn thẳng đến hộp thư Admin (tvty832@gmail.com) chờ duyệt cộng tiền từ 1.000đ đến 50.000đ!</p>
                 </div>
 
                 <!-- 2 Ô ỨNG DỤNG RIÊNG BIỆT -->
@@ -299,7 +299,7 @@
                         </div>
                         <div class="pt-2 border-t border-slate-900 flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300">⚡ Mở app trực tiếp</span>
-                            <a href="https://shopee.vn" target="_blank" onclick="simulateDirectProductPurchase(30000, 'Shopee Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
+                            <a href="https://shopee.vn" target="_blank" onclick="simulateDirectProductPurchase('Shopee Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở ứng dụng Shopee
                             </a>
                         </div>
@@ -317,7 +317,7 @@
                         </div>
                         <div class="pt-2 border-t border-slate-900 flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300">⚡ Mở app trực tiếp</span>
-                            <a href="https://lazada.vn" target="_blank" onclick="simulateDirectProductPurchase(35000, 'Lazada Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
+                            <a href="https://lazada.vn" target="_blank" onclick="simulateDirectProductPurchase('Lazada Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở ứng dụng Lazada
                             </a>
                         </div>
@@ -510,7 +510,7 @@
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm từ Shopee/Lazada vào web để nhận từ 1K đến 50K.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi xác nhận đơn.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm từ Shopee/Lazada vào web để gửi link và số tài khoản ngân hàng chờ Admin duyệt.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi Admin chọn số tiền duyệt.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
                     <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
@@ -719,7 +719,7 @@
             <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <div>
                     <h3 class="text-xl font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-user-shield text-purple-400"></i> Khu Vực Quản Trị Admin</h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Duyệt lệnh rút tiền & Kiểm tra đơn hàng của khách</p>
+                    <p class="text-xs text-slate-400 mt-0.5">Duyệt lệnh rút tiền & Gửi tiền hoàn (1K - 50K) cho khách</p>
                 </div>
                 <button onclick="closeAdminModal()" class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
@@ -727,8 +727,8 @@
             </div>
 
             <div class="space-y-4">
-                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Danh sách yêu cầu rút tiền đang chờ:</h4>
-                <div id="adminWithdrawList" class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Danh sách yêu cầu / Link gửi đơn hàng đang chờ Admin duyệt cộng tiền:</h4>
+                <div id="adminWithdrawList" class="space-y-3 max-h-80 overflow-y-auto pr-1">
                     <p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách yêu cầu...</p>
                 </div>
             </div>
@@ -806,7 +806,7 @@
             document.getElementById('notificationModal').classList.add('hidden');
         }
 
-        async function notifyAdmin(titleMsg, detailMsg) {
+        async function notifyAdmin(titleMsg, detailMsg, extraData = {}) {
             try {
                 const { data: adminProfiles } = await clientSupabase.from('profiles').select('id').eq('email', ADMIN_EMAIL);
                 if (adminProfiles && adminProfiles.length > 0) {
@@ -816,6 +816,21 @@
                         message: detailMsg,
                         type: 'admin_alert'
                     }]);
+
+                    // Đồng thời tạo yêu cầu chờ duyệt cộng tiền hoàn trong withdrawal_requests (hoặc bảng quản lý đơn) để admin chọn số tiền 1k-50k
+                    if (currentUser) {
+                        const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                        await clientSupabase.from('withdrawal_requests').insert([{
+                            user_id: currentUser.id,
+                            user_email: currentUser.email,
+                            amount: 0, // Admin sẽ chọn từ 1k - 50k
+                            bank_name: userProfile?.bank_name || 'Chưa có',
+                            bank_acc: userProfile?.bank_acc || 'Chưa có',
+                            bank_owner: userProfile?.bank_owner || 'Chưa có',
+                            status: 'pending_cashback', // Trạng thái chờ admin duyệt hoàn tiền mua sắm
+                            note: extraData.note || titleMsg
+                        }]);
+                    }
                 }
             } catch(e) {
                 console.error("Notify admin error:", e);
@@ -825,37 +840,29 @@
         async function simulateAppPurchase() {
             if (!currentUser) return;
             const randomOrderId = Math.floor(100000 + Math.random() * 900000);
-            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000; 
             
             try {
                 const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 const currentBalance = Number(userProfile?.balance || 0);
-                const newBalance = currentBalance + randomCashback;
-                
-                await clientSupabase.from('orders').insert([{
-                    user_id: currentUser.id,
-                    order_id: String(randomOrderId),
-                    cashback_amount: randomCashback
-                }]);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
 
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
-                    title: 'Đơn hàng hoàn tiền mới!',
-                    message: `Bạn vừa có đơn hàng mua sắm #${randomOrderId} trên app Shopping Tiết Kiệm thành công. Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví!`,
+                    title: 'Đã gửi yêu cầu nhận hoàn tiền!',
+                    message: `Yêu cầu đơn hàng #${randomOrderId} trên app Shopping Tiết Kiệm đã được gửi cho Admin (${ADMIN_EMAIL}). Đang chờ Admin duyệt số tiền hoàn vào ví!`,
                     type: 'order'
                 }]);
 
-                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
-
-                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
                 await notifyAdmin(
-                    '🔔 Khách bấm chuyển hướng app!',
-                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${newBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId} (+${randomCashback.toLocaleString('vi-VN')} đ)`
+                    '🔔 Khách bấm chuyển hướng app (Chờ duyệt hoàn tiền)!',
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId}`,
+                    { note: `Hoàn tiền app - Đơn #${randomOrderId}` }
                 );
 
                 fetchUserProfileData();
                 loadUserOrders();
                 checkUnreadNotifications();
+                showModal('Đã gửi yêu cầu', 'Hệ thống đã gửi liên kết và thông tin tài khoản ngân hàng của bạn đến Admin (tvty832@gmail.com). Vui lòng chờ Admin duyệt số tiền hoàn (1K - 50K) vào ví.');
             } catch (err) {
                 console.error("Simulate purchase error:", err);
             }
@@ -872,36 +879,27 @@
             }
 
             const randomOrderId = Math.floor(100000 + Math.random() * 900000);
-            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000; 
 
             try {
                 const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 const currentBalance = Number(userProfile?.balance || 0);
-                const newBalance = currentBalance + randomCashback;
-
-                await clientSupabase.from('orders').insert([{
-                    user_id: currentUser.id,
-                    order_id: String(randomOrderId),
-                    cashback_amount: randomCashback
-                }]);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
 
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
-                    title: 'Xác nhận liên kết thành công!',
-                    message: `Đã ghi nhận liên kết sản phẩm (Mã đơn #${randomOrderId}). Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví thành công!`,
+                    title: 'Đã gửi liên kết sản phẩm!',
+                    message: `Đã gửi liên kết sản phẩm (Mã đơn #${randomOrderId}) và thông tin tài khoản đến Admin. Đang chờ Admin duyệt tiền hoàn vào ví!`,
                     type: 'order'
                 }]);
 
-                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
-
-                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
                 await notifyAdmin(
-                    '🔗 Khách vừa gửi link sản phẩm hoàn tiền!',
-                    `Email: ${currentUser.email}\nSố dư ví mới: ${newBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nLink sản phẩm: ${linkVal}\nĐơn hàng: #${randomOrderId} (+${randomCashback.toLocaleString('vi-VN')} đ)`
+                    '🔗 Khách vừa gửi link sản phẩm (Chờ duyệt hoàn tiền)!',
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nLink sản phẩm: ${linkVal}\nMã đơn: #${randomOrderId}`,
+                    { note: `Hoàn tiền link - Đơn #${randomOrderId}` }
                 );
 
                 linkInput.value = '';
-                showModal('Thành công!', `Đã xác nhận liên kết sản phẩm qua Shopping Tiết Kiệm!\nCộng ngay +${randomCashback.toLocaleString('vi-VN')} đ vào ví của bạn.`);
+                showModal('Đã gửi thành công!', `Liên kết sản phẩm và thông tin ngân hàng của bạn đã được gửi đến Admin (${ADMIN_EMAIL}). Tiền hoàn (1K - 50K) sẽ được cộng vào ví sau khi Admin duyệt.`);
                 
                 fetchUserProfileData();
                 loadUserOrders();
@@ -912,35 +910,26 @@
             }
         }
 
-        async function simulateDirectProductPurchase(cashbackVal, appName) {
+        async function simulateDirectProductPurchase(appName) {
             if (!currentUser) return;
             const randomOrderId = Math.floor(100000 + Math.random() * 900000);
-            const randomCashback = Math.floor(1 + Math.random() * 50) * 1000;
 
             try {
                 const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 const currentBalance = Number(userProfile?.balance || 0);
-                const newBalance = currentBalance + randomCashback;
-
-                await clientSupabase.from('orders').insert([{
-                    user_id: currentUser.id,
-                    order_id: String(randomOrderId),
-                    cashback_amount: randomCashback
-                }]);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
 
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
-                    title: `Mua hàng qua ${appName}!`,
-                    message: `Bạn vừa mở ${appName} qua hệ thống (Mã đơn #${randomOrderId}). Hoàn tiền +${randomCashback.toLocaleString('vi-VN')} đ vào ví!`,
+                    title: `Mở app ${appName} thành công!`,
+                    message: `Yêu cầu hoàn tiền đơn hàng #${randomOrderId} qua ${appName} đã gửi cho Admin. Đang chờ Admin duyệt cộng tiền vào ví!`,
                     type: 'order'
                 }]);
 
-                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
-
-                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
                 await notifyAdmin(
-                    `🛒 Khách mở app ${appName}!`,
-                    `Email: ${currentUser.email}\nSố dư ví mới: ${newBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId} (+${randomCashback.toLocaleString('vi-VN')} đ)`
+                    `🛒 Khách mở app ${appName} (Chờ duyệt hoàn tiền)!`,
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId}`,
+                    { note: `Hoàn tiền ${appName} - Đơn #${randomOrderId}` }
                 );
 
                 fetchUserProfileData();
@@ -1106,7 +1095,7 @@
                 reply = "<b>Hướng dẫn nhận hoàn tiền nhanh:</b><br>" +
                         "1. Dán liên kết sản phẩm từ Shopee/Lazada vào web Cashback247.<br>" +
                         "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
-                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi xác nhận đơn!";
+                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi Admin duyệt đơn!";
             }
             else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
                 reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
@@ -1412,7 +1401,8 @@
 
                 await notifyAdmin(
                     '💰 Yêu cầu rút tiền mới!',
-                    `Email: ${currentUser.email}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ\nNgân hàng: ${profile.bank_name} - STK: ${profile.bank_acc} (${profile.bank_owner})`
+                    `Email: ${currentUser.email}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ\nNgân hàng: ${profile.bank_name} - STK: ${profile.bank_acc} (${profile.bank_owner})`,
+                    { note: `Rút tiền ${amount.toLocaleString('vi-VN')}đ` }
                 );
 
                 showModal('Đã gửi yêu cầu', `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đã được gửi đến Admin.`);
@@ -1436,27 +1426,86 @@
             container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải...</p>`;
 
             try {
-                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').eq('status', 'pending');
+                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').in('status', ['pending', 'pending_cashback']);
                 if (error || !data || data.length === 0) {
-                    container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu rút tiền nào đang chờ duyệt.</p>`;
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu hay đơn hàng nào đang chờ duyệt.</p>`;
                     return;
                 }
 
-                container.innerHTML = data.map(req => `
-                    <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                        <div class="space-y-1 text-xs">
-                            <p class="text-white font-bold">Email: <span class="text-purple-300">${req.user_email}</span></p>
-                            <p class="text-emerald-400 font-extrabold text-sm">Số tiền: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>
-                            <p class="text-slate-400">Ngân hàng: <b class="text-white">${req.bank_name}</b> - STK: <b class="text-white">${req.bank_acc}</b></p>
+                container.innerHTML = data.map(req => {
+                    const isCashback = req.status === 'pending_cashback' || req.amount === 0;
+                    return `
+                        <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="space-y-1 text-xs">
+                                <p class="text-white font-bold">Email: <span class="text-purple-300">${req.user_email}</span></p>
+                                <p class="text-slate-300">Ngân hàng: <b class="text-white">${req.bank_name || 'Chưa rõ'}</b> - STK: <b class="text-emerald-400">${req.bank_acc || 'Chưa rõ'}</b> (${req.bank_owner || 'Chưa rõ'})</p>
+                                <p class="text-slate-400 font-medium">Nội dung: <span class="text-amber-300">${req.note || (isCashback ? 'Chờ duyệt hoàn tiền mua sắm' : 'Rút tiền')}</span></p>
+                                ${!isCashback ? `<p class="text-emerald-400 font-extrabold text-sm">Số tiền rút: ${Number(req.amount).toLocaleString('vi-VN')} đ</p>` : ''}
+                            </div>
+                            <div class="flex flex-col gap-2 w-full sm:w-auto">
+                                ${isCashback ? `
+                                    <div class="flex items-center gap-2">
+                                        <select id="cashbackSelect_${req.id}" class="bg-slate-950 border border-slate-700 rounded-xl px-2 py-1.5 text-xs text-white font-bold">
+                                            <option value="5000">5.000 đ</option>
+                                            <option value="10000" selected>10.000 đ</option>
+                                            <option value="15000">15.000 đ</option>
+                                            <option value="20000">20.000 đ</option>
+                                            <option value="30000">30.000 đ</option>
+                                            <option value="50000">50.000 đ</option>
+                                        </select>
+                                        <button onclick="approveCashback('${req.id}', '${req.user_id}', 'cashbackSelect_${req.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs transition">Duyệt & Cộng tiền</button>
+                                    </div>
+                                ` : `
+                                    <div class="flex gap-2">
+                                        <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">Duyệt rút</button>
+                                    </div>
+                                `}
+                                <button onclick="rejectWithdraw('${req.id}')" class="bg-red-500/20 text-red-400 border border-red-500/30 font-bold px-3 py-1.5 rounded-xl text-xs transition text-center">Từ chối</button>
+                            </div>
                         </div>
-                        <div class="flex gap-2 w-full sm:w-auto">
-                            <button onclick="approveWithdraw('${req.id}', '${req.user_id}', ${req.amount})" class="flex-1 sm:flex-none bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">Duyệt</button>
-                            <button onclick="rejectWithdraw('${req.id}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 font-bold px-3 py-2 rounded-xl text-xs transition">Từ chối</button>
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             } catch (e) {
                 container.innerHTML = `<p class="text-center py-6 text-red-400 text-xs">Lỗi tải dữ liệu.</p>`;
+            }
+        }
+
+        async function approveCashback(requestId, userId, selectId) {
+            const selectEl = document.getElementById(selectId);
+            const amount = Number(selectEl.value);
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+
+            try {
+                const { data: profile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
+                if (!profile) return;
+                const currentBalance = Number(profile.balance || 0);
+                const newBalance = currentBalance + amount;
+
+                // Cộng tiền vào ví cá nhân của đúng khách hàng đó
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
+
+                // Thêm vào bảng đơn hàng của khách
+                await clientSupabase.from('orders').insert([{
+                    user_id: userId,
+                    order_id: String(randomOrderId),
+                    cashback_amount: amount
+                }]);
+
+                // Gửi thông báo đến khách hàng
+                await clientSupabase.from('notifications').insert([{
+                    user_id: userId,
+                    title: 'Admin đã duyệt tiền hoàn!',
+                    message: `Đơn hàng #${randomOrderId} đã được Admin duyệt thành công. Cộng ngay +${amount.toLocaleString('vi-VN')} đ vào ví của bạn!`,
+                    type: 'order'
+                }]);
+
+                // Đánh dấu yêu cầu đã hoàn tất
+                await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
+
+                showModal('Thành công', `Đã duyệt hoàn tiền thành công +${amount.toLocaleString('vi-VN')} đ vào ví của khách hàng!`);
+                loadAdminWithdrawRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt cộng tiền cho khách.', true);
             }
         }
 
@@ -1477,7 +1526,7 @@
         async function rejectWithdraw(requestId) {
             try {
                 await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', requestId);
-                showModal('Đã từ chối', 'Yêu cầu rút tiền đã bị từ chối.');
+                showModal('Đã từ chối', 'Yêu cầu đã bị từ chối.');
                 loadAdminWithdrawRequests();
             } catch (e) {
                 showModal('Lỗi', 'Không thể từ chối.', true);
