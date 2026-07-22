@@ -1924,7 +1924,470 @@
                 initLoggedInUser();
             }
         });
+        <!-- CONTINUED FROM PREVIOUS PART -->
+    <script>
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> Đang khởi tạo ví...`;
+
+            const { data, error } = await clientSupabase.auth.signUp({ email, password: pass });
+
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
+
+            if (error) {
+                showModal('Đăng ký thất bại', error.message, true);
+            } else {
+                showModal('Đăng ký thành công!', 'Tài khoản ví hoàn tiền của bạn đã được khởi tạo. Vui lòng kiểm tra email xác nhận hoặc đăng nhập ngay.');
+                switchAuthTab('login');
+            }
+        }
+
+        async function submitForgotPassword() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            if (!email) {
+                showModal('Thiếu email', 'Vui lòng nhập email đã đăng ký tài khoản!', true);
+                return;
+            }
+
+            const { error } = await clientSupabase.auth.resetPasswordForEmail(email);
+            if (error) {
+                showModal('Lỗi', error.message, true);
+            } else {
+                showModal('Đã gửi email', 'Đường dẫn khôi phục mật khẩu đã được gửi đến hộp thư của bạn.');
+                switchAuthTab('login');
+            }
+        }
+
+        async function handleLogout() {
+            await clientSupabase.auth.signOut();
+            currentUser = null;
+            closeSettingsModal();
+            document.getElementById('mainScreen').classList.add('hidden');
+            document.getElementById('authScreen').classList.remove('hidden');
+        }
+
+        /* ================= KHỞI TẠO VÀ DỮ LIỆU TÀI KHOẢN ================= */
+        async function initLoggedInUser() {
+            if (!currentUser) return;
+
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('mainScreen').classList.remove('hidden');
+
+            // Cập nhật thanh Header
+            document.getElementById('authSection').innerHTML = `
+                <button onclick="openSettingsModal()" class="flex items-center gap-2 bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700/80 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition active:scale-95 shadow-md">
+                    <i class="fa-solid fa-user-gear text-emerald-400"></i>
+                    <span class="max-w-[100px] truncate">${currentUser.email}</span>
+                </button>
+            `;
+
+            // Kiểm tra quyền Admin
+            if (currentUser.email === ADMIN_EMAIL) {
+                document.getElementById('adminNavContainer').classList.remove('hidden');
+            } else {
+                document.getElementById('adminNavContainer').classList.add('hidden');
+            }
+
+            fetchUserProfileData();
+            loadUserOrders();
+            checkUnreadNotifications();
+        }
+
+        async function fetchUserProfileData() {
+            if (!currentUser) return;
+            try {
+                let { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+
+                if (!profile) {
+                    const { data: newProf } = await clientSupabase.from('profiles').insert([{
+                        id: currentUser.id,
+                        email: currentUser.email,
+                        balance: 0,
+                        referral_code: 'STKRDMEJV'
+                    }]).select().single();
+                    profile = newProf;
+                }
+
+                const balance = Number(profile?.balance || 0);
+                document.getElementById('settingsBalanceVal').innerText = balance.toLocaleString('vi-VN');
+                document.getElementById('userEmailDisplay').innerText = currentUser.email;
+
+                // Hiển thị thông tin ngân hàng
+                if (profile?.bank_name && profile?.bank_acc) {
+                    document.getElementById('bankStatusBadge').innerText = "Đã liên kết";
+                    document.getElementById('bankStatusBadge').className = "text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md font-bold border border-emerald-500/30";
+                    document.getElementById('lblBankName').innerText = profile.bank_name;
+                    document.getElementById('lblBankAcc').innerText = profile.bank_acc;
+                    document.getElementById('lblBankOwner').innerText = profile.bank_owner || 'Chưa cập nhật';
+                    document.getElementById('linkedBankInfo').classList.remove('hidden');
+                    document.getElementById('btnBankActionText').innerText = "Thay Đổi Ngân Hàng";
+                } else {
+                    document.getElementById('bankStatusBadge').innerText = "Chưa liên kết";
+                    document.getElementById('bankStatusBadge').className = "text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-md font-bold border border-amber-500/30";
+                    document.getElementById('linkedBankInfo').classList.add('hidden');
+                    document.getElementById('btnBankActionText').innerText = "Liên Kết Ngân Hàng Ngay";
+                }
+            } catch (err) {
+                console.error("Profile load error:", err);
+            }
+        }
+
+        async function loadUserOrders() {
+            const listEl = document.getElementById('orderHistoryList');
+            if (!currentUser) return;
+
+            try {
+                const { data: orders } = await clientSupabase
+                    .from('withdrawal_requests')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+
+                if (!orders || orders.length === 0) {
+                    listEl.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+                    return;
+                }
+
+                listEl.innerHTML = orders.map(item => {
+                    let statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">Chờ duyệt</span>';
+                    if (item.status === 'completed' || item.status === 'approved') {
+                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Đã cộng ví</span>';
+                    } else if (item.status === 'rejected') {
+                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">Từ chối</span>';
+                    }
+
+                    return `
+                        <div class="p-3.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex items-center justify-between gap-3">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-white text-xs">${item.note || 'Yêu cầu hoàn tiền'}</span>
+                                    ${statusBadge}
+                                </div>
+                                <p class="text-[10px] text-slate-500">${new Date(item.created_at || Date.now()).toLocaleString('vi-VN')}</p>
+                            </div>
+                            <span class="font-black text-emerald-400 text-xs">${item.amount > 0 ? '+' + item.amount.toLocaleString('vi-VN') + ' đ' : 'Chờ định giá'}</span>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                listEl.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+            }
+        }
+
+        /* ================= LIÊN KẾT NGÂN HÀNG & RÚT TIỀN ================= */
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            fetchUserProfileData();
+        }
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function openBankModal() {
+            document.getElementById('bankModal').classList.remove('hidden');
+            onBankChange();
+        }
+        function closeBankModal() {
+            document.getElementById('bankModal').classList.add('hidden');
+        }
+
+        async function saveBankConnection() {
+            if (!currentUser) return;
+            const bankName = document.getElementById('bankSelect').value;
+            const bankAcc = document.getElementById('bankAccNum').value.trim();
+            const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
+
+            if (!bankAcc || !bankOwner) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập số tài khoản và tên chủ tài khoản!', true);
+                return;
+            }
+
+            try {
+                const { error } = await clientSupabase.from('profiles').update({
+                    bank_name: bankName,
+                    bank_acc: bankAcc,
+                    bank_owner: bankOwner
+                }).eq('id', currentUser.id);
+
+                if (error) throw error;
+
+                showModal('Thành công', 'Đã liên kết tài khoản ngân hàng thành công!');
+                closeBankModal();
+                fetchUserProfileData();
+            } catch (err) {
+                showModal('Lỗi', 'Không thể lưu thông tin ngân hàng. Vui lòng thử lại.', true);
+            }
+        }
+
+        async function handleWithdrawRequest() {
+            if (!currentUser) return;
+            const amountInput = document.getElementById('withdrawAmount');
+            const amount = Number(amountInput.value);
+
+            if (isNaN(amount) || amount < MIN_WITHDRAW_AMOUNT) {
+                showModal('Hạn mức không đủ', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
+                return;
+            }
+
+            try {
+                const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                const currentBalance = Number(userProfile?.balance || 0);
+
+                if (amount > currentBalance) {
+                    showModal('Số dư không đủ', 'Số dư ví của bạn không đủ để thực hiện lệnh rút tiền này!', true);
+                    return;
+                }
+
+                if (!userProfile?.bank_acc) {
+                    showModal('Chưa liên kết ngân hàng', 'Vui lòng liên kết tài khoản ngân hàng trước khi thực hiện rút tiền!', true);
+                    openBankModal();
+                    return;
+                }
+
+                // Trừ tiền khỏi số dư và tạo lệnh rút
+                await clientSupabase.from('profiles').update({ balance: currentBalance - amount }).eq('id', currentUser.id);
+
+                await clientSupabase.from('withdrawal_requests').insert([{
+                    user_id: currentUser.id,
+                    user_email: currentUser.email,
+                    amount: amount,
+                    bank_name: userProfile.bank_name,
+                    bank_acc: userProfile.bank_acc,
+                    bank_owner: userProfile.bank_owner,
+                    status: 'pending',
+                    note: `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ`
+                }]);
+
+                await notifyAdmin(
+                    `💸 Khách vừa tạo lệnh rút tiền (${amount.toLocaleString('vi-VN')} đ)!`,
+                    `Email: ${currentUser.email}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ\nNgân hàng: ${userProfile.bank_name}\nSTK: ${userProfile.bank_acc}\nChủ TK: ${userProfile.bank_owner}`
+                );
+
+                amountInput.value = '';
+                showModal('Gửi thành công', `Đã gửi yêu cầu rút ${amount.toLocaleString('vi-VN')} đ. Quản trị viên sẽ kiểm tra và chuyển khoản cho bạn!`);
+                fetchUserProfileData();
+                loadUserOrders();
+            } catch (err) {
+                console.error("Withdraw error:", err);
+                showModal('Lỗi', 'Có lỗi xảy ra khi tạo lệnh rút tiền!', true);
+            }
+        }
+
+        /* ================= QUẢN TRỊ ADMIN ================= */
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            loadAdminRequests();
+        }
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        async function loadAdminRequests() {
+            const container = document.getElementById('adminWithdrawList');
+            container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách...</p>`;
+
+            try {
+                const { data: list } = await clientSupabase
+                    .from('withdrawal_requests')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (!list || list.length === 0) {
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu nào đang chờ duyệt.</p>`;
+                    return;
+                }
+
+                container.innerHTML = list.map(item => {
+                    const isCashbackType = item.status === 'pending_cashback' || item.amount === 0;
+
+                    return `
+                        <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-start gap-2">
+                                <div>
+                                    <span class="font-bold text-white text-xs block">${item.user_email}</span>
+                                    <span class="text-[10px] text-slate-400 block mt-0.5">${item.note || 'Yêu cầu'}</span>
+                                    <span class="text-[10px] text-amber-400 font-mono block mt-1">NH: ${item.bank_name || 'N/A'} - STK: ${item.bank_acc || 'N/A'} (${item.bank_owner || 'N/A'})</span>
+                                </div>
+                                <span class="text-xs font-black text-emerald-400">${item.amount > 0 ? item.amount.toLocaleString('vi-VN') + ' đ' : 'Chờ hoàn tiền'}</span>
+                            </div>
+
+                            ${item.status.includes('pending') ? `
+                                <div class="pt-2 border-t border-slate-800 flex flex-wrap gap-2 items-center justify-end">
+                                    ${isCashbackType ? `
+                                        <input type="number" id="cashbackInput_${item.id}" placeholder="Số tiền cộng (1,000 - 50,000)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white w-48 focus:outline-none focus:border-purple-400">
+                                        <button onclick="approveCashbackOrder('${item.id}', '${item.user_id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs transition active:scale-95 shadow-md">
+                                            <i class="fa-solid fa-check"></i> Duyệt cộng tiền
+                                        </button>
+                                    ` : `
+                                        <button onclick="approveWithdrawRequest('${item.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs transition active:scale-95 shadow-md">
+                                            <i class="fa-solid fa-check"></i> Duyệt rút tiền
+                                        </button>
+                                    `}
+                                    <button onclick="rejectAdminRequest('${item.id}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 font-bold px-3 py-1.5 rounded-xl text-xs transition active:scale-95">
+                                        Từ chối
+                                    </button>
+                                </div>
+                            ` : `
+                                <div class="pt-1 text-right">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase">Trạng thái: ${item.status}</span>
+                                </div>
+                            `}
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.error("Admin load error:", e);
+            }
+        }
+
+        async function approveCashbackOrder(reqId, userId) {
+            const input = document.getElementById(`cashbackInput_${reqId}`);
+            const amount = Number(input.value);
+
+            if (isNaN(amount) || amount <= 0) {
+                showModal('Nhập sai số tiền', 'Vui lòng nhập số tiền hoàn hợp lệ (VD: 5000, 10000)!', true);
+                return;
+            }
+
+            try {
+                // Lấy thông tin user để cộng tiền
+                const { data: userProfile } = await clientSupabase.from('profiles').select('balance').eq('id', userId).single();
+                const newBalance = Number(userProfile?.balance || 0) + amount;
+
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', userId);
+                await clientSupabase.from('withdrawal_requests').update({
+                    amount: amount,
+                    status: 'completed',
+                    note: `Đã hoàn +${amount.toLocaleString('vi-VN')} đ vào ví`
+                }).eq('id', reqId);
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: userId,
+                    title: '🎉 Bạn nhận được tiền hoàn!',
+                    message: `Admin đã duyệt đơn hàng và cộng +${amount.toLocaleString('vi-VN')} đ trực tiếp vào số dư ví hoàn tiền của bạn!`,
+                    type: 'cashback'
+                }]);
+
+                showModal('Đã duyệt', `Đã cộng +${amount.toLocaleString('vi-VN')} đ cho khách hàng!`);
+                loadAdminRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt cộng tiền!', true);
+            }
+        }
+
+        async function approveWithdrawRequest(reqId) {
+            try {
+                await clientSupabase.from('withdrawal_requests').update({ status: 'completed' }).eq('id', reqId);
+                showModal('Thành công', 'Đã xác nhận hoàn tất lệnh rút tiền!');
+                loadAdminRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt lệnh rút tiền!', true);
+            }
+        }
+
+        async function rejectAdminRequest(reqId) {
+            try {
+                await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', reqId);
+                showModal('Đã từ chối', 'Đã từ chối yêu cầu.');
+                loadAdminRequests();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể xử lý yêu cầu!', true);
+            }
+        }
+
+        /* ================= TRỢ LÝ AI CHATBOT ================= */
+        function toggleAiChat() {
+            const win = document.getElementById('aiChatWindow');
+            win.classList.toggle('hidden');
+        }
+
+        function handleAiKeypress(e) {
+            if (e.key === 'Enter') sendUserAiMessage();
+        }
+
+        function sendAiPrompt(text) {
+            document.getElementById('aiChatInput').value = text;
+            sendUserAiMessage();
+        }
+
+        function sendUserAiMessage() {
+            const input = document.getElementById('aiChatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            appendAiChatMessage('user', msg);
+            input.value = '';
+
+            setTimeout(() => {
+                const response = generateAiReply(msg);
+                appendAiChatMessage('ai', response);
+            }, 600);
+        }
+
+        function appendAiChatMessage(sender, text) {
+            const container = document.getElementById('aiChatMessages');
+            const isUser = sender === 'user';
+
+            const html = isUser ? `
+                <div class="flex items-start justify-end gap-2">
+                    <div class="bg-emerald-500 text-slate-950 p-3 rounded-2xl rounded-tr-none text-xs font-medium space-y-1 max-w-[80%]">
+                        <p>${text}</p>
+                    </div>
+                </div>
+            ` : `
+                <div class="flex items-start gap-2">
+                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1 max-w-[85%]">
+                        <p>${text}</p>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', html);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function generateAiReply(userText) {
+            const lower = userText.toLowerCase();
+
+            // Tính toán đơn giản
+            if (/^\d+[\+\-\*\/]\d+$/.test(userText.replace(/\s+/g, ''))) {
+                try {
+                    const mathRes = eval(userText.replace(/\s+/g, ''));
+                    return `Kế quả của phép tính **${userText}** là: **${mathRes}** ✨`;
+                } catch (e) {}
+            }
+
+            if (lower.includes('1+1') || lower.includes('1 + 1')) return "1 + 1 = 2 bạn nhé! 😊";
+            if (lower.includes('hoàn tiền') || lower.includes('cao nhất') || lower.includes('app')) {
+                return "Hiện tại nền tảng **Shopping Tiết Kiệm** (kèm mã giới thiệu **STKRDMEJV**) cung cấp tỷ lệ hoàn tiền cao nhất thị trường! Bạn dán link sản phẩm Shopee/Lazada vào web để Admin duyệt hoàn 1K-50K nhé! 🛍️";
+            }
+            if (lower.includes('chào') || lower.includes('hello') || lower.includes('khỏe không')) {
+                return "Xin chào! Mọi hệ thống hoàn tiền và trợ lý AI vẫn đang vận hành cực kỳ mượt mà! Bạn cần mình tư vấn về sản phẩm hay hỗ trợ hoàn tiền nào không?";
+            }
+            if (lower.includes('rút tiền') || lower.includes('bao lâu')) {
+                return "Hạn mức rút tiền tối thiểu là **10.000 đ**. Khi bạn tạo lệnh, Admin sẽ kiểm tra và chuyển khoản trực tiếp vào ngân hàng đã liên kết của bạn!";
+            }
+            if (lower.includes('thời tiết')) {
+                return "Thời tiết hôm nay rất thích hợp để bạn săn deal Shopee và nhận hoàn tiền tự động đấy! ☀️🛒";
+            }
+
+            return `Cảm ơn câu hỏi của bạn! Với thắc mắc: "${userText}", bạn chỉ cần dán link sản phẩm Shopee/Lazada vào ô tìm kiếm phía trên để gửi thông tin cho Admin duyệt hoàn tiền từ 1.000đ đến 50.000đ nhé!`;
+        }
+
+        /* ================= KHỞI ĐỘNG HỆ THỐNG ================= */
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data } = await clientSupabase.auth.getSession();
+            if (data?.session?.user) {
+                currentUser = data.session.user;
+                initLoggedInUser();
+            } else {
+                document.getElementById('authScreen').classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>
+
 
