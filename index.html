@@ -375,8 +375,9 @@
             </div>
 
             <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
-                <button onclick="sendAiPrompt('Hoàn tiền có thực sự rẻ hơn hay chỉ là chiêu trò tăng giá?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hoàn tiền có phải chiêu trò?</button>
-                <button onclick="sendAiPrompt('Tại sao nên dùng Cashback247 thay vì mua trực tiếp trên sàn?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tại sao nên qua Cashback247?</button>
+                <button onclick="sendAiPrompt('Cách sử dụng Cashback247 như thế nào?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Cách dùng thế nào?</button>
+                <button onclick="sendAiPrompt('Điều kiện rút tiền là gì?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Điều kiện rút tiền?</button>
+                <button onclick="sendAiPrompt('Hoàn tiền có phải chiêu trò tăng giá không?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Hoàn tiền có phải chiêu trò?</button>
                 <button onclick="sendAiPrompt('Làm sao để tối ưu hóa tiền hoàn lớn nhất?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Tối ưu tiền hoàn thế nào?</button>
             </div>
 
@@ -777,31 +778,50 @@
         }
 
         function processCriticalThinkingAi(query) {
-            const q = query.toLowerCase();
+            const q = query.toLowerCase().trim();
             let reply = "";
 
-            if (q.includes('chiêu trò') || q.includes('tăng giá') || q.includes('thật sự rẻ')) {
+            // 1. Các câu hỏi chào hỏi, xã giao hàng ngày
+            if (q.match(/^(chào|hi|hello|alo|chào bot|admin đâu|shop ơi)/)) {
+                reply = "Xin chào bạn! Mình là trợ lý AI của Cashback247. Mình có thể giúp gì cho bạn về việc mua sắm, tích lũy hoàn tiền hoặc giải đáp các thắc mắc hôm nay?";
+            } 
+            // 2. Câu hỏi về cách dùng / hướng dẫn cơ bản
+            else if (q.includes('dùng thế nào') || q.includes('cách dùng') || q.includes('hướng dẫn') || q.includes('bắt đầu từ đâu')) {
+                reply = "<b>Hướng dẫn nhanh cách sử dụng Cashback247:</b><br>" +
+                        "1. Nhấn nút <b>'Chuyển Hướng Qua Shopping Tiết Kiệm'</b> trên trang chủ.<br>" +
+                        "2. Đăng ký hoặc đăng nhập tài khoản kèm mã giới thiệu <b class='text-amber-400'>STKRDMEJV</b> để lên Hạng Bạc (+2% hoa hồng).<br>" +
+                        "3. Mua sắm bình thường trên các sàn liên kết và nhận tiền hoàn tự động về ví!";
+            }
+            // 3. Câu hỏi về rút tiền / min rút
+            else if (q.includes('rút tiền') || q.includes('tối thiểu') || q.includes('bao nhiêu thì rút')) {
+                reply = "<b>Quy định rút tiền tại Cashback247:</b><br>" +
+                        "• Hạn mức rút tối thiểu là <b class='text-emerald-400'>10.000 đ</b>.<br>" +
+                        "• Bạn cần liên kết tài khoản ngân hàng trong phần <i>Quản lý Ví</i>, sau đó gửi yêu cầu rút tiền để Admin duyệt chuyển khoản trực tiếp nhé.";
+            }
+            // 4. Các câu hỏi phản biện & chiêu trò
+            else if (q.includes('chiêu trò') || q.includes('tăng giá') || q.includes('thật sự rẻ')) {
                 reply = "<b>Phản biện đa chiều từ AI:</b><br>" +
-                        "1. <i>Góc nhìn hoài nghi:</i> Đúng là có hiện tượng một số shop tăng giá ảo rồi giảm giá hoặc gắn hoa hồng cao. Nếu không tỉnh táo, bạn có thể mua đắt hơn bên ngoài.<br>" +
-                        "2. <i>Góc nhìn tối ưu:</i> Cashback247 không can thiệp vào giá của sàn mà tận dụng dòng tiền chiết khấu (marketing budget) của nhãn hàng trả cho Accesstrade. Thay vì tiền chảy hết vào túi sàn, hệ thống trích lại cho bạn.<br>" +
-                        "<b>Lời khuyên phản biện:</b> Hãy luôn so sánh giá ở nhiều shop khác nhau trước khi mua, kết hợp mã giảm giá của sàn + tiền hoàn từ ví để đạt hiệu quả tiết kiệm thực sự!";
+                        "1. <i>Góc nhìn hoài nghi:</i> Đúng là có hiện tượng một số shop tăng giá ảo rồi giảm giá. Do đó bạn cần so sánh giá.<br>" +
+                        "2. <i>Góc nhìn tối ưu:</i> Cashback247 tận dụng dòng tiền tiếp thị liên kết (marketing budget) trả cho Accesstrade. Thay vì tiền vào túi sàn, hệ thống trích lại cho bạn.<br>" +
+                        "<b>Lời khuyên:</b> Hãy luôn săn sale kết hợp mã giảm giá + tiền hoàn từ ví để tiết kiệm thật sự!";
             } else if (q.includes('tại sao nên dùng') || q.includes('thay vì mua trực tiếp')) {
                 reply = "<b>Phản biện chiến lược:</b><br>" +
-                        "Nếu bạn mua trực tiếp, sàn thương mại điện tử vẫn giữ nguyên 100% phần hoa hồng tiếp thị liên kết đó như một khoản lợi nhuận ròng của họ.<br>" +
-                        "Bằng cách đi qua Cashback247 và áp dụng mã <b>STKRDMEJV</b> (Hạng Bạc), bạn đang biến mình từ một người mua hàng đơn thuần thành người nhận lại lợi nhuận chiết khấu. Tại sao lại bỏ qua dòng tiền hợp pháp này trong khi giá sản phẩm hoàn toàn không thay đổi?";
+                        "Nếu mua trực tiếp, sàn thương mại điện tử giữ lại 100% hoa hồng. Đi qua Cashback247 với mã <b class='text-amber-400'>STKRDMEJV</b> giúp bạn nhận lại phần chiết khấu đó mà giá sản phẩm hoàn toàn không thay đổi!";
             } else if (q.includes('tối ưu') || q.includes('lớn nhất')) {
-                reply = "<b>Công thức tối ưu hóa lợi ích tài chính:</b><br>" +
-                        "• <b>Bước 1:</b> Săn khung giờ vàng sale lớn (Sale 15 hàng tháng, Lương về 25-30).<br>" +
-                        "• <b>Bước 2:</b> Thu thập mã Freeship + Mã giảm giá của Shop & Sàn.<br>" +
-                        "• <b>Bước 3:</b> Chuyển hướng qua Shopping Tiết Kiệm để nhận thêm hoàn hồng vào ví.<br>" +
-                        "<i>Góc nhìn phản biện:</i> Đừng vì thấy hoàn tiền cao mà mua những món đồ không thực sự cần thiết. Tối ưu nhất là tiết kiệm trên những thứ bạn đã có kế hoạch mua từ trước!";
-            } else {
-                reply = "<b>Góc nhìn phản biện từ AI:</b> Câu hỏi của bạn rất đáng suy ngẫm. Khi xét về bài toán tài chính cá nhân, mọi quyết định chi tiêu đều có chi phí cơ hội. Theo bạn, liệu việc tích lũy khoản hoàn tiền nhỏ này dài hạn có thực sự giúp tạo ra thói quen quản lý tài chính thông minh hơn không? Hãy chia sẻ thêm góc nhìn của bạn nhé!";
+                reply = "<b>Công thức tối ưu hóa:</b><br>" +
+                        "• Săn sale khung giờ vàng.<br>" +
+                        "• Kết hợp mã Freeship và mã giảm giá sàn.<br>" +
+                        "• Chuyển hướng qua Shopping Tiết Kiệm để cộng dồn tiền hoàn vào ví!";
+            } 
+            // 5. Câu trả lời mặc định thông minh
+            else {
+                reply = `Cảm ơn câu hỏi của bạn: "<i>${escapeHtml(query)}</i>".<br>` +
+                        "Về vấn đề này, hệ thống Cashback247 luôn hỗ trợ tối đa để bạn mua sắm an toàn và tiết kiệm nhất. Nếu bạn cần hỗ trợ kiểm tra đơn hàng, liên kết ngân hàng hoặc thắc mắc về mã <b>STKRDMEJV</b>, cứ nhắn cụ thể cho mình nhé!";
             }
 
             setTimeout(() => {
                 appendAiMessage(reply, false);
-            }, 600);
+            }, 500);
         }
 
         function escapeHtml(text) {
