@@ -806,7 +806,6 @@
             document.getElementById('notificationModal').classList.add('hidden');
         }
 
-        // Hàm gửi thông báo trực tiếp đến tài khoản Admin (tvty832@gmail.com)
         async function notifyAdmin(titleMsg, detailMsg) {
             try {
                 const { data: adminProfiles } = await clientSupabase.from('profiles').select('id').eq('email', ADMIN_EMAIL);
@@ -829,7 +828,6 @@
             const randomCashback = Math.floor(1 + Math.random() * 50) * 1000; 
             
             try {
-                // Lấy thông tin số dư và ngân hàng của user hiện tại
                 const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 const currentBalance = Number(userProfile?.balance || 0);
                 const newBalance = currentBalance + randomCashback;
@@ -849,7 +847,6 @@
 
                 await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
 
-                // Gửi thông báo đến Admin kèm email tài khoản, số dư ví và thông tin ngân hàng
                 const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
                 await notifyAdmin(
                     '🔔 Khách bấm chuyển hướng app!',
@@ -864,7 +861,6 @@
             }
         }
 
-        // Xử lý dán link sản phẩm tùy chỉnh và gửi thông báo trực tiếp đến Admin
         async function submitCustomProductLink() {
             if (!currentUser) return;
             const linkInput = document.getElementById('customProductLinkInput');
@@ -898,7 +894,6 @@
 
                 await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
 
-                // Gửi thông báo đến Admin tvty832@gmail.com kèm email và thông tin tài khoản ví
                 const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
                 await notifyAdmin(
                     '🔗 Khách vừa gửi link sản phẩm hoàn tiền!',
@@ -1538,4 +1533,4 @@
         window.onload = initApp;
     </script>
 </body>
-                  </html>
+</html>
