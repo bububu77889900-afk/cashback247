@@ -48,7 +48,7 @@
   </style>
 </head>
 
-<body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+<body class="bg-cashback-pattern text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950" onload="initApp()">
 
     <!-- ================= SẢNH ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU ================= -->
     <div id="authScreen" class="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-4 overflow-y-auto">
@@ -189,8 +189,8 @@
                 
                 <div class="flex items-center gap-3">
                     <div id="authSection"></div>
-                    <!-- NÚT THÔNG BÁO VÀ LỊCH SỬ HOÀN TIỀN -->
-                    <button onclick="openNotificationModal()" class="relative w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition active:scale-95 shadow-md" title="Thông báo & Lịch sử hoàn tiền">
+                    <!-- NÚT THÔNG BÁO VÀ HOẠT ĐỘNG -->
+                    <button onclick="openNotificationModal()" class="relative w-10 h-10 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition active:scale-95 shadow-md">
                         <i class="fa-regular fa-bell text-base"></i>
                         <span id="notifBadgeDot" class="hidden absolute top-2 right-2 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
                         <span id="notifBadgeCount" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white font-black text-[10px] flex items-center justify-center border-2 border-slate-900">0</span>
@@ -206,7 +206,7 @@
         <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 space-y-6">
             <div id="adminNavContainer" class="hidden">
                 <button onclick="openAdminModal()" class="w-full bg-gradient-to-r from-purple-600/30 to-indigo-600/30 hover:from-purple-600/40 hover:to-indigo-600/40 text-purple-300 border border-purple-500/40 font-bold py-3 px-4 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-user-shield text-sm"></i> Bảng Quản Trị Admin (Duyệt lệnh rút tiền & Chuyển tiền ví)
+                    <i class="fa-solid fa-user-shield text-sm"></i> Bảng Quản Trị Admin (Duyệt lệnh rút tiền & Gửi tiền hoàn 1K-50K cho khách)
                 </button>
             </div>
 
@@ -214,11 +214,11 @@
                 <div class="relative z-10 space-y-3">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống hoàn tiền thông minh
+                            <i class="fa-solid fa-circle-check text-[10px]"></i> Hệ thống hoàn tiền cao nhất hiện nay
                         </span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Mua sắm thông minh, tích lũy hoàn tiền</h1>
-                    <p class="text-slate-400 text-sm max-w-lg">Truy cập ứng dụng Shopping Tiết Kiệm hoặc chọn cửa hàng mua sắm trực tiếp bên dưới để nhận hoàn tiền tự động an toàn vào ví.</p>
+                    <p class="text-slate-400 text-sm max-w-lg">Truy cập trực tiếp qua app Shopping Tiết Kiệm hoặc chọn gian hàng mua sắm trực tiếp bên dưới để nhận hoàn tiền tự động an toàn vào ví.</p>
                 </div>
             </div>
 
@@ -237,7 +237,7 @@
                   <div class="bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700/80 p-4 rounded-2xl flex justify-between items-center">
                       <div>
                           <p class="text-[11px] text-slate-400 uppercase tracking-wider">Số dư Quỹ Admin (tvty832):</p>
-                          <p id="adminDisplayBalance" class="text-base font-black text-emerald-400">200.000.000.000 đ</p>
+                          <p id="adminDisplayBalance" class="text-base font-black text-emerald-400">99.999.999 đ</p>
                       </div>
                       <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                           <i class="fa-solid fa-shield-halved"></i>
@@ -246,7 +246,7 @@
 
                   <div class="space-y-4">
                       <div class="space-y-1.5">
-                          <label class="text-xs font-bold text-slate-300">Email tài khoản nhận:</label>
+                          <label class="text-xs font-bold text-slate-300">Email hoặc ID tài khoản nhận:</label>
                           <input type="text" id="transferTargetEmail" placeholder="Nhập email người nhận (VD: user@gmail.com)" class="w-full bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-3 text-xs text-white outline-none transition">
                       </div>
 
@@ -257,7 +257,7 @@
 
                       <div class="space-y-1.5">
                           <label class="text-xs font-bold text-slate-300">Nội dung / Lời nhắn:</label>
-                          <input type="text" id="transferNote" placeholder="Cộng tiền thưởng / Hoàn tiền..." class="w-full bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-3 text-xs text-white outline-none transition">
+                          <input type="text" id="transferNote" placeholder="Cộng tiền thưởng / Hỗ trợ ví..." class="w-full bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-3 text-xs text-white outline-none transition">
                       </div>
                   </div>
 
@@ -280,24 +280,29 @@
                 </h2>
 
                 <div class="space-y-3">
-                    <div class="space-y-1.5">
-                        <label class="block text-xs font-bold text-slate-300">Dán link sản phẩm muốn gắn vào app:</label>
-                        <input type="text" id="affiliateLinkInput" placeholder="https://shopee.vn/san-pham-cua-ban..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
-                    </div>
-
-                    <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchaseWithLink()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 px-4 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center">
-                        <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Chuyển Hướng Qua App Shopping Tiết Kiệm
+                    <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 px-4 rounded-2xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 text-center">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-base"></i> Chuyển Hướng Qua Shopping Tiết Kiệm
                     </a>
 
                     <div class="pt-2 text-xs text-slate-400 space-y-2 border-t border-slate-800/80">
                         <p class="leading-relaxed">
-                            Sau khi dán link và bấm chuyển hướng, hệ thống sẽ tự động gắn link vào app và gửi thông báo kiểm duyệt về trang thông báo của web.
+                            Ứng dụng Shopping Tiết Kiệm cung cấp tỷ lệ hoàn tiền vượt trội và cao nhất hiện nay, giúp bạn tối ưu tối đa chi phí mua sắm online.
                         </p>
+                        <div>
+                            <span onclick="toggleGuideSection()" class="text-emerald-400 font-bold cursor-pointer hover:underline inline-flex items-center gap-1 select-none">
+                                <i id="guideIcon" class="fa-solid fa-chevron-right text-[10px] transition-transform"></i> Hướng dẫn chi tiết nhận hoàn tiền 1K - 50K
+                            </span>
+                            <div id="guideContentBox" class="hidden mt-2 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5 animate-zoom">
+                                <p><b>Bước 1:</b> Sau khi copy link sản phẩm về web, bấm vào nút <b>"Chuyển Hướng Qua Shopping Tiết Kiệm"</b>.</p>
+                                <p><b>Bước 2:</b> Lưu ý: Người muốn nhận thêm tiền hoàn từ 1K đến 50K phải là người đã đăng ký trên Shopping Tiết Kiệm và <b>nhập mã giới thiệu của tôi (STKRDMEJV)</b>.</p>
+                                <p><b>Bước 3:</b> Dán link sản phẩm vào app để hoàn tất đơn hàng và tự động nhận hoa hồng về ví!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ================= GIAO DIỆN CỬA HÀNG (10 Ô SẢN PHẨM) ================= -->
+            <!-- ================= GIAO DIỆN MUA HÀNG TRỰC TIẾP ================= -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-emerald-500/30 shadow-xl space-y-5 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/40">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div>
@@ -305,36 +310,67 @@
                             <div class="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm">
                                 <i class="fa-solid fa-store"></i>
                             </div>
-                            Cửa Hàng Đặc Biệt (Bát Mì, Tô Phở & Đồ Dùng)
+                            Gian Hàng Mua Sắm & Tìm Kiếm Đơn Hàng Trực Tiếp
                         </h2>
-                        <p class="text-xs text-slate-400 mt-1">Giao diện uy tín, chia ô sản phẩm chất lượng cao.</p>
+                        <p class="text-xs text-slate-400 mt-1">Dán link sản phẩm để hệ thống gửi thông báo và số tài khoản ngân hàng trực tiếp đến quản trị viên (Admin)!</p>
                     </div>
                     <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                        <i class="fa-solid fa-bolt text-[9px]"></i> Mua ngay uy tín
+                        <i class="fa-solid fa-bolt text-[9px]"></i> Hoàn tiền hấp dẫn
                     </span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3" id="storeGridContainer">
-                    <!-- 10 Ô sản phẩm định sẵn -->
-                    <!-- Sẽ được render qua Javascript bên dưới hoặc tĩnh -->
+                <div class="bg-slate-950/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+                    <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider">Dán liên kết sản phẩm từ Shopee / Lazada vào đây trước khi gửi:</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="customProductLinkInput" placeholder="https://shopee.vn/san-pham-cua-ban..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                        <button onclick="submitCustomProductLink()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-5 py-3 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Gửi liên kết nhận hoàn tiền
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Hệ thống sẽ ghi nhận liên kết, gửi thông báo email, thông tin tài khoản ngân hàng và số dư ví của bạn thẳng đến hộp thư Admin chờ duyệt cộng tiền từ 1.000đ đến 50.000đ!</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between space-y-3 hover:border-emerald-500/50 transition">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-500/10 text-orange-400 border border-orange-500/20">Shopee</span>
+                                <span class="text-xs font-black text-emerald-400">Nhận 1K - 50K vào ví</span>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Bấm vào ứng dụng tìm kiếm đơn hàng Shopee</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Truy cập trực tiếp ứng dụng Shopee để tìm kiếm sản phẩm và mua sắm tiết kiệm.</p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-900 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-300">⚡ Mở app trực tiếp</span>
+                            <a href="https://shopee.vn" target="_blank" onclick="simulateDirectProductPurchase('Shopee Shopping')" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Mở ứng dụng Shopee
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- ================= BẢNG: MÃ GIỚI THIỆU & LÊN HẠNG ================= -->
+            <!-- ================= BẢNG RIÊNG: MÃ GIỚI THIỆU & LÊN HẠNG BẠC ================= -->
             <section class="glass-card p-6 sm:p-7 rounded-3xl border border-teal-500/30 shadow-xl space-y-5 bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/40">
                 <div class="flex items-center justify-between">
                     <h2 class="text-base font-bold text-teal-300 flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-400 text-sm">
                             <i class="fa-solid fa-award"></i>
                         </div>
-                        Kích Hoạt Hạng & Giới Thiệu
+                        Kích Hoạt Hạng Bạc & Nhận +2% Hoa Hồng
                     </h2>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                        <i class="fa-solid fa-crown text-[9px]"></i> Ưu đãi đặc quyền
+                    </span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
                     <div class="space-y-4 bg-slate-950/60 p-4.5 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Nhập mã giới thiệu <b class="text-amber-400">STKRDMEJV</b> ngay bên dưới để được tự động thăng lên <b class="text-amber-400">Hạng Bạc</b> và nhận thêm <b class="text-emerald-400">+2% hoa hồng</b> trên nền tảng hoàn tiền cao nhất hiện nay.
+                        </p>
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mã Giới Thiệu Của Bạn</label>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mã Giới Thiệu Khuyến Mãi</label>
                             <div class="flex gap-2">
                                 <input type="text" id="referralCodeInput" value="STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-mono text-amber-300 font-bold select-all focus:outline-none">
                                 <button onclick="copyReferralCodeOnly()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1">
@@ -342,8 +378,14 @@
                                 </button>
                             </div>
                         </div>
+                        <div id="referralStatusMsg" class="hidden text-[11px] text-emerald-400 font-bold flex items-center gap-1 pt-1">
+                            <i class="fa-solid fa-circle-check"></i> Đã áp dụng thành công mã STKRDMEJV! Tài khoản đã lên Hạng Bạc (+2% hoa hồng).
+                        </div>
 
                         <div class="pt-2 border-t border-slate-800/80 space-y-2">
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Nhớ gắn mã giới thiệu <b class="text-amber-400">STKRDMEJV</b> ở trên vào nhé! Bạn có thể sử dụng đường dẫn tải ứng dụng kèm sẵn mã bên dưới:
+                            </p>
                             <div class="flex gap-2">
                                 <input type="text" id="appDownloadLinkInput" value="https://shoppingtietkiem.com/register?ref=STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300 select-all focus:outline-none">
                                 <button onclick="copyAppDownloadLink()" class="bg-slate-800 hover:bg-slate-700 text-teal-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition active:scale-95 flex items-center gap-1">
@@ -354,19 +396,40 @@
                     </div>
 
                     <div class="relative overflow-hidden rounded-2xl border border-slate-700/60 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950/30 p-5 text-center space-y-3 shadow-inner">
+                        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+                        
                         <div class="w-16 h-16 rounded-2xl bg-white p-2 mx-auto shadow-xl shadow-emerald-500/20 border border-slate-700 flex items-center justify-center">
                             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%23ffffff'/><path d='M160 160V120c0-44.1 35.9-80 80-80s80 35.9 80 80v40' fill='none' stroke='%230f766e' stroke-width='36' stroke-linecap='round'/><path d='M110 160h292l20 280H90l20-280z' fill='none' stroke='%230f766e' stroke-width='36' stroke-linejoin='round'/><path d='M200 240l60 60 100-100' fill='none' stroke='%2310b981' stroke-width='36' stroke-linecap='round' stroke-linejoin='round'/></svg>" alt="Shopping Tiết Kiệm Logo" class="w-full h-full object-contain">
                         </div>
+
                         <div>
                             <h3 class="text-xs font-extrabold text-white uppercase tracking-wider">Shopping Tiết Kiệm</h3>
-                            <p class="text-[11px] text-slate-400 mt-1">Nền tảng mua sắm hoàn tiền uy tín.</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Nền tảng hoàn tiền cao nhất hiện nay, tối ưu hóa từng đồng chi tiêu.</p>
                         </div>
+
                         <div class="pt-2">
-                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng (Có sẵn mã giới thiệu)
+                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng Ngay (Đã kèm mã STKRDMEJV)
                             </a>
                         </div>
+
+                        <div class="pt-1 flex justify-center gap-2">
+                            <span class="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-1 rounded-lg font-medium"><i class="fa-solid fa-shield text-emerald-400 mr-1"></i> An toàn 100%</span>
+                            <span class="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-1 rounded-lg font-medium"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Tự động cộng ví</span>
+                        </div>
                     </div>
+                </div>
+            </section>
+
+            <section class="glass-card p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-xl space-y-4">
+                <h2 class="text-base font-bold text-white flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 text-sm">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    Lịch Sử Hoàn Tiền Gần Đây
+                </h2>
+                <div id="orderHistoryList" class="space-y-2.5 text-sm text-slate-400">
+                    <p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>
                 </div>
             </section>
         </main>
@@ -390,8 +453,8 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm">Trợ Lý AI Tự Học</h4>
-                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Nhiệt tình, hài hước, hỗ trợ 24/7</span>
+                        <h4 class="font-bold text-sm">Trợ Lý AI Shopping</h4>
+                        <span class="text-[10px] text-emerald-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Hỗ trợ hoàn tiền & Trò chuyện</span>
                     </div>
                 </div>
                 <button onclick="toggleAiChat()" class="w-7 h-7 rounded-lg bg-black/20 hover:bg-black/30 flex items-center justify-center text-xs transition">
@@ -405,13 +468,21 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Chào bạn! Tôi là trợ lý AI thông minh có khả năng tự học. Tôi sẵn sàng giải đáp các câu hỏi khó, toán học, văn học cơ bản với một chút hài hước và nhiệt tình hướng dẫn chi tiết cho bạn!</p>
+                        <p>Xin chào! Tôi là trợ lý AI thông minh, sẵn sàng trò chuyện, giải đáp thắc mắc, tính toán toán học (ví dụ: 1+1, 5*5...) hoặc hỗ trợ bạn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b>.</p>
+                        <p class="text-[10px] text-slate-400">Bạn cần tôi giúp gì hôm nay?</p>
                     </div>
                 </div>
             </div>
 
+            <div class="p-2 bg-slate-900 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[10px]">
+                <button onclick="sendAiPrompt('Chào bot, bạn khỏe không?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Chào bot!</button>
+                <button onclick="sendAiPrompt('1+1 bằng mấy?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">1+1 = ?</button>
+                <button onclick="sendAiPrompt('App nào hoàn tiền cao nhất hiện nay?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">App hoàn tiền cao nhất?</button>
+                <button onclick="sendAiPrompt('Thời tiết hôm nay thế nào?')" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-2.5 py-1.5 rounded-lg whitespace-nowrap border border-slate-700 transition">Thời tiết thế nào?</button>
+            </div>
+
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiChatInput" placeholder="Hỏi toán, văn, hoặc cách rút tiền..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi, tính toán 1+1..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                 <button onclick="sendUserAiMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -419,30 +490,20 @@
         </div>
     </div>
 
-
-    <!-- ================= MODAL THÔNG BÁO & LỊCH SỬ HOÀN TIỀN ================= -->
+    <!-- ================= MODAL THÔNG BÁO & HOẠT ĐỘNG ================= -->
     <div id="notificationModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="glass-panel border border-slate-700/85 p-6 sm:p-7 rounded-[2rem] max-w-lg w-full space-y-4 shadow-2xl relative animate-zoom">
+        <div class="glass-panel border border-slate-700/85 p-6 sm:p-7 rounded-[2rem] max-w-md w-full space-y-4 shadow-2xl relative animate-zoom">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-bell text-emerald-400"></i> Thông Báo & Lịch Sử Hoàn Tiền
+                    <i class="fa-solid fa-bell text-emerald-400"></i> Thông Báo & Hoạt Động
                 </h3>
                 <button onclick="closeNotificationModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
-            <div class="flex gap-2 border-b border-slate-800 pb-2">
-                <button onclick="switchNotifTab('notif')" id="tabBtnNotif" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition">Thông Báo</button>
-                <button onclick="switchNotifTab('history')" id="tabBtnHistory" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 transition">Lịch Sử Hoàn Tiền</button>
-            </div>
-
             <div id="notificationListContainer" class="space-y-3 max-h-80 overflow-y-auto pr-1 text-xs">
-                <p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo nào.</p>
-            </div>
-
-            <div id="historyListContainer" class="hidden space-y-3 max-h-80 overflow-y-auto pr-1 text-xs">
-                <p class="text-center py-6 text-slate-500 font-medium">Chưa có lịch sử hoàn tiền ví.</p>
+                <p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>
             </div>
 
             <button onclick="closeNotificationModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Đóng</button>
@@ -454,7 +515,7 @@
     <div id="menuDropdownModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 z-50">
         <div class="glass-panel border-t sm:border border-slate-700/85 p-6 sm:p-8 rounded-t-[2.5rem] sm:rounded-[2rem] max-w-md w-full space-y-4 shadow-2xl relative animate-zoom">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-compass text-emerald-400"></i> Tiện Ích & Cài Đặt</h3>
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-compass text-emerald-400"></i> Tiện Ích & Công Cụ</h3>
                 <button onclick="closeMenuDropdown()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -462,19 +523,19 @@
             
             <div class="space-y-2 text-xs">
                 <button onclick="closeMenuDropdown(); openSettingsModal();" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
-                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-wallet text-emerald-400"></i> Quản lý Ví & Rút Tiền (Tối thiểu 10K)</span>
+                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-wallet text-emerald-400"></i> Quản lý Ví & Rút tiền (Tối thiểu 10K)</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
                 <button onclick="closeMenuDropdown(); openBankModal();" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
-                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-building-columns text-teal-400"></i> Cài đặt Ngân Hàng Liên Kết</span>
+                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-building-columns text-teal-400"></i> Liên kết tài khoản Ngân hàng</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
                 <button onclick="closeMenuDropdown(); openReportModal();" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
-                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo Lỗi Hệ Thống</span>
+                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo lỗi hệ thống / Góp ý</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
-                <button onclick="closeMenuDropdown(); openGuideModal();" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
-                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng Dẫn Sử Dụng Tổng Hợp</span>
+                <button onclick="closeMenuDropdown(); showModal('Hướng dẫn sử dụng', '1. Dán link sản phẩm từ Shopee/Lazada vào web để gửi link và số tài khoản ngân hàng chờ Admin duyệt.\n2. Đăng ký/đăng nhập kèm mã STKRDMEJV.\n3. Nhận tiền hoàn về ví tự động sau khi Admin chọn số tiền duyệt.');" class="w-full text-left p-3.5 bg-slate-900/90 hover:bg-slate-800 rounded-2xl border border-slate-800 transition flex items-center justify-between group">
+                    <span class="font-bold text-white flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng dẫn hoàn tiền nhanh</span>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-slate-400"></i>
                 </button>
             </div>
@@ -484,32 +545,11 @@
     </div>
 
 
-    <!-- ================= MODAL HƯỚNG DẪN TỔNG HỢP ================= -->
-    <div id="guideModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="glass-panel border border-slate-700/85 p-7 rounded-[2rem] max-w-lg w-full space-y-5 shadow-2xl relative animate-zoom max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-circle-question text-sky-400"></i> Hướng Dẫn Sử Dụng Hệ Thống</h3>
-                <button onclick="closeGuideModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
-                <p><b>1. Tài khoản Admin & Quản lý ví:</b> Tài khoản quản trị <i>tvty832@gmail.com</i> luôn có số dư 200.000.000.000đ và có quyền chuyển tiền ảo qua ví cho các tài khoản người dùng khác.</p>
-                <p><b>2. Rút tiền:</b> Người dùng thường có thể rút tiền khi số dư trên 10.000đ. Hệ thống sẽ trừ tiền trước và gửi yêu cầu kèm số tài khoản ngân hàng và gmail đăng nhập đến <i>tvty832@gmail.com</i>. Admin duyệt xong sẽ hiển thị trong bảng đã duyệt.</p>
-                <p><b>3. Chuyển hướng hoàn tiền:</b> Gắn link sản phẩm và bấm chuyển hướng để sang app Shopping Tiết Kiệm kèm thông báo về email admin hoặc thông báo web.</p>
-                <p><b>4. Cửa hàng & Mua ngay:</b> Giao diện 10 dòng sản phẩm bát mì, tô phở uy tín với nút mua ngay hoạt động trơn tru.</p>
-                <p><b>5. Bot Chat thông minh:</b> Tự học, quản lý trả lời các câu hỏi khó, toán học, văn học cơ bản một cách hài hước và nhiệt tình.</p>
-            </div>
-            <button onclick="closeGuideModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Đã hiểu</button>
-        </div>
-    </div>
-
-
     <!-- ================= MODAL BÁO LỖI HỆ THỐNG ================= -->
     <div id="reportModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="glass-panel border border-slate-700/85 p-7 rounded-[2rem] max-w-md w-full space-y-5 shadow-2xl relative animate-zoom">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo Lỗi Hệ Thống</h3>
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Báo Lỗi & Góp Ý Hệ Thống</h3>
                 <button onclick="closeReportModal()" class="w-8 h-8 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -521,17 +561,17 @@
                 </div>
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase">Mô tả chi tiết</label>
-                    <textarea id="reportContent" rows="4" placeholder="Mô tả các bước gặp lỗi..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
+                    <textarea id="reportContent" rows="4" placeholder="Mô tả các bước gặp lỗi hoặc nội dung góp ý của bạn..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
                 </div>
             </div>
             <button onclick="submitSystemReport()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg">
-                Gửi Báo Lỗi Đến Admin (tvty832@gmail.com)
+                Gửi Báo Lỗi Đến Admin
             </button>
         </div>
     </div>
 
 
-    <!-- ================= MODAL THÔNG BÁO CHUNG ================= -->
+    <!-- ================= MODAL THÔNG BÁO ================= -->
     <div id="customModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="glass-panel border border-slate-700/85 p-7 rounded-[2rem] max-w-sm w-full space-y-5 shadow-2xl relative animate-zoom text-center">
             <div id="modalIcon" class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-2xl mb-2">
@@ -560,7 +600,7 @@
             </div>
 
             <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex justify-between items-center">
-                <span class="text-xs text-slate-400 font-medium">Số dư ví hiện tại:</span>
+                <span class="text-xs text-slate-400 font-medium">Số dư ví hoàn tiền:</span>
                 <span class="text-sm font-black text-emerald-400"><span id="settingsBalanceVal">0</span> đ</span>
             </div>
 
@@ -579,17 +619,36 @@
                 </button>
             </div>
 
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="closeSettingsModal(); openReportModal();" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-xs font-bold text-amber-400 flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Báo lỗi hệ thống
+                </button>
+                <button onclick="closeSettingsModal(); showModal('Bảo mật tài khoản', 'Tài khoản của bạn được bảo vệ bằng mã hóa SSL và xác thực hai lớp qua Supabase Auth.');" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-xs font-bold text-sky-400 flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-shield-halved"></i> Bảo mật tài khoản
+                </button>
+            </div>
+
             <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Yêu cầu rút tiền</span>
                     <span class="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded font-bold border border-amber-500/20">Tối thiểu: 10.000 đ</span>
                 </div>
                 <div class="space-y-2">
-                    <input type="number" id="withdrawAmount" placeholder="Nhập số tiền muốn rút..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
+                    <input type="number" id="withdrawAmount" placeholder="Nhập số tiền muốn rút (Tối thiểu 10,000 đ)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
                     <button onclick="handleWithdrawRequest()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md">
-                        Gửi yêu cầu rút tiền (Gửi qua email admin tvty832@gmail.com)
+                        Gửi yêu cầu rút tiền (Chờ Admin duyệt)
                     </button>
                 </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-2 text-xs">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-exclamation text-xs"></i> Quy Định Về Hoàn Tiền & Rút Tiền
+                </span>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
+                    <li><b>Hạn mức rút tiền:</b> Số tiền rút mỗi lần tối thiểu là <b class="text-emerald-400">10.000 đ</b>. Số dư hợp lệ từ hoàn tiền sẽ được chuyển thẳng về tài khoản ngân hàng liên kết sau khi Admin duyệt.</li>
+                    <li><b>Chính sách khấu trừ khi đổi trả:</b> Trường hợp đơn hàng phát sinh yêu cầu <i>Hoàn hàng, Trả tiền hoặc Hủy đơn</i>, hệ thống sẽ tiến hành <b>khấu trừ tương ứng 100% phần hoa hồng đã tạm ứng</b> khỏi số dư ví tích lũy của bạn.</li>
+                </ul>
             </div>
 
             <div class="space-y-2 pt-1">
@@ -610,23 +669,26 @@
                     <i class="fa-solid fa-building-columns"></i>
                 </div>
                 <h3 class="text-xl font-extrabold text-white">Liên Kết Ngân Hàng</h3>
-                <p class="text-xs text-slate-400 font-medium">Nhập đúng thông tin để liên kết</p>
+                <p class="text-xs text-slate-400 font-medium">Hỗ trợ đa dạng ngân hàng nội địa</p>
             </div>
 
             <div class="space-y-3.5">
                 <div class="space-y-1">
                     <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Chọn Ngân Hàng</label>
-                    <select id="bankSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
+                    <select id="bankSelect" onchange="onBankChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-emerald-400">
                         <option value="Techcombank">Techcombank</option>
-                        <option value="MBBank">MB Bank</option>
-                        <option value="Vietcombank">Vietcombank</option>
+                        <option value="MBBank">MB Bank (Ngân hàng TMCP Quân Đội)</option>
+                        <option value="Vietcombank">Vietcombank (VCB)</option>
                         <option value="BIDV">BIDV</option>
                         <option value="Agribank">Agribank</option>
+                        <option value="VPBank">VPBank</option>
+                        <option value="ACB">ACB</option>
+                        <option value="TPBank">TPBank</option>
                     </select>
                 </div>
 
                 <div class="space-y-1">
-                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Số tài khoản</label>
+                    <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Số tài khoản / Số điện thoại</label>
                     <input type="text" id="bankAccNum" placeholder="Nhập số tài khoản ngân hàng" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400">
                 </div>
 
@@ -634,25 +696,54 @@
                     <label class="block text-[11px] font-bold text-slate-300 ml-1 uppercase">Họ và tên chủ tài khoản (Không dấu)</label>
                     <input type="text" id="bankAccOwner" placeholder="NGUYEN VAN A" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-400 uppercase">
                 </div>
+
+                <div id="bankPromoBox" class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl space-y-2 text-xs">
+                    <div id="promoTechcomContent" class="space-y-2 text-center">
+                        <p class="text-emerald-400 font-bold text-left"><i class="fa-solid fa-gift"></i> Mã giới thiệu Techcombank:</p>
+                        <p class="text-slate-300 text-left">Sử dụng mã giới thiệu / Quét mã QR:</p>
+                        <div class="flex justify-center pt-1">
+                            <div class="w-48 h-48 bg-white p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center shadow-lg relative overflow-hidden">
+                                <img src="1000016682_3.jpg" alt="Mã QR Techcombank" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='1000016682.jpg';">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="promoMbContent" class="hidden space-y-2.5">
+                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-gift"></i> Chương trình giới thiệu MB Bank:</p>
+                        <p class="text-slate-300 leading-relaxed text-[11px]">
+                            Đăng ký App MBBank để nhận ngay <b class="text-amber-400">30,000 VND</b> vào tài khoản! Mời thêm bạn bè đăng ký App MBBank để nhận thêm ưu đãi. Mã giới thiệu: <span class="font-mono text-emerald-400 font-bold">UKWK35QD7DRG3CGOI4T1U</span>
+                        </p>
+                        <div class="pt-1">
+                            <a href="https://mbbank.onelink.me/QPF5?pid=SF%20Email%20Warmup&c=SF_Email_WarmUP_AppInstall&af_force_deeplink=true&af_dp=mbbank%3A%2F%2F&referral_code=UKWK35QD7DRG3CGOI4T1U" target="_blank" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở link đăng ký MB Bank ngay
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="promoOtherContent" class="hidden space-y-1">
+                        <p class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-info"></i> Thông tin liên kết:</p>
+                        <p class="text-slate-300 text-[11px]">Hệ thống bảo mật thông tin tài khoản ngân hàng của bạn an toàn 100%.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="space-y-2 pt-1">
                 <button onclick="saveBankConnection()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3 rounded-xl text-sm transition active:scale-95 shadow-lg shadow-emerald-500/20">
-                    Xác nhận liên kết
+                    Xác nhận liên kết ngân hàng
                 </button>
-                <button onclick="closeBankModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition border border-slate-700">Hủy bỏ</button>
+                <button onclick="closeBankModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-sm transition border border-slate-700">Hủy bỏ</button>
             </div>
         </div>
     </div>
 
 
-    <!-- ================= MODAL ADMIN: QUẢN TRỊ & DUYỆT LỆNH ================= -->
+    <!-- ================= MODAL ADMIN: DUYỆT LỆNH RÚT TIỀN & ĐƠN HÀNG ================= -->
     <div id="adminModal" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="glass-panel border border-purple-500/40 p-6 sm:p-8 rounded-[2rem] max-w-2xl w-full space-y-6 shadow-2xl relative animate-zoom my-auto">
             <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-xl font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-user-shield text-purple-400"></i> Khu Vực Quản Trị Admin (tvty832)</h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Duyệt lệnh rút tiền & Chuyển tiền qua ví</p>
+                    <h3 class="text-xl font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-user-shield text-purple-400"></i> Khu Vực Quản Trị Admin</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Duyệt lệnh rút tiền & Gửi tiền hoàn (1K - 50K) cho khách</p>
                 </div>
                 <button onclick="closeAdminModal()" class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
@@ -660,16 +751,9 @@
             </div>
 
             <div class="space-y-4">
-                <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Bảng chuyển tiền cho người dùng:</h4>
-                    <button onclick="openAdminTransferModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-xs transition">
-                        <i class="fa-solid fa-money-bill-transfer"></i> Chuyển tiền ví
-                    </button>
-                </div>
-
-                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider pt-2">Danh sách yêu cầu rút tiền đang chờ duyệt & Bảng đã duyệt:</h4>
+                <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Danh sách yêu cầu / Link gửi đơn hàng đang chờ Admin duyệt cộng tiền:</h4>
                 <div id="adminWithdrawList" class="space-y-3 max-h-80 overflow-y-auto pr-1">
-                    <p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách...</p>
+                    <p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách yêu cầu...</p>
                 </div>
             </div>
 
@@ -684,50 +768,20 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyY2VvdHl1Y2xlaHJrb3pvdG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzQzMDAsImV4cCI6MjEwMDIxMDMwMH0.JRoCXVP56Nlwt28Be8wBjHHasItW73bVoGSWdL-SD70';
         
         const clientSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
         });
 
+        const ACCESSTRADE_AFF_ID = "AT2107363";           
         let currentUser = null;
         const ADMIN_EMAIL = "tvty832@gmail.com"; 
 
-        // Khởi tạo 10 dòng sản phẩm cửa hàng (bát mì, tô phở,...)
-        const storeProducts = [
-            { id: 1, name: "Bát mì tôm hảo hạng", price: "15.000 đ", link: "xxxx" },
-            { id: 2, name: "Tô phở bò đặc biệt", price: "45.000 đ", link: "xxxx" },
-            { id: 3, name: "Bát mì trộn cay", price: "20.000 đ", link: "xxxx" },
-            { id: 4, name: "Tô phở gà ta", price: "40.000 đ", link: "xxxx" },
-            { id: 5, name: "Bát mì vịt tiềm", price: "60.000 đ", link: "xxxx" },
-            { id: 6, name: "Tô phở tái lăn", price: "50.000 đ", link: "xxxx" },
-            { id: 7, name: "Bát mì bò viên", price: "35.000 đ", link: "xxxx" },
-            { id: 8, name: "Tô phở sốt vang", price: "55.000 đ", link: "xxxx" },
-            { id: 9, name: "Bát mì hải sản", price: "45.000 đ", link: "xxxx" },
-            { id: 10, name: "Tô phở đặc sản truyền thống", price: "65.000 đ", link: "xxxx" }
-        ];
-
-        function renderStoreGrid() {
-            const grid = document.getElementById('storeGridContainer');
-            if(!grid) return;
-            grid.innerHTML = storeProducts.map(p => `
-                <div class="bg-slate-950/80 border border-slate-800 p-3.5 rounded-2xl flex flex-col justify-between space-y-2 hover:border-emerald-500/50 transition">
-                    <div class="space-y-1">
-                        <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Cửa hàng</span>
-                        <h3 class="font-bold text-white text-xs truncate">${p.name}</h3>
-                        <p class="text-[11px] font-black text-emerald-400">${p.price}</p>
-                    </div>
-                    <button onclick="buyStoreItem('${p.link}')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-2 rounded-xl text-[11px] transition active:scale-95 shadow-md">
-                        Mua Ngay
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function buyStoreItem(link) {
-            if (link === "xxxx" || !link) {
-                showModal("Thông báo", "Sản phẩm này đang chờ Admin cập nhật liên kết mua hàng chính thức.");
-            } else {
-                window.open(link, '_blank');
-            }
-        }
+        let loginFailCount = 0;
+        let lockUntilTime = 0;
+        const MIN_WITHDRAW_AMOUNT = 10000;
 
         function showModal(title, message, isError = false) {
             document.getElementById('modalTitle').innerText = title;
@@ -743,131 +797,198 @@
             document.getElementById('customModal').classList.remove('hidden');
         }
 
-        function closeModal() { document.getElementById('customModal').classList.add('hidden'); }
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
         function switchAuthTab(tab) {
             document.getElementById('loginCard').classList.add('hidden');
             document.getElementById('signupCard').classList.add('hidden');
             document.getElementById('forgotCard').classList.add('hidden');
-            if (tab === 'signup') document.getElementById('signupCard').classList.remove('hidden');
-            else if (tab === 'forgot') document.getElementById('forgotCard').classList.remove('hidden');
-            else document.getElementById('loginCard').classList.remove('hidden');
+
+            if (tab === 'signup') {
+                document.getElementById('signupCard').classList.remove('hidden');
+            } else if (tab === 'forgot') {
+                document.getElementById('forgotCard').classList.remove('hidden');
+            } else {
+                document.getElementById('loginCard').classList.remove('hidden');
+            }
         }
 
-        function openMenuDropdown() { document.getElementById('menuDropdownModal').classList.remove('hidden'); }
-        function closeMenuDropdown() { document.getElementById('menuDropdownModal').classList.add('hidden'); }
-        function openGuideModal() { document.getElementById('guideModal').classList.remove('hidden'); }
-        function closeGuideModal() { document.getElementById('guideModal').classList.add('hidden'); }
+        function openMenuDropdown() {
+            document.getElementById('menuDropdownModal').classList.remove('hidden');
+        }
+        function closeMenuDropdown() {
+            document.getElementById('menuDropdownModal').classList.add('hidden');
+        }
 
         function openNotificationModal() {
             document.getElementById('notificationModal').classList.remove('hidden');
             loadNotifications();
-            loadHistory();
         }
-        function closeNotificationModal() { document.getElementById('notificationModal').classList.add('hidden'); }
-
-        function switchNotifTab(tab) {
-            const btnNotif = document.getElementById('tabBtnNotif');
-            const btnHist = document.getElementById('tabBtnHistory');
-            const notifList = document.getElementById('notificationListContainer');
-            const histList = document.getElementById('historyListContainer');
-
-            if (tab === 'notif') {
-                btnNotif.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition";
-                btnHist.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 transition";
-                notifList.classList.remove('hidden');
-                histList.classList.add('hidden');
-            } else {
-                btnHist.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition";
-                btnNotif.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 transition";
-                histList.classList.remove('hidden');
-                notifList.classList.add('hidden');
-            }
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').classList.add('hidden');
         }
 
-        async function simulateAppPurchaseWithLink() {
-            if (!currentUser) return;
-            const linkInput = document.getElementById('affiliateLinkInput');
-            const linkVal = linkInput.value.trim();
-            if (!linkVal) {
-                showModal('Thiếu link', 'Vui lòng nhập link sản phẩm cần gắn vào app!', true);
-                return;
-            }
-
+        async function notifyAdmin(titleMsg, detailMsg, extraData = {}) {
             try {
-                // Gửi thông báo về thông báo trên web và email admin
+                const { data: adminProfiles } = await clientSupabase.from('profiles').select('id').eq('email', ADMIN_EMAIL);
+                if (adminProfiles && adminProfiles.length > 0) {
+                    await clientSupabase.from('notifications').insert([{
+                        user_id: adminProfiles[0].id,
+                        title: titleMsg,
+                        message: detailMsg,
+                        type: 'admin_alert'
+                    }]);
+
+                    if (currentUser) {
+                        const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                        await clientSupabase.from('withdrawal_requests').insert([{
+                            user_id: currentUser.id,
+                            user_email: currentUser.email,
+                            amount: 0, 
+                            bank_name: userProfile?.bank_name || 'Chưa có',
+                            bank_acc: userProfile?.bank_acc || 'Chưa có',
+                            bank_owner: userProfile?.bank_owner || 'Chưa có',
+                            status: 'pending_cashback', 
+                            note: extraData.note || titleMsg
+                        }]);
+                    }
+                }
+            } catch(e) {
+                console.error("Notify admin error:", e);
+            }
+        }
+
+        async function simulateAppPurchase() {
+            if (!currentUser) return;
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+            
+            try {
+                const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                const currentBalance = Number(userProfile?.balance || 0);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
+
                 await clientSupabase.from('notifications').insert([{
                     user_id: currentUser.id,
-                    title: 'Đã gắn link và chuyển hướng app',
-                    message: `Link sản phẩm: ${linkVal} đã được chuyển hướng sang app Shopping Tiết Kiệm thành công.`,
+                    title: 'Đã gửi yêu cầu nhận hoàn tiền!',
+                    message: `Yêu cầu đơn hàng #${randomOrderId} trên app Shopping Tiết Kiệm đã được gửi cho Quản trị viên hệ thống. Đang chờ duyệt số tiền hoàn vào ví!`,
                     type: 'order'
                 }]);
 
-                // Thông báo về gmail admin
-                await clientSupabase.from('notifications').insert([{
-                    user_id: (await getAdminUserId()),
-                    title: '🔔 Thông báo gắn link chuyển hướng mới',
-                    message: `Tài khoản ${currentUser.email} vừa gắn link sản phẩm: ${linkVal} và chuyển hướng sang app Shopping Tiết Kiệm.`,
-                    type: 'admin_alert'
-                }]);
+                await notifyAdmin(
+                    '🔔 Khách bấm chuyển hướng app (Chờ duyệt hoàn tiền)!',
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId}`,
+                    { note: `Hoàn tiền app - Đơn #${randomOrderId}` }
+                );
 
-                linkInput.value = '';
-                showModal('Thành công', 'Đã gắn link và chuyển hướng sang app Shopping Tiết Kiệm thành công!');
+                fetchUserProfileData();
+                loadUserOrders();
                 checkUnreadNotifications();
-            } catch(e) {
-                console.error(e);
+                showModal('Đã gửi yêu cầu', 'Hệ thống đã gửi liên kết và thông tin tài khoản ngân hàng của bạn đến Quản trị viên hệ thống. Vui lòng chờ duyệt số tiền hoàn (1K - 50K) vào ví.');
+            } catch (err) {
+                console.error("Simulate purchase error:", err);
             }
         }
 
-        async function getAdminUserId() {
-            const { data } = await clientSupabase.from('profiles').select('id').eq('email', ADMIN_EMAIL);
-            return data && data.length > 0 ? data[0].id : null;
+        async function submitCustomProductLink() {
+            if (!currentUser) return;
+            const linkInput = document.getElementById('customProductLinkInput');
+            const linkVal = linkInput.value.trim();
+
+            if (!linkVal) {
+                showModal('Thiếu liên kết', 'Vui lòng dán liên kết sản phẩm cần mua vào ô!', true);
+                return;
+            }
+
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+
+            try {
+                const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                const currentBalance = Number(userProfile?.balance || 0);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: 'Đã gửi liên kết sản phẩm!',
+                    message: `Đã gửi liên kết sản phẩm (Mã đơn #${randomOrderId}) và thông tin tài khoản đến hệ thống. Đang chờ duyệt tiền hoàn vào ví!`,
+                    type: 'order'
+                }]);
+
+                await notifyAdmin(
+                    '🔗 Khách vừa gửi link sản phẩm (Chờ duyệt hoàn tiền)!',
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nLink sản phẩm: ${linkVal}\nMã đơn: #${randomOrderId}`,
+                    { note: `Hoàn tiền link - Đơn #${randomOrderId}` }
+                );
+
+                linkInput.value = '';
+                showModal('Đã gửi thành công!', `Liên kết sản phẩm và thông tin ngân hàng của bạn đã được gửi đến hệ thống quản trị. Tiền hoàn (1K - 50K) sẽ được cộng vào ví sau khi duyệt.`);
+                
+                fetchUserProfileData();
+                loadUserOrders();
+                checkUnreadNotifications();
+            } catch (err) {
+                console.error("Custom link error:", err);
+                showModal('Lỗi', 'Không thể xử lý liên kết lúc này.', true);
+            }
+        }
+
+        async function simulateDirectProductPurchase(appName) {
+            if (!currentUser) return;
+            const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+
+            try {
+                const { data: userProfile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
+                const currentBalance = Number(userProfile?.balance || 0);
+                const bankInfoText = userProfile?.bank_name ? `Ngân hàng: ${userProfile.bank_name} - STK: ${userProfile.bank_acc} (${userProfile.bank_owner || 'Chưa rõ'})` : 'Chưa liên kết ngân hàng';
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: currentUser.id,
+                    title: `Mở app ${appName} thành công!`,
+                    message: `Yêu cầu hoàn tiền đơn hàng #${randomOrderId} qua ${appName} đã gửi cho hệ thống. Đang chờ duyệt cộng tiền vào ví!`,
+                    type: 'order'
+                }]);
+
+                await notifyAdmin(
+                    `🛒 Khách mở app ${appName} (Chờ duyệt hoàn tiền)!`,
+                    `Email: ${currentUser.email}\nSố dư ví hiện tại: ${currentBalance.toLocaleString('vi-VN')} đ\n${bankInfoText}\nMã đơn hàng: #${randomOrderId}`,
+                    { note: `Hoàn tiền ${appName} - Đơn #${randomOrderId}` }
+                );
+
+                fetchUserProfileData();
+                loadUserOrders();
+                checkUnreadNotifications();
+            } catch (err) {
+                console.error("Direct product purchase error:", err);
+            }
         }
 
         async function loadNotifications() {
             const container = document.getElementById('notificationListContainer');
             if (!currentUser) return;
+            container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Đang tải thông báo...</p>`;
+
             try {
                 const { data } = await clientSupabase.from('notifications').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
                 if (!data || data.length === 0) {
-                    container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo nào.</p>`;
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>`;
                     return;
                 }
+
                 container.innerHTML = data.map(item => `
                     <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl space-y-1">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-white text-xs">${item.title}</span>
+                            <span class="font-bold text-white text-xs flex items-center gap-1.5"><i class="fa-solid fa-circle-dot text-emerald-400 text-[8px]"></i> ${item.title}</span>
                             <span class="text-[10px] text-slate-500">${new Date(item.created_at || Date.now()).toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})}</span>
                         </div>
                         <p class="text-slate-300 text-[11px] leading-relaxed whitespace-pre-line">${item.message}</p>
                     </div>
                 `).join('');
+
                 document.getElementById('notifBadgeDot').classList.add('hidden');
                 document.getElementById('notifBadgeCount').classList.add('hidden');
             } catch (e) {
-                container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo nào.</p>`;
-            }
-        }
-
-        async function loadHistory() {
-            const container = document.getElementById('historyListContainer');
-            if (!currentUser) return;
-            try {
-                const { data } = await clientSupabase.from('withdrawal_requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
-                if (!data || data.length === 0) {
-                    container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có lịch sử chuyển ví / hoàn tiền.</p>`;
-                    return;
-                }
-                container.innerHTML = data.map(item => `
-                    <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl space-y-1">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-emerald-400 text-xs">${item.note || 'Lịch sử giao dịch ví'}</span>
-                            <span class="text-[10px] text-slate-500">${item.status}</span>
-                        </div>
-                        <p class="text-white text-xs font-bold">Số tiền: ${Number(item.amount || 0).toLocaleString('vi-VN')} đ</p>
-                    </div>
-                `).join('');
-            } catch (e) {
-                container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có lịch sử giao dịch ví.</p>`;
+                container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có thông báo hoặc hoạt động nào.</p>`;
             }
         }
 
@@ -883,8 +1004,12 @@
             } catch (e) {}
         }
 
-        function openReportModal() { document.getElementById('reportModal').classList.remove('hidden'); }
-        function closeReportModal() { document.getElementById('reportModal').classList.add('hidden'); }
+        function openReportModal() {
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
         async function submitSystemReport() {
             const title = document.getElementById('reportTitle').value.trim();
             const content = document.getElementById('reportContent').value.trim();
@@ -892,22 +1017,35 @@
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ tiêu đề và nội dung báo lỗi!', true);
                 return;
             }
-            const adminId = await getAdminUserId();
-            if(adminId) {
-                await clientSupabase.from('notifications').insert([{
-                    user_id: adminId,
-                    title: `⚠️ Báo lỗi hệ thống: ${title}`,
-                    message: `Từ email: ${currentUser ? currentUser.email : 'Ẩn danh'}\nNội dung: ${content}`,
-                    type: 'admin_alert'
-                }]);
-            }
-            showModal('Thành công', 'Báo lỗi hệ thống đã được gửi đến gmail quản trị (tvty832@gmail.com).');
+            await notifyAdmin(`⚠️ Báo lỗi từ khách: ${title}`, `Email: ${currentUser ? currentUser.email : 'Ẩn danh'}\nNội dung: ${content}`);
+            showModal('Đã gửi báo lỗi', 'Cảm ơn bạn! Đội ngũ kỹ thuật đã nhận được thông tin báo lỗi và sẽ xử lý sớm.');
             document.getElementById('reportTitle').value = '';
             document.getElementById('reportContent').value = '';
             closeReportModal();
         }
 
-        function toggleAiChat() { document.getElementById('aiChatWindow').classList.toggle('hidden'); }
+        function toggleGuideSection() {
+            const box = document.getElementById('guideContentBox');
+            const icon = document.getElementById('guideIcon');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                icon.className = "fa-solid fa-chevron-down text-[10px] transition-transform";
+            } else {
+                box.classList.add('hidden');
+                icon.className = "fa-solid fa-chevron-right text-[10px] transition-transform";
+            }
+        }
+
+        function toggleAiChat() {
+            const win = document.getElementById('aiChatWindow');
+            win.classList.toggle('hidden');
+        }
+
+        function sendAiPrompt(promptText) {
+            appendAiMessage(promptText, true);
+            processAiQuery(promptText);
+        }
+
         function sendUserAiMessage() {
             const input = document.getElementById('aiChatInput');
             const text = input.value.trim();
@@ -916,14 +1054,28 @@
             input.value = '';
             processAiQuery(text);
         }
-        function handleAiKeypress(e) { if (e.key === 'Enter') sendUserAiMessage(); }
+
+        function handleAiKeypress(e) {
+            if (e.key === 'Enter') sendUserAiMessage();
+        }
 
         function appendAiMessage(text, isUser = false) {
             const container = document.getElementById('aiChatMessages');
             if (isUser) {
-                container.innerHTML += `<div class="flex items-start justify-end gap-2"><div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${escapeHtml(text)}</div></div>`;
+                container.innerHTML += `
+                    <div class="flex items-start justify-end gap-2">
+                        <div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${escapeHtml(text)}</div>
+                    </div>
+                `;
             } else {
-                container.innerHTML += `<div class="flex items-start gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-brain"></i></div><div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%] space-y-1">${text}</div></div>`;
+                container.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-xs">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 max-w-[80%] space-y-1">${text}</div>
+                    </div>
+                `;
             }
             container.scrollTop = container.scrollHeight;
         }
@@ -931,22 +1083,57 @@
         function processAiQuery(query) {
             const q = query.toLowerCase().trim();
             let reply = "";
-            if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.includes('cộng') || q.includes('nhân') || q.includes('bằng mấy')) {
+
+            if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.match(/^\s*1\s*\+\s*1\s*=?\s*$/) || q.match(/^\s*2\s*\+\s*2\s*=?\s*$/) || q.match(/bằng mấy/)) {
                 try {
                     const sanitized = q.replace(/[^0-9\+\-\*\/\.]/g, '');
-                    const result = Function('"use strict";return (' + sanitized + ')')();
-                    reply = `Hì hì, câu hỏi toán học này dễ quá! Kết quả là <b class="text-emerald-400 font-bold">${result}</b> nha bạn yêu dấu!`;
-                } catch(e) {
-                    reply = "Ôi câu hỏi toán học này thú vị đấy, nhưng tôi tính toán một chút rồi thấy ra kết quả tuyệt vời lắm nhé!";
+                    if(sanitized.length > 0) {
+                        const result = Function('"use strict";return (' + sanitized + ')')();
+                        reply = `Kết quả của ${sanitized} là: <b class="text-emerald-400 font-bold">${result}</b>`;
+                    } else {
+                        reply = "1 + 1 = <b class='text-emerald-400 font-bold'>2</b> nha bạn!";
+                    }
+                } catch (e) {
+                    reply = "1 + 1 = <b class='text-emerald-400 font-bold'>2</b> nha bạn!";
                 }
-            } else if (q.includes('văn') || q.includes('thơ') || q.includes('tác phẩm')) {
-                reply = "Về văn học thì tôi cực kỳ rành mạch luôn! Văn chương là hơi thở của cảm xúc, bạn cứ đưa đoạn văn hay bài thơ nào khó, tôi phân tích chi tiết và hài hước cho nghe!";
-            } else if (q.includes('rút tiền') || q.includes('số dư')) {
-                reply = "À về rút tiền thì đơn giản lắm: Bạn vào phần Cài đặt ví, nhập số tiền muốn rút (phải trên 10.000đ). Hệ thống sẽ trừ tiền ngay lập tức và gửi yêu cầu đến email admin <b>tvty832@gmail.com</b> để được duyệt đấy nhé!";
-            } else {
-                reply = `Tôi đã ghi nhận câu hỏi: "<i>${escapeHtml(query)}</i>". Là một trợ lý AI tự học nhiệt tình và hài hước, tôi khuyên bạn cứ trải nghiệm mua sắm hoặc hỏi tôi bất cứ lúc nào cần nhé!`;
             }
-            setTimeout(() => { appendAiMessage(reply, false); }, 400);
+            else if (q.match(/^(chào|hi|hello|alo|chào bot|shop ơi|chúc 1 ngày tốt lành|xin chào)/)) {
+                reply = "Xin chào bạn! Rất vui được trò chuyện và hỗ trợ bạn hôm nay. Bạn đang cần tìm hiểu về hoàn tiền mua sắm hay muốn trò chuyện, hỏi đáp vấn đề gì cứ nói với tôi nhé!";
+            } 
+            else if (q.match(/(bạn tên gì|ai tạo ra bạn|cậu là ai|mày là ai)/)) {
+                reply = "Tôi là trợ lý ảo thông minh của hệ thống Cashback247 và Shopping Tiết Kiệm, luôn sẵn sàng hỗ trợ bạn 24/7 mọi lúc mọi nơi!";
+            }
+            else if (q.match(/(khỏe không|thế nào rồi|bạn thế nào)/)) {
+                reply = "Cảm ơn bạn đã hỏi thăm, tôi là AI nên luôn luôn tràn đầy năng lượng và sẵn sàng giúp đỡ bạn! Còn bạn thế nào rồi?";
+            }
+            else if (q.includes('thời tiết') || q.includes('trời mưa') || q.includes('nắng không')) {
+                reply = "Vì tôi là trợ lý trực tuyến nên không cập nhật được chính xác vị trí hiện tại của bạn, nhưng khuyên bạn trước khi ra đường nhớ xem app thời tiết hoặc mang theo ô/áo mưa để phòng hờ nhé!";
+            }
+            else if (q.includes('hoàn tiền cao nhất') || q.includes('app nào') || q.includes('nền tảng nào') || q.includes('shopping tiết kiệm')) {
+                reply = "<b>Shopping Tiết Kiệm</b> hiện là nền tảng hoàn tiền <b>cao nhất hiện nay</b>!<br>" +
+                        "• Hoàn tiền tự động từ 1K đến 50K vào ví.<br>" +
+                        "• Nhập mã giới thiệu <b class='text-amber-400'>STKRDMEJV</b> để thăng hạng Bạc và nhận thêm +2% hoa hồng trọn đời.";
+            }
+            else if (q.includes('cách nhận') || q.includes('dùng thế nào') || q.includes('hướng dẫn')) {
+                reply = "<b>Hướng dẫn nhận hoàn tiền nhanh:</b><br>" +
+                        "1. Dán liên kết sản phẩm từ Shopee/Lazada vào web Cashback247.<br>" +
+                        "2. Đăng ký tài khoản kèm mã <b class='text-amber-400'>STKRDMEJV</b>.<br>" +
+                        "3. Nhận ngay từ 1.000đ đến 50.000đ vào ví sau khi duyệt đơn!";
+            }
+            else if (q.match(/(cảm ơn|thanks|thank you|tks)/)) {
+                reply = "Không có chi ạ! Chúc bạn có những trải nghiệm mua sắm tuyệt vời và tích lũy được thật nhiều tiền hoàn với Cashback247!";
+            }
+            else if (q.match(/(tạm biệt|bye|chào nhé)/)) {
+                reply = "Tạm biệt bạn! Hẹn gặp lại bạn lần sau nhé. Chúc bạn một ngày tốt lành!";
+            }
+            else {
+                reply = `Cảm ơn câu hỏi của bạn: "<i>${escapeHtml(query)}</i>".<br>` +
+                        "Tôi có thể hỗ trợ bạn trò chuyện, giải đáp thắc mắc hoặc hướng dẫn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b> (mã <b class='text-amber-400'>STKRDMEJV</b>). Bạn muốn tôi giúp gì cụ thể hơn không?";
+            }
+
+            setTimeout(() => {
+                appendAiMessage(reply, false);
+            }, 400);
         }
 
         function escapeHtml(text) {
@@ -956,29 +1143,45 @@
         function copyReferralCodeOnly() {
             const codeInput = document.getElementById('referralCodeInput');
             codeInput.select();
+            codeInput.setSelectionRange(0, 99999);
+            
             navigator.clipboard.writeText(codeInput.value).then(() => {
-                showModal('Đã sao chép', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm!');
+                document.getElementById('referralStatusMsg').classList.remove('hidden');
+                showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại. Bạn có thể dán (Paste) mã này vào bất cứ đâu!');
+            }).catch(err => {
+                document.execCommand('copy');
+                document.getElementById('referralStatusMsg').classList.remove('hidden');
+                showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại!');
             });
         }
 
         function copyAppDownloadLink() {
             const copyText = document.getElementById('appDownloadLinkInput');
             copyText.select();
+            copyText.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(copyText.value).then(() => {
-                showModal('Thành công', 'Đã sao chép link tải app!');
+                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
+            }).catch(err => {
+                document.execCommand('copy');
+                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
             });
         }
 
         async function initApp() {
-            renderStoreGrid();
             try {
-                const { data: { user } } = await clientSupabase.auth.getUser();
+                const authPromise = clientSupabase.auth.getUser();
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
+                const { data: { user } } = await Promise.race([authPromise, timeoutPromise]);
                 currentUser = user;
             } catch (e) {
                 currentUser = null;
             }
-            if (currentUser) showMainScreen();
-            else showAuthScreen();
+
+            if (currentUser) {
+                showMainScreen();
+            } else {
+                showAuthScreen();
+            }
         }
 
         function showAuthScreen() {
@@ -990,17 +1193,25 @@
             document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('mainScreen').classList.remove('hidden');
 
-            // Cấu hình tài khoản admin tvty832@gmail.com luôn có số dư 200.000.000.000đ
             if (currentUser && currentUser.email === ADMIN_EMAIL) {
-                await clientSupabase.from('profiles').upsert({ id: currentUser.id, email: ADMIN_EMAIL, balance: 200000000000 });
+                try {
+                    const { data: pData } = await clientSupabase.from('profiles').select('balance').eq('id', currentUser.id).single();
+                    if (!pData || Number(pData.balance || 0) < 90000000) {
+                        await clientSupabase.from('profiles').upsert({ id: currentUser.id, balance: 90000000 });
+                    }
+                } catch (err) {}
+            }
+
+            renderHeaderUI();
+            loadUserOrders();
+            fetchUserProfileData();
+            checkUnreadNotifications();
+
+            if (currentUser && currentUser.email === ADMIN_EMAIL) {
                 document.getElementById('adminNavContainer').classList.remove('hidden');
             } else {
                 document.getElementById('adminNavContainer').classList.add('hidden');
             }
-
-            renderHeaderUI();
-            fetchUserProfileData();
-            checkUnreadNotifications();
         }
 
         function renderHeaderUI() {
@@ -1008,7 +1219,7 @@
             if (currentUser) {
                 authSection.innerHTML = `
                     <button onclick="openSettingsModal()" class="bg-slate-900 border border-emerald-500/30 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-400 flex items-center gap-1.5 shadow-inner hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-wallet text-amber-400 text-xs"></i> 
+                        <i class="fa-solid fa-medal text-amber-400 text-xs"></i> 
                         <span><span id="balanceVal">0</span> đ</span>
                     </button>
                 `;
@@ -1018,40 +1229,106 @@
         async function submitSignup() {
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPass').value.trim();
+            const btn = document.getElementById('btnSignupBtn');
+
             if (!email || !password) {
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
                 return;
             }
-            const { error } = await clientSupabase.auth.signUp({ email, password });
-            if (error) showModal('Đăng ký thất bại', error.message, true);
-            else {
-                showModal('Đăng ký thành công', 'Tài khoản đã được tạo! Hãy đăng nhập.');
-                switchAuthTab('login');
+            if (password.length < 6) {
+                showModal('Mật khẩu yếu', 'Mật khẩu phải từ 6 ký tự trở lên!', true);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng ký...`;
+
+            try {
+                const { error } = await clientSupabase.auth.signUp({ email, password });
+                if (error) {
+                    showModal('Đăng ký thất bại', error.message, true);
+                } else {
+                    showModal('Đăng ký thành công', 'Tài khoản đã được tạo! Hãy tiến hành đăng nhập.');
+                    switchAuthTab('login');
+                }
+            } catch (err) {
+                showModal('Lỗi kết nối', 'Không thể kết nối đến máy chủ CSDL!', true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Xác nhận đăng ký ví`;
             }
         }
 
         async function submitLogin() {
+            const now = Date.now();
+            const warningEl = document.getElementById('loginLockWarning');
+
+            if (now < lockUntilTime) {
+                const remainingSec = Math.ceil((lockUntilTime - now) / 1000);
+                warningEl.innerText = `Tài khoản tạm khóa do nhập sai quá nhiều lần. Vui lòng thử lại sau ${remainingSec} giây!`;
+                warningEl.classList.remove('hidden');
+                return;
+            } else {
+                warningEl.classList.add('hidden');
+            }
+
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPass').value.trim();
+            const btn = document.getElementById('btnLoginBtn');
+
             if (!email || !password) {
                 showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ Email và Mật khẩu!', true);
                 return;
             }
-            const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                showModal('Đăng nhập thất bại', error.message, true);
-            } else {
-                currentUser = data.user;
-                showMainScreen();
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra...`;
+
+            try {
+                const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    loginFailCount++;
+                    if (loginFailCount >= 3) {
+                        lockUntilTime = Date.now() + 5 * 60 * 1000;
+                        loginFailCount = 0;
+                        warningEl.innerText = `Tài khoản bị khóa tạm thời trong 5 phút.`;
+                        warningEl.classList.remove('hidden');
+                        showModal('Cảnh báo bảo mật', 'Nhập sai mật khẩu quá 3 lần.', true);
+                    } else {
+                        showModal('Đăng nhập thất bại', `Sai thông tin! Bạn còn ${3 - loginFailCount} lần thử.`, true);
+                    }
+                } else {
+                    loginFailCount = 0;
+                    lockUntilTime = 0;
+                    warningEl.classList.add('hidden');
+                    currentUser = data.user;
+                    showMainScreen();
+                }
+            } catch (err) {
+                showModal('Lỗi kết nối', 'Lỗi kết nối CSDL!', true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập an toàn`;
             }
         }
 
         async function submitForgotPassword() {
             const email = document.getElementById('forgotEmail').value.trim();
-            if (!email) { showModal('Thiếu email', 'Vui lòng nhập email!', true); return; }
-            await clientSupabase.auth.resetPasswordForEmail(email);
-            showModal('Đã gửi', 'Link khôi phục mật khẩu đã gửi đến email của bạn.');
-            switchAuthTab('login');
+            if (!email) {
+                showModal('Thiếu email', 'Vui lòng nhập email tài khoản!', true);
+                return;
+            }
+            try {
+                const { error } = await clientSupabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+                if (error) {
+                    showModal('Gửi thất bại', error.message, true);
+                } else {
+                    showModal('Đã gửi email', 'Link đặt lại mật khẩu đã được gửi đến email của bạn!');
+                    switchAuthTab('login');
+                }
+            } catch (err) {
+                showModal('Lỗi', 'Không thể gửi yêu cầu lúc này.', true);
+            }
         }
 
         async function handleLogout() {
@@ -1067,7 +1344,9 @@
                 const { data } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 if (data) {
                     let balance = Number(data.balance || 0);
-                    if (currentUser.email === ADMIN_EMAIL) balance = 200000000000;
+                    if (balance > 90000000) {
+                        balance = Math.floor(Math.random() * (90000000 - 0 + 1)) + 0;
+                    }
                     document.getElementById('balanceVal').innerText = balance.toLocaleString('vi-VN');
                     document.getElementById('settingsBalanceVal').innerText = balance.toLocaleString('vi-VN');
 
@@ -1078,12 +1357,34 @@
                         document.getElementById('lblBankName').innerText = data.bank_name;
                         document.getElementById('lblBankAcc').innerText = data.bank_acc;
                         document.getElementById('lblBankOwner').innerText = data.bank_owner || '---';
+                        document.getElementById('btnBankActionText').innerText = "Đổi Ngân Hàng Liên Kết";
                     }
                 }
             } catch (e) {
                 document.getElementById('balanceVal').innerText = "0";
+                document.getElementById('settingsBalanceVal').innerText = "0";
             }
             document.getElementById('userEmailDisplay').innerText = currentUser.email;
+        }
+
+        async function loadUserOrders() {
+            if (!currentUser) return;
+            try {
+                const { data } = await clientSupabase.from('orders').select('*').eq('user_id', currentUser.id);
+                const container = document.getElementById('orderHistoryList');
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+                    return;
+                }
+                container.innerHTML = data.map(item => `
+                    <div class="flex justify-between items-center p-3.5 bg-slate-900/80 rounded-2xl border border-slate-800">
+                        <div><p class="font-semibold text-white text-xs">Đơn hàng #${item.order_id || '---'}</p></div>
+                        <div class="text-right"><p class="text-emerald-400 font-bold text-xs">+${Number(item.cashback_amount || 0).toLocaleString('vi-VN')} đ</p></div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('orderHistoryList').innerHTML = `<p class="text-center py-6 text-slate-500 font-medium">Chưa có đơn hàng hoàn tiền nào.</p>`;
+            }
         }
 
         async function handleWithdrawRequest() {
@@ -1092,32 +1393,28 @@
             const amount = Number(amountInput);
 
             if (!amount || amount <= 0) {
-                showModal('Không hợp lệ', 'Vui lòng nhập số tiền muốn rút!', true);
+                showModal('Số tiền không hợp lệ', 'Vui lòng nhập số tiền muốn rút!', true);
                 return;
             }
-            if (amount < 10000) {
-                showModal('Lỗi', 'Yêu cầu rút tiền phải trên 10.000đ trở lên!', true);
+
+            if (amount < MIN_WITHDRAW_AMOUNT) {
+                showModal('Chưa đạt mức tối thiểu', `Số tiền rút tối thiểu là ${MIN_WITHDRAW_AMOUNT.toLocaleString('vi-VN')} đ!`, true);
                 return;
             }
 
             try {
                 const { data: profile } = await clientSupabase.from('profiles').select('*').eq('id', currentUser.id).single();
                 if (!profile || !profile.bank_name || !profile.bank_acc) {
-                    showModal('Chưa liên kết', 'Vui lòng liên kết tài khoản ngân hàng trước khi rút tiền!', true);
+                    showModal('Chưa liên kết ngân hàng', 'Bạn cần liên kết tài khoản ngân hàng trước khi rút tiền!', true);
                     return;
                 }
 
-                let currentBalance = Number(profile.balance || 0);
+                const currentBalance = Number(profile.balance || 0);
                 if (amount > currentBalance) {
-                    showModal('Lỗi 0đ', 'Số dư tài khoản không đủ để rút!', true);
+                    showModal('Số dư không đủ', 'Số tiền rút vượt quá số dư hiện có trong ví!', true);
                     return;
                 }
 
-                // Trừ tiền trước ở tài khoản người dùng
-                const newBalance = currentBalance - amount;
-                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', currentUser.id);
-
-                // Lưu yêu cầu rút tiền và gửi yêu cầu qua gmail tvty832@gmail.com
                 await clientSupabase.from('withdrawal_requests').insert([{
                     user_id: currentUser.id,
                     user_email: currentUser.email,
@@ -1128,27 +1425,45 @@
                     status: 'pending'
                 }]);
 
-                const adminId = await getAdminUserId();
-                if(adminId) {
-                    await clientSupabase.from('notifications').insert([{
-                        user_id: adminId,
-                        title: '💰 Yêu cầu rút tiền mới gửi đến tvty832@gmail.com',
-                        message: `Email đăng nhập: ${currentUser.email}\nSố tài khoản ngân hàng: ${profile.bank_acc} (${profile.bank_name}) - Chủ TK: ${profile.bank_owner}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ`,
-                        type: 'admin_alert'
-                    }]);
-                }
+                await notifyAdmin(
+                    '💰 Yêu cầu rút tiền mới!',
+                    `Email: ${currentUser.email}\nSố tiền rút: ${amount.toLocaleString('vi-VN')} đ\nNgân hàng: ${profile.bank_name} - STK: ${profile.bank_acc} (${profile.bank_owner})`
+                );
 
-                showModal('Thành công', `Yêu cầu rút ${amount.toLocaleString('vi-VN')}đ đã được trừ trước khỏi ví và gửi tới gmail admin (tvty832@gmail.com). Số dư còn lại: ${newBalance.toLocaleString('vi-VN')}đ`);
+                showModal('Đã gửi yêu cầu rút tiền', 'Yêu cầu rút tiền của bạn đã được gửi thành công đến Quản trị viên và đang chờ duyệt.');
                 document.getElementById('withdrawAmount').value = '';
                 closeSettingsModal();
-                fetchUserProfileData();
             } catch (e) {
-                showModal('Lỗi', 'Không thể thực hiện yêu cầu rút tiền.', true);
+                showModal('Lỗi', 'Không thể gửi yêu cầu rút tiền lúc này.', true);
             }
         }
 
-        function openBankModal() { document.getElementById('bankModal').classList.remove('hidden'); }
-        function closeBankModal() { document.getElementById('bankModal').classList.add('hidden'); }
+        function openBankModal() {
+            document.getElementById('bankModal').classList.remove('hidden');
+            onBankChange();
+        }
+        function closeBankModal() {
+            document.getElementById('bankModal').classList.add('hidden');
+        }
+
+        function onBankChange() {
+            const val = document.getElementById('bankSelect').value;
+            const techBox = document.getElementById('promoTechcomContent');
+            const mbBox = document.getElementById('promoMbContent');
+            const otherBox = document.getElementById('promoOtherContent');
+
+            techBox.classList.add('hidden');
+            mbBox.classList.add('hidden');
+            otherBox.classList.add('hidden');
+
+            if (val === 'Techcombank') {
+                techBox.classList.remove('hidden');
+            } else if (val === 'MBBank') {
+                mbBox.classList.remove('hidden');
+            } else {
+                otherBox.classList.remove('hidden');
+            }
+        }
 
         async function saveBankConnection() {
             if (!currentUser) return;
@@ -1157,116 +1472,216 @@
             const bankOwner = document.getElementById('bankAccOwner').value.trim().toUpperCase();
 
             if (!bankAcc || !bankOwner) {
-                showModal('Thiếu thông tin', 'Vui lòng nhập đầy đủ thông tin ngân hàng!', true);
+                showModal('Thiếu thông tin', 'Vui lòng điền đầy đủ số tài khoản và tên chủ tài khoản!', true);
                 return;
             }
 
-            const { error } = await clientSupabase.from('profiles').upsert({
-                id: currentUser.id,
-                email: currentUser.email,
-                bank_name: bankName,
-                bank_acc: bankAcc,
-                bank_owner: bankOwner
-            });
+            try {
+                const { error } = await clientSupabase.from('profiles').upsert({
+                    id: currentUser.id,
+                    email: currentUser.email,
+                    bank_name: bankName,
+                    bank_acc: bankAcc,
+                    bank_owner: bankOwner
+                });
 
-            if (error) showModal('Lỗi', error.message, true);
-            else {
-                showModal('Đã liên kết', 'Xác nhận liên kết ngân hàng thành công!');
-                closeBankModal();
-                fetchUserProfileData();
+                if (error) {
+                    showModal('Lỗi', error.message, true);
+                } else {
+                    showModal('Thành công', 'Đã lưu và liên kết tài khoản ngân hàng thành công!');
+                    closeBankModal();
+                    fetchUserProfileData();
+                }
+            } catch (e) {
+                showModal('Lỗi', 'Không thể kết nối lưu thông tin ngân hàng.', true);
             }
         }
 
         async function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
             const listContainer = document.getElementById('adminWithdrawList');
-            listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải...</p>`;
-
-            const { data } = await clientSupabase.from('withdrawal_requests').select('*').order('created_at', { ascending: false });
-            if (!data || data.length === 0) {
-                listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không có yêu cầu nào.</p>`;
-                return;
-            }
-
-            listContainer.innerHTML = data.map(item => `
-                <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl space-y-1 text-xs">
-                    <p class="font-bold text-white">Email: ${item.user_email}</p>
-                    <p class="text-slate-300">Ngân hàng: ${item.bank_name} - STK: ${item.bank_acc} (${item.bank_owner})</p>
-                    <p class="text-amber-400 font-bold">Số tiền: ${Number(item.amount).toLocaleString('vi-VN')} đ - Trạng thái: ${item.status}</p>
-                    ${item.status === 'pending' ? `
-                        <div class="pt-2 flex gap-2">
-                            <button onclick="adminApproveWithdraw('${item.id}', '${item.user_id}', ${item.amount})" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-1.5 rounded-lg">Duyệt & Thêm vào bảng đã duyệt</button>
-                        </div>
-                    ` : `<span class="text-emerald-400 font-semibold">[Đã duyệt]</span>`}
-                </div>
-            `).join('');
-        }
-
-        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
-        function openAdminTransferModal() { document.getElementById('adminTransferModal').classList.remove('hidden'); }
-        function closeAdminTransferModal() { document.getElementById('adminTransferModal').classList.add('hidden'); }
-
-        async function executeAdminTransfer() {
-            const targetEmail = document.getElementById('transferTargetEmail').value.trim();
-            const amount = Number(document.getElementById('transferAmount').value);
-            const note = document.getElementById('transferNote').value.trim() || "Admin chuyển tiền ví";
-
-            if (!targetEmail || !amount) {
-                showModal('Thiếu thông tin', 'Vui lòng nhập email và số tiền cần chuyển!', true);
-                return;
-            }
+            listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Đang tải danh sách yêu cầu...</p>`;
 
             try {
-                const { data: targetUser } = await clientSupabase.from('profiles').select('*').eq('email', targetEmail).single();
-                if (!targetUser) {
-                    showModal('Không tìm thấy', 'Không tìm thấy tài khoản người nhận với email này!', true);
+                const { data, error } = await clientSupabase.from('withdrawal_requests').select('*').order('created_at', { ascending: false });
+                if (error || !data || data.length === 0) {
+                    listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Chưa có yêu cầu rút tiền hoặc chờ duyệt nào.</p>`;
                     return;
                 }
 
-                const currentTargetBalance = Number(targetUser.balance || 0);
-                const newTargetBalance = currentTargetBalance + amount;
+                listContainer.innerHTML = data.map(item => {
+                    const isPendingCashback = item.status === 'pending_cashback';
+                    const amountText = isPendingCashback ? `<span class="text-emerald-400 font-bold">Chờ duyệt cộng tiền hoàn (1K-50K)</span>` : `<span class="text-amber-400 font-bold">${Number(item.amount).toLocaleString('vi-VN')} đ</span>`;
+                    const actionBtn = isPendingCashback ? `
+                        <div class="flex gap-1.5 pt-2">
+                            <button onclick="adminApproveCashback('${item.id}', '${item.user_id}', 1000)" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-2 py-1.5 rounded-lg text-[10px]">Cộng 1K</button>
+                            <button onclick="adminApproveCashback('${item.id}', '${item.user_id}', 10000)" class="bg-teal-500 hover:bg-teal-400 text-slate-950 font-black px-2 py-1.5 rounded-lg text-[10px]">Cộng 10K</button>
+                            <button onclick="adminApproveCashback('${item.id}', '${item.user_id}', 30000)" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-2 py-1.5 rounded-lg text-[10px]">Cộng 30K</button>
+                            <button onclick="adminApproveCashback('${item.id}', '${item.user_id}', 50000)" class="bg-indigo-500 hover:bg-indigo-400 text-slate-950 font-black px-2 py-1.5 rounded-lg text-[10px]">Cộng 50K</button>
+                            <button onclick="adminRejectRequest('${item.id}')" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 px-2 py-1.5 rounded-lg text-[10px] font-bold">Từ chối</button>
+                        </div>
+                    ` : (item.status === 'pending' ? `
+                        <div class="flex gap-2 pt-2">
+                            <button onclick="adminApproveWithdraw('${item.id}', '${item.user_id}', ${item.amount})" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-1.5 rounded-lg text-[10px]">Duyệt Rút Tiền</button>
+                            <button onclick="adminRejectRequest('${item.id}')" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1.5 rounded-lg text-[10px] font-bold">Từ chối</button>
+                        </div>
+                    ` : `<span class="text-emerald-400 text-[10px] font-bold">Đã duyệt hoàn tất</span>`);
 
-                await clientSupabase.from('profiles').update({ balance: newTargetBalance }).eq('id', targetUser.id);
-                
-                // Ghi nhận vào bảng lịch sử giao dịch riêng của tài khoản nhận
-                await clientSupabase.from('withdrawal_requests').insert([{
-                    user_id: targetUser.id,
-                    user_email: targetUser.email,
-                    amount: amount,
-                    bank_name: targetUser.bank_name || 'Ví ảo',
-                    bank_acc: targetUser.bank_acc || '---',
-                    bank_owner: targetUser.bank_owner || '---',
-                    status: 'completed',
-                    note: note
-                }]);
-
-                showModal('Thành công', `Đã chuyển ${amount.toLocaleString('vi-VN')}đ vào ví của tài khoản ${targetEmail} thành công!`);
-                closeAdminTransferModal();
-            } catch(e) {
-                showModal('Lỗi', 'Không thể thực hiện chuyển tiền.', true);
+                    return `
+                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">${item.user_email}</span>
+                                <span class="text-[10px] text-slate-400">${new Date(item.created_at || Date.now()).toLocaleString('vi-VN')}</span>
+                            </div>
+                            <div class="space-y-0.5 text-[11px] text-slate-300">
+                                <p>Số tiền / Nội dung: ${amountText}</p>
+                                <p>Ngân hàng: <b>${item.bank_name}</b> - STK: <b>${item.bank_acc}</b> (${item.bank_owner})</p>
+                                ${item.note ? `<p class="text-amber-300">Ghi chú: ${item.note}</p>` : ''}
+                            </div>
+                            ${actionBtn}
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                listContainer.innerHTML = `<p class="text-center py-6 text-slate-500 text-xs">Không thể tải dữ liệu quản trị.</p>`;
             }
         }
 
-        async function adminApproveWithdraw(requestId, userId, amount) {
+        async function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        async function adminApproveCashback(requestId, targetUserId, cashbackAmount) {
             try {
-                await clientSupabase.from('withdrawal_requests').update({ status: 'approved' }).eq('id', requestId);
-                
-                // Gửi thông báo cho user
-                await clientSupabase.from('notifications').insert([{
-                    user_id: userId,
-                    title: 'Yêu cầu rút tiền đã được duyệt',
-                    message: `Lệnh rút ${amount.toLocaleString('vi-VN')}đ của bạn đã được admin xác nhận chuyển về tài khoản ngân hàng.`,
-                    type: 'system'
+                const { data: targetProfile } = await clientSupabase.from('profiles').select('balance').eq('id', targetUserId).single();
+                const currentBalance = Number(targetProfile?.balance || 0);
+                const newBalance = currentBalance + cashbackAmount;
+
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', targetUserId);
+                await clientSupabase.from('withdrawal_requests').update({ status: 'approved_cashback', amount: cashbackAmount }).eq('id', requestId);
+
+                const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+                await clientSupabase.from('orders').insert([{
+                    user_id: targetUserId,
+                    order_id: randomOrderId,
+                    cashback_amount: cashbackAmount,
+                    status: 'completed'
                 }]);
 
-                showModal('Đã duyệt', 'Đã duyệt yêu cầu rút tiền thành công!');
+                await clientSupabase.from('notifications').insert([{
+                    user_id: targetUserId,
+                    title: 'Đã duyệt cộng tiền hoàn vào ví!',
+                    message: `Admin đã duyệt và cộng thành công +${cashbackAmount.toLocaleString('vi-VN')} đ tiền hoàn vào ví của bạn (Đơn #${randomOrderId}).`,
+                    type: 'success'
+                }]);
+
+                showModal('Thành công', `Đã duyệt và cộng +${cashbackAmount.toLocaleString('vi-VN')} đ vào ví khách hàng!`);
                 openAdminModal();
-            } catch(e) {
-                showModal('Lỗi', 'Không thể duyệt yêu cầu.', true);
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt cộng tiền hoàn lúc này.', true);
             }
         }
 
-        window.onload = initApp;
+        async function adminApproveWithdraw(requestId, targetUserId, withdrawAmount) {
+            try {
+                const { data: targetProfile } = await clientSupabase.from('profiles').select('balance').eq('id', targetUserId).single();
+                const currentBalance = Number(targetProfile?.balance || 0);
+                if (withdrawAmount > currentBalance) {
+                    showModal('Lỗi', 'Số dư ví của người dùng không đủ để trừ tiền rút!', true);
+                    return;
+                }
+
+                const newBalance = currentBalance - withdrawAmount;
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', targetUserId);
+                await clientSupabase.from('withdrawal_requests').update({ status: 'approved_withdraw' }).eq('id', requestId);
+
+                await clientSupabase.from('notifications').insert([{
+                    user_id: targetUserId,
+                    title: 'Yêu cầu rút tiền đã được duyệt!',
+                    message: `Lệnh rút ${withdrawAmount.toLocaleString('vi-VN')} đ của bạn đã được Admin chuyển khoản thành công về ngân hàng liên kết.`,
+                    type: 'success'
+                }]);
+
+                showModal('Thành công', `Đã duyệt lệnh rút ${withdrawAmount.toLocaleString('vi-VN')} đ thành công!`);
+                openAdminModal();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể duyệt lệnh rút tiền.', true);
+            }
+        }
+
+        async function adminRejectRequest(requestId) {
+            try {
+                await clientSupabase.from('withdrawal_requests').update({ status: 'rejected' }).eq('id', requestId);
+                showModal('Đã từ chối', 'Đã từ chối yêu cầu thành công.');
+                openAdminModal();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể từ chối yêu cầu.', true);
+            }
+        }
+
+        function openAdminTransferModal() {
+            document.getElementById('adminTransferModal').classList.remove('hidden');
+        }
+        function closeAdminTransferModal() {
+            document.getElementById('adminTransferModal').classList.add('hidden');
+        }
+
+        async function executeAdminTransfer() {
+            const targetEmail = document.getElementById('transferTargetEmail').value.trim();
+            const amountInput = document.getElementById('transferAmount').value;
+            const noteText = document.getElementById('transferNote').value.trim() || 'Hỗ trợ từ Quản trị viên';
+            const amount = Number(amountInput);
+
+            if (!targetEmail || !amount || amount <= 0) {
+                showModal('Thiếu thông tin', 'Vui lòng nhập email người nhận và số tiền chuyển hợp lệ!', true);
+                return;
+            }
+
+            try {
+                const { data: targetUsers, error } = await clientSupabase.from('profiles').select('*').eq('email', targetEmail);
+                if (error || !targetUsers || targetUsers.length === 0) {
+                    showModal('Không tìm thấy', `Không tìm thấy tài khoản với email: ${targetEmail}`, true);
+                    return;
+                }
+
+                const targetUser = targetUsers[0];
+                const currentBalance = Number(targetUser.balance || 0);
+                const newBalance = currentBalance + amount;
+
+                await clientSupabase.from('profiles').update({ balance: newBalance }).eq('id', targetUser.id);
+                
+                await clientSupabase.from('notifications').insert([{
+                    user_id: targetUser.id,
+                    title: 'Nhận được tiền từ Quản trị viên!',
+                    message: `Bạn vừa nhận được +${amount.toLocaleString('vi-VN')} đ vào ví.\nNội dung: ${noteText}`,
+                    type: 'success'
+                }]);
+
+                const randomOrderId = Math.floor(100000 + Math.random() * 900000);
+                await clientSupabase.from('orders').insert([{
+                    user_id: targetUser.id,
+                    order_id: randomOrderId,
+                    cashback_amount: amount,
+                    status: 'completed'
+                }]);
+
+                showModal('Thành công', `Đã chuyển thành công +${amount.toLocaleString('vi-VN')} đ vào tài khoản ${targetEmail}!`);
+                document.getElementById('transferTargetEmail').value = '';
+                document.getElementById('transferAmount').value = '';
+                document.getElementById('transferNote').value = '';
+                closeAdminTransferModal();
+            } catch (e) {
+                showModal('Lỗi', 'Không thể thực hiện chuyển tiền lúc này.', true);
+            }
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            fetchUserProfileData();
+        }
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
