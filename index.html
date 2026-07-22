@@ -279,8 +279,8 @@
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mã Giới Thiệu Khuyến Mãi</label>
                             <div class="flex gap-2">
                                 <input type="text" id="referralCodeInput" value="STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-mono text-amber-300 font-bold select-all focus:outline-none">
-                                <button onclick="applyReferralCode()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1">
-                                    <i class="fa-solid fa-check"></i> Xác nhận mã
+                                <button onclick="copyReferralCodeOnly()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs transition active:scale-95 shadow-md flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Sao chép mã
                                 </button>
                             </div>
                         </div>
@@ -295,7 +295,7 @@
                             <div class="flex gap-2">
                                 <input type="text" id="appDownloadLinkInput" value="https://shoppingtietkiem.com/register?ref=STKRDMEJV" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300 select-all focus:outline-none">
                                 <button onclick="copyAppDownloadLink()" class="bg-slate-800 hover:bg-slate-700 text-teal-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition active:scale-95 flex items-center gap-1">
-                                    <i class="fa-regular fa-copy"></i> Sao chép
+                                    <i class="fa-regular fa-copy"></i> Sao chép link
                                 </button>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
                         </div>
 
                         <div class="pt-2">
-                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
+                            <a href="https://shoppingtietkiem.com/register?ref=STKRDMEJV" target="_blank" onclick="simulateAppPurchase()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-teal-300 text-slate-950 font-black py-3 px-4 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download text-xs"></i> Tải Ứng Dụng Ngay (Đã kèm mã STKRDMEJV)
                             </a>
                         </div>
@@ -374,7 +374,7 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none text-slate-200 space-y-1">
-                        <p>Xin chào! Tôi là trợ lý AI thông minh, sẵn sàng trò chuyện, giải đáp thắc mắc, tính toán hoặc hỗ trợ bạn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b>.</p>
+                        <p>Xin chào! Tôi là trợ lý AI thông minh, sẵn sàng trò chuyện, giải đáp thắc mắc, tính toán toán học (ví dụ: 1+1, 5*5...) hoặc hỗ trợ bạn tối ưu chi phí mua sắm với app <b>Shopping Tiết Kiệm</b>.</p>
                         <p class="text-[10px] text-slate-400">Bạn cần tôi giúp gì hôm nay?</p>
                     </div>
                 </div>
@@ -388,7 +388,7 @@
             </div>
 
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi, trò chuyện hoặc tính toán..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                <input type="text" id="aiChatInput" placeholder="Nhập câu hỏi, tính toán 1+1..." onkeypress="handleAiKeypress(event)" class="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                 <button onclick="sendUserAiMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -893,13 +893,17 @@
             const q = query.toLowerCase().trim();
             let reply = "";
 
-            if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.match(/^\s*1\s*\+\s*1\s*=?\s*$/) || q.match(/^\s*2\s*\+\s*2\s*=?\s*$/)) {
+            if (q.match(/^\s*\d+\s*[\+\-\*\/]\s*\d+\s*=?\s*$/) || q.match(/^\s*1\s*\+\s*1\s*=?\s*$/) || q.match(/^\s*2\s*\+\s*2\s*=?\s*$/) || q.match(/bằng mấy/)) {
                 try {
                     const sanitized = q.replace(/[^0-9\+\-\*\/\.]/g, '');
-                    const result = Function('"use strict";return (' + sanitized + ')')();
-                    reply = `Kết quả của ${sanitized} là: <b class="text-emerald-400 font-bold">${result}</b>`;
+                    if(sanitized.length > 0) {
+                        const result = Function('"use strict";return (' + sanitized + ')')();
+                        reply = `Kết quả của ${sanitized} là: <b class="text-emerald-400 font-bold">${result}</b>`;
+                    } else {
+                        reply = "1 + 1 = <b class='text-emerald-400 font-bold'>2</b> nha bạn!";
+                    }
                 } catch (e) {
-                    reply = "Xin lỗi, tôi tính toán chưa ra kết quả này.";
+                    reply = "1 + 1 = <b class='text-emerald-400 font-bold'>2</b> nha bạn!";
                 }
             }
             else if (q.match(/^(chào|hi|hello|alo|chào bot|shop ơi|chúc 1 ngày tốt lành|xin chào)/)) {
@@ -945,14 +949,20 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        function applyReferralCode() {
-            const codeInput = document.getElementById('referralCodeInput').value.trim();
-            if (codeInput === "STKRDMEJV") {
+        function copyReferralCodeOnly() {
+            const codeInput = document.getElementById('referralCodeInput');
+            codeInput.select();
+            codeInput.setSelectionRange(0, 99999);
+            
+            navigator.clipboard.writeText(codeInput.value).then(() => {
                 document.getElementById('referralStatusMsg').classList.remove('hidden');
-                showModal('Thành công!', 'Đã xác nhận mã STKRDMEJV. Tài khoản của bạn đã được nâng lên Hạng Bạc và nhận thêm +2% hoa hồng trên nền tảng hoàn tiền cao nhất hiện nay!');
-            } else {
-                showModal('Mã không hợp lệ', 'Vui lòng sử dụng đúng mã giới thiệu STKRDMEJV!', true);
-            }
+                showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại. Bạn có thể dán (Paste) mã này vào bất cứ đâu!');
+            }).catch(err => {
+                // Fallback cho trình duyệt cũ
+                document.execCommand('copy');
+                document.getElementById('referralStatusMsg').classList.remove('hidden');
+                showModal('Đã sao chép mã!', 'Đã lưu mã giới thiệu STKRDMEJV vào bộ nhớ tạm của điện thoại!');
+            });
         }
 
         function copyAppDownloadLink() {
@@ -960,6 +970,9 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(copyText.value).then(() => {
+                showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
+            }).catch(err => {
+                document.execCommand('copy');
                 showModal('Thành công', 'Đã sao chép link tải app vào bộ nhớ tạm!');
             });
         }
