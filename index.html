@@ -1568,7 +1568,7 @@
 
             try {
                 await clientSupabase.from('profiles').update({ bank_name: bankName, bank_acc: bankAcc, bank_owner: bankOwner }).eq('id', currentUser.id);
-                showModal('Thành công', `Đã liên kết tài khoản ${bankName}!`);
+                showModal('Thành công', 'Đã lưu thông tin tài khoản ngân hàng liên kết thành công!');
                 closeBankModal();
                 fetchUserProfileData();
             } catch (e) {
